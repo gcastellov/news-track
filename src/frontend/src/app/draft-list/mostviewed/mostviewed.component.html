@@ -1,0 +1,15 @@
+<div class="panel panel-default" *ngIf="mostViewed && mostViewed.length">      
+  <div class="panel-heading">
+    <h3 class="panel-title">      
+      <a [routerLink]="['/most-viewed']">{{ 'mostviewed-component.title-mostviewed' | translate }}</a>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <ul class="list-inline">
+      <li class="list-inline-item mostViewed-item" *ngFor="let draft of mostViewed">
+        <span class="badge badge-secondary">{{draft.views}}</span>
+        <a role="button" (click)="go(draft.id)">{{draft.title}}</a>
+      </li>
+    </ul>
+  </div>
+</div>

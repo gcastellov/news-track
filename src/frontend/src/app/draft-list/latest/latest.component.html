@@ -1,0 +1,14 @@
+<div class="panel panel-default" *ngIf="latest && latest.length">      
+  <div class="panel-heading">
+    <h3 class="panel-title">      
+      <a [routerLink]="['/latest']">{{ 'latest-component.title-latest' | translate }}</a>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <ul class="list-inline">
+      <li class="list-inline-item latest-item" *ngFor="let draft of latest">
+          <a role="button" (click)="go(draft.id)">{{draft.title}}</a>
+      </li>
+    </ul>
+  </div>
+</div>

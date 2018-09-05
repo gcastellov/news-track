@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-md-8">
+    <app-draft [draft]="draft" [isExtended]="true" *ngIf="draft"></app-draft>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default" *ngIf="relationship && relationship.length">      
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ 'draft-entry-component.title-related' | translate }}</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-inline">
+          <li class="list-inline-item relationship-item" *ngFor="let draft of relationship">
+              <a role="button" (click)="go(draft.id)">{{draft.title}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel panel-default" *ngIf="suggestions && suggestions.tags && suggestions.tags.length">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ 'draft-entry-component.title-suggested-tags' | translate }}</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-inline">
+          <li class="list-inline-item tag-item" *ngFor="let tag of suggestions.tags">
+            <span class="label label-default" (click)="searchByTag(tag)">{{tag}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel panel-default" *ngIf="suggestions && suggestions.drafts && suggestions.drafts.length">      
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <a role="button" (click)="suggest()">{{ 'draft-entry-component.title-suggested-news' | translate }}</a>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-inline">
+          <li class="list-inline-item relationship-item" *ngFor="let draft of suggestions.drafts">
+              <a role="button" (click)="go(draft.id)">{{draft.title}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

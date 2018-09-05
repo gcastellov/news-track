@@ -1,0 +1,22 @@
+<div class="row">
+  <form class="col-md-5" [formGroup]="authForm">
+    <div class="form-group">
+        <label for="username">{{ 'authentication-component.email-address' | translate }}</label>
+        <input type="email" class="form-control" id="username" placeholder="name@example.com" formControlName="username"/>
+    </div>
+    <div class="form-group">
+        <label for="password">{{ 'authentication-component.password' | translate }}</label>
+        <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" (keyup.enter)="onSignIn()"/>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!authForm.valid" (click)="onSignIn()">{{ 'authentication-component.sing-in' | translate }}</button>
+    </div>
+  </form>
+  <div class="col-md-7">
+      <div *ngIf="failureReason !== 0" class="alert alert-danger" role="alert">
+        <span *ngIf="failureReason === -1">{{ 'authentication-component.failure-reason-one' | translate }}</span>
+        <span *ngIf="failureReason === 1">{{ 'authentication-component.failure-reason-two' | translate }}</span>
+        <span *ngIf="failureReason === 2">{{ 'authentication-component.failure-reason-tree' | translate }}</span>
+      </div>
+  </div>
+</div>

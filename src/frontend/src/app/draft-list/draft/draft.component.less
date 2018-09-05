@@ -1,0 +1,84 @@
+@import "../../../less/colors.less";
+@import "../../../less/variables.less";
+
+.draft {
+    margin-bottom: 10pt;   
+    background-color: @panel-bg;
+    border-radius: @panel-border-radius;
+    padding: 2em 2em 0 2em;
+    border: 1px solid @panel-default-border;
+}
+
+.draft-picture-container {
+    float: left;
+    margin-right: 10pt;
+    position: relative;
+    top: 0;
+    z-index: 1;
+}
+
+.draft-fuck {
+    height: 150px;
+    width: 200px;    
+    margin-right: 10pt;
+    position: relative;
+    top: 0;
+    z-index: 2;
+    opacity: 0.7;
+    padding: 5px;
+    align-content: center;
+    text-align: center;
+    background-color: transparent;
+
+    .draft-fuck-action {
+        vertical-align: middle;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        .btn, .label {
+            top: auto;            
+            position: relative;
+        }
+
+        .btn, {
+            bottom: -50px;
+        }
+
+        .label {
+            bottom: -40px;
+        }
+    }
+}
+
+.draft-fuck:hover {
+    background-color: @panel-hover-color;
+    opacity: 0.8;
+
+    .draft-fuck-action > button {
+        opacity: 1;
+    }
+}
+
+.img-container {
+    float: left;
+}
+
+.draft-picture {
+    height: 150px;
+    width: 200px;
+    border-radius: 5%;        
+}
+
+.draft-body {
+    margin-top: 1em;
+}
+
+.draft-paragraph {
+    text-align: justify;
+    text-justify: inter-word;
+}

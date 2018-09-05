@@ -1,0 +1,18 @@
+<div *ngIf="identity">
+  <div class="form-group row">
+    <label for="username" class="col-sm-2 col-form-label">{{ 'member-component.username' | translate }}</label>
+    <span id="username">{{identity.username}}</span>    
+  </div>  
+  <div class="form-group row">
+    <label for="email" class="col-sm-2 col-form-label">{{ 'member-component.email' | translate }}</label>
+    <span id="email">{{identity.email}}</span>    
+  </div>
+  <div class="form-group row">
+    <label for="createdAt" class="col-sm-2 col-form-label">{{ 'member-component.cratedAt' | translate }}</label>
+    <span id="createdAt">{{identity.createdAt}}</span>    
+  </div>
+  <div class="form-group row">
+    <label for="failedAttempts" class="col-sm-2 col-form-label">{{ 'member-component.failedAttempts' | translate }}</label>
+    <span id="failedAttempts">{{identity.accessFailedCount}}</span>    
+  </div>  
+</div>

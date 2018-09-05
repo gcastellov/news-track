@@ -1,0 +1,87 @@
+@import 'variables.less';
+
+.dropdown-menu > button {
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1pt solid;
+}
+
+.dropdown-menu > button:hover {
+  background-color: @dropdown-link-hover-bg;
+  color: @dropdown-link-hover-color;
+}
+
+.HolyGrail {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.HolyGrail-body {
+  display: flex;
+  flex: 1;  
+}
+
+.HolyGrail-content {
+  flex: 1;
+}
+
+.HolyGrail-nav, .HolyGrail-ads {
+  /* 12em is the width of the columns */
+  flex: 0 0 5em;
+  display: none;
+}
+
+.HolyGrail-nav {
+  /* put the nav on the left */
+  order: -1;
+}
+
+@media (min-width: 768px) {
+  .HolyGrail-body {
+    flex-direction: row;
+    flex: 1;
+    min-height: 75vh;
+  }
+  .HolyGrail-nav, .HolyGrail-ads {
+    flex: 0 0 10em;
+    display: block;
+  }
+
+  .footer {
+    min-height: 18vh;
+  }
+}
+
+@media (min-width: 992px) { 
+  .HolyGrail-body {
+    flex-direction: row;
+    flex: 1;
+    min-height: 75vh;
+  }
+  .HolyGrail-nav, .HolyGrail-ads {
+    flex: 0 0 12em;
+    display: block;
+  }
+
+  .footer {
+    min-height: 18vh;
+  }
+}
+
+@media (min-width: 1200px) { 
+  .HolyGrail-body {
+    flex-direction: row;
+    flex: 1;
+    min-height: 75vh;
+  }
+  .HolyGrail-nav, .HolyGrail-ads {
+    flex: 0 0 15em;
+    display: block;
+  }
+
+  .footer {
+    min-height: 18vh;    
+  }
+}

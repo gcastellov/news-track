@@ -1,0 +1,13 @@
+<div class="panel panel-default" *ngIf="websites && websites.length">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ 'websites-component.title-websites' | translate }}</h3>
+  </div>
+  <div class="panel-body">
+    <ul class="list-inline">
+      <li *ngFor="let website of websites">
+        <span class="badge badge-secondary">{{website.count}}</span>
+        <a role="button" (click)="onSelected(website.name)">{{website.name}}</a>        
+      </li>
+    </ul>
+  </div>
+</div>

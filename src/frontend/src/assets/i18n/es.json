@@ -1,0 +1,195 @@
+{
+    "app-component": {
+        "title-latest-news": "Últimas",
+        "title-most-viewed-news": "Más vistadas",
+        "title-most-fucked-news": "Más bochornosas",
+        "title-search": "Búsqueda",
+        "title-browse": "Navegar",
+        "title-sing-in": "Acceder",
+        "title-about-us": "Sobre nosotros",
+        "title-terms-of-use": "Términos de uso",
+        "title-privacy": "Privacidad"
+    },
+    "authentication-component": {
+        "email-address": "Email",
+        "password": "Password",
+        "failure-reason-one": "Algo fue mal",
+        "failure-reason-two": "Usuario o contraseña incorrecta",
+        "failure-reason-tree": "El usuario se ha bloqueado por razones de seguridad",
+        "sing-in": "Acceder"
+    },
+    "browsing-component": {
+        "title-images": "Imágenes",
+        "title-titles": "Títulos",
+        "title-paragraphs": "Párrafos",
+        "forbidden-url": "Ten en cuenta que esta URL pertenece a un dominio que ha sido incluido en la lista negra de dominios no permitidos",
+        "action-find": "Buscar",
+        "action-relationship": "Establecer relaciones",
+        "action-save": "Guardar"
+    },
+    "browsing-relationship-component": {
+        "title-related": "Relacionadas",
+        "action-back": "Volver",
+        "action-save": "Guardar"
+    },
+    "browsing-relationship-draft-component": {
+        "check-it": "Selecciona",
+        "views": "Visitas"
+    },
+    "draft-component": {
+        "action-fuck": "Oh là là"
+    },
+    "draft-entry-component": {
+        "title-related": "Relacionadas",
+        "title-suggested-tags": "Etiquetas sugeridas",
+        "title-suggested-news": "Noticias sugeridas"
+    },
+    "draft-footer-component": {
+        "fucks": "Bochornos:",
+        "source": "Ver fuente",
+        "related": "Relacionadas:",
+        "views": "Visitas:",
+        "created": "Creado",
+        "by": "por"
+    },
+    "latest-component": {
+        "title-latest": "Últimas"
+    },
+    "mostfucking-component": {
+        "title-mostfucked": "Más bochornosas"
+    },
+    "mostviewed-component": {
+        "title-mostviewed": "Más visitadas"
+    },
+    "search-component": {
+        "action-search": "Buscar"
+    },
+    "tags-component": {
+        "title-tags": "Etiquetas"
+    },
+    "websites-component": {
+        "title-websites": "Websites"
+    },
+    "paginator-component": {
+        "action-next": "Siguiente",
+        "action-previous": "Anterior"
+    },
+    "terms-component": {
+        "title": "Términos y condiciones",
+        "title-introduction": "Introducción",
+        "title-intellectual-rights": "Derechos de propiedad intelectual",
+        "title-restrictions": "Restricciones",
+        "title-content": "Tu contenido",
+        "title-warranties": "Garantías",
+        "title-liability": "Limitación de responsabilidad",
+        "title-indemnification": "Indemnización",
+        "title-severability": "Separabilidad",
+        "title-variation-terms": "Variación de términos",
+        "title-assignment": "Asignación",
+        "title-agreement": "Acuerdo completo",
+        "title-jurisdiction": "Legislación aplicable y jurisdicción",
+        "content-introduction": "Estos términos y condiciones estándar del sitio web (estos 'Términos' o estos 'Términos y condiciones estándar del sitio web') que rigen el uso de este sitio web, incluyendo todas las páginas dentro de este sitio web (denominados colectivamente en este documento a continuación como este  'Sitio web'). Estos términos se aplican con pleno vigor y efecto a su uso de este sitio web y al utilizar este sitio web, usted acepta expresamente todos los términos y condiciones aquí contenidos. No debe utilizar este sitio web, si tiene alguna objeción a cualquiera de estos Términos y condiciones estándar del sitio web. Este sitio web no es para uso de menores de edad (definidos como aquellos que no tienen al menos 18 años de edad), y no debe utilizar este sitio web si es menor de edad.",
+        "content-intellectual-rights": "Además del contenido que posee, que puede haber optado por incluir en este sitio web, bajo estos Términos, {{company}} y / o sus licenciantes poseen todos los derechos sobre la propiedad intelectual y el material contenido en este sitio web, y todos esos derechos son reservados. Solo se le concede una licencia limitada, sujeta a las restricciones establecidas en estos Términos, a los efectos de ver el material contenido en este sitio web.",
+        "content-restrictions-1": "Usted está expresamente y enfáticamente restringido de todo lo siguiente:",
+        "content-restrictions-li-1": "vender, sublicenciar y / o comercializar de otro modo cualquier material del sitio web",
+        "content-restrictions-li-2": "realizar públicamente y / o mostrar cualquier material del sitio web",
+        "content-restrictions-li-3": "utilizar este sitio web de cualquier forma que sea o pueda ser, perjudicial para este sitio web",
+        "content-restrictions-li-4": "utilizar este sitio web de cualquier forma que afecte el acceso de los usuarios a este sitio web",
+        "content-restrictions-li-5": "utilizar este sitio web en contra de las leyes y regulaciones aplicables, o de una manera que cause, o pueda causar, daño al sitio web, o a cualquier persona o entidad comercial",
+        "content-restrictions-li-6": "participar en cualquier extracción de datos, recolección de datos, extracción de datos o cualquier otra actividad similar relacionada con este sitio web, o al usar este sitio web",
+        "content-restrictions-li-7": "usar este sitio web para participar en cualquier publicidad o mercadotecnia",
+        "content-restrictions-2": "Ciertas áreas de este sitio web tienen un acceso restringido y {{company}} puede restringir aún más el acceso de usted a cualquier área de este sitio web, en cualquier momento, a su exclusivo y absoluto criterio. Cualquier identificación de usuario y contraseña que pueda tener para este sitio web son confidenciales y debe mantener la confidencialidad de dicha información.",
+        "content-content-1": "En estos términos y condiciones estándar del sitio web, 'su contenido' significará cualquier audio, video, texto, imágenes u otro material que elija mostrar en este sitio web. Con respecto a su contenido, al mostrarlo, otorga {{company}} una licencia no exclusiva, mundial, irrevocable, libre de regalías y sublicenciable para usar, reproducir, adaptar, publicar, traducir y distribuir en cualquier medio.",
+        "content-content-2": "Su contenido debe ser suyo y no debe infringir los derechos de ningún tercero. {{company}} se reserva el derecho de eliminar cualquiera de sus contenidos de este sitio web en cualquier momento y por cualquier motivo, sin previo aviso.",
+        "content-warranties": "Este sitio web se proporciona 'tal cual', con todas las faltas, y {{company}} no ofrece representaciones ni garantías explícitas o implícitas, de ningún tipo relacionadas con este sitio web o los materiales contenidos en este sitio web. Además, nada de lo contenido en este sitio web se interpretará como una consulta o consejo para usted.",
+        "content-liability": "En ningún caso {{company}}, ni ninguno de sus funcionarios, directores y empleados serán responsables ante usted por cualquier cosa que surja o esté relacionada de alguna manera con su uso de este sitio web, ya sea que dicha responsabilidad esté bajo contrato, agravio o de lo contrario, y {{company}}, incluidos sus funcionarios, directores y empleados no serán responsables de ninguna responsabilidad indirecta, consecuente o especial que surja de o esté relacionada con el uso que usted haga de este sitio web.",
+        "content-indemnification": "Usted por consiguiente indemniza en la máxima medida {{company}} desde y contra todas y cada una de las responsabilidades, costos, demandas, causas de acción, daños y gastos (incluidos los honorarios razonables de los abogados) que surjan o estén relacionados con su incumplimiento de cualquier de las disposiciones de estos términos.",
+        "content-severability": "Si se determina que alguna disposición de estos términos es inaplicable o inválida en virtud de cualquier ley aplicable, dicha inaplicabilidad o invalidez no hará que estos términos sean inaplicables o inválidos en su totalidad, y dichas disposiciones se eliminarán sin afectar las disposiciones restantes del presente.",
+        "content-variation-terms": "{{company}} tiene permiso para revisar estos términos en cualquier momento como lo considere oportuno, y al utilizar este sitio web se espera que revise dichos términos periódicamente para asegurarse de que comprende todos los términos y condiciones que rigen el uso de este sitio web.",
+        "content-assignment": "{{company}} se le permitirá asignar, transferir y subcontratar sus derechos y / u obligaciones bajo estos términos sin ninguna notificación o consentimiento requerido. Sin embargo,. No se le permitirá asignar, transferir o subcontratar ninguno de sus derechos y / u obligaciones bajo estos términos.",
+        "content-agreement": "Estos términos, incluidos los avisos legales y descargos de responsabilidad contenidos en este sitio web, constituyen el acuerdo completo entre {{company}} y usted en relación con su uso de este sitio web, y reemplazan todos los acuerdos y entendimientos anteriores con respecto al mismo.",
+        "content-jurisdiction": "Estos términos se regirán e interpretarán de conformidad con las leyes de {{country}}, y usted se somete a la jurisdicción no exclusiva de los tribunales estatales ubicados en {{country}} para la resolución de cualquier disputa."
+    },
+    "privacy-component": {
+        "title": "Política de privacidad",
+        "title-information": "Información que podemos obtener de usted",
+        "title-cookies": "Dirección IP y Cookies",
+        "title-personal-data": "Donde almacenos sus datos personales",
+        "title-personal-data-use": "Uso hecho de la información",
+        "title-spread-information": "Divulgación de su información",
+        "title-rights": "Sus derechos",
+        "title-data-access": "Acceso a la información",
+        "title-privacy-changes": "Cambios en nuestra política de privacidad",
+        "content-intro-1": "{{company}} se compromete a proteger y respetar su privacidad.",
+        "content-intro-2": "Esta política (junto con Términos de Uso y cualquier otro documento al que se haga referencia en ella) establece la base sobre la que los datos personales que obtenemos de usted, o que usted nos proporcione, será procesada por nosotros. Por favor, lea lo siguiente cuidadosamente para entender nuestros puntos de vista y prácticas respecto a sus datos personales. Esta política declara que mantenemos cierta información básica cuando usted visita nuestro sitio web, reconoce la importancia de mantener la información segura y le permite saber lo que vamos a hacer con ella.",
+        "content-intro-3": "Esta política sólo se aplica a nuestro sitio web. Si usted sale de nuestro sitio a través de un enlace o de otra forma, usted estará sujeto a la política de ese proveedor. No tenemos ningún control sobre la política o los términos de uso de otros portales, por lo que usted debe revisar su política antes de continuar accediendo al sitio.",
+        "content-information-li-1": "La información que usted proporcione al completar formularios en nuestro sitio. Esto incluye la información facilitada en el momento de registrarse para utilizar nuestro sitio, suscribirse a nuestro servicio o solicitar servicios adicionales. También podemos pedirle información cuando se notifique un problema con nuestro sitio.",
+        "content-information-li-2": "Si usted nos contacta, podemos mantener un registro de esa correspondencia.",
+        "content-information-li-3": "También podemos pedirle que complete encuestas que utilizamos con fines de investigación, aunque no tiene que responder a ellas.",
+        "content-information-li-4": "Los detalles de sus visitas a nuestro sitio, incluyendo, pero no limitando a, los datos de tráfico, datos de localización, logs, sistema operativo, el uso del navegador y otros datos de comunicación y los recursos a los que accede.",
+        "content-cookies-1": "Podemos recabar información sobre su ordenador, tal como, su dirección IP, sistema operativo y tipo de navegador, para la administración del sistema. Se trata de datos estadísticos sobre las acciones y patrones de navegación de nuestros usuarios. Éstos no identifican a ninguna persona y no recopilarán información personal de ninguna manera.",
+        "content-cookies-2": "Podemos obtener información sobre tu uso general de Internet mediante un archivo de cookies que se almacena en el disco duro de su ordenador. Las cookies contienen información que se transfiere al disco duro de su ordenador. Ellas nos ayudan a mejorar nuestro sitio web y nos permiten ofrecer un servicio mejor y más personalizado. Nos permite:",
+        "content-cookies-li-1": "Estimar el tamaño de nuestra audiencia y patrones de uso.",
+        "content-cookies-li-2": "Almacenar información sobre sus preferencias, y así poder personalizar nuestro sitio web de acuerdo a sus intereses individuales.",
+        "content-cookies-li-3": "Acelerar sus búsquedas.",
+        "content-cookies-li-4": "Reconocerlo cuando vuelve al sitio web.",
+        "content-cookies-3": "Usted puede negarse a aceptar cookies activando la configuración en su navegador que le permite rechazar la instalación de cookies. Sin embargo, si selecciona esta configuración es posible que no pueda acceder a ciertas partes de nuestro sitio. A menos que usted haya configurado su navegador para que rechace las cookies, nuestro sistema emitirá cookies cuando te conectes a nuestro sitio.",
+        "content-personal-data-1": "Los datos que obtenemos de usted pueden ser transferidos y almacenados en un destino fuera del Espacio Económico Europeo ('EEE'). También pueden ser procesados por personal fuera del EEE que trabajan para nosotros o para uno de nuestros proveedores. Este personal prepara, entre otras cosas, en cumplimiento de su orden, el procesamiento de los datos de pago y la prestación de servicios de apoyo. Al enviar sus datos personales, usted acepta esta transferencia, almacenamiento o procesamiento. Tomaremos todas las medidas razonablemente necesarias para asegurar que sus datos son tratados de forma segura y de acuerdo con esta política de privacidad.",
+        "content-personal-data-2": "Toda la información que usted nos proporciona se almacena en nuestros servidores seguros. Será cifrada cualquier transacción de pago. Usted (o donde usted ha elegido) ha dado una contraseña que le permite acceder a ciertas partes de nuestro sitio web. Usted es el responsable de mantener la confidencialidad de esta contraseña. Le pedimos que no comparta la contraseña con nadie.",
+        "content-personal-data-3": "Desafortunadamente, la transmisión de información a través de Internet no es completamente segura. Aunque haremos todo lo posible para proteger sus datos personales, no podemos garantizar la seguridad de sus datos transmitidos a nuestro sitio; cualquier transmisión es a su propio riesgo. Una vez que hayamos recibido su información, utilizaremos procedimientos estrictos y características de seguridad para tratar de evitar el acceso no autorizado.",
+        "content-personal-data-use-1": "Utilizamos la información sobre usted de las siguientes maneras:",
+        "content-personal-data-use-li-1": "Para asegurar que el contenido de nuestro sitio web se presenta de la manera más efectiva para usted y para su equipo.",
+        "content-personal-data-use-li-2": "Para proporcionarle información, productos o servicios que nos solicite o que nosotros consideremos interesante para usted, en la que usted ha dado su consentimiento para ser contactado para tales fines.",
+        "content-personal-data-use-li-3": "Para llevar a cabo nuestras obligaciones derivadas de cualquier contrato celebrado entre usted y nosotros.",
+        "content-personal-data-use-li-4": "Para permitirle participar en funciones interactivas de nuestro servicio, cuando usted elija hacerlo.",
+        "content-personal-data-use-li-5": "Para notificarle acerca de cambios en nuestro servicio.",
+        "content-personal-data-use-2": "También podemos utilizar sus datos para ofrecerle información sobre productos y servicios que puedan ser de interés para usted.",
+        "content-personal-data-use-3": "Si no desea que utilicemos sus datos de esta forma, por favor marque la casilla correspondiente situada en el formulario en el que recogemos los datos solicitados.",
+        "content-spread-information": "Podemos revelar su información personal a terceros:",
+        "content-spread-information-li-1": "Nunca venderemos sus datos a terceras empresas para buscar un beneficio personal.",
+        "content-spread-information-li-2": "Si nos vemos en la obligación de revelar o compartir sus datos personales con el fin de cumplir con cualquier obligación legal, nuestros clientes u otros. Esto incluye el intercambio de información con otras compañías y organizaciones a los efectos de protección contra el fraude y la reducción del riesgo de crédito.",
+        "content-rights": "Nuestro sitio puede de vez en cuando, contener enlaces hacia y desde los sitios web de nuestras redes de socios, anunciantes y afiliados. Si usted sigue un enlace a cualquiera de estos sitios web, tenga en cuenta que estos sitios web tienen sus propias políticas de privacidad y que no aceptamos ninguna responsabilidad u obligación por estas políticas. Por favor revise estas políticas antes de enviar cualquier información personal a estos sitios web.",
+        "content-data-access": "La Ley le da derecho a acceder a la información que nosotros guardamos sobre usted. Su derecho de acceso puede ejercerse con garantías y de conformidad con la ley. Cualquier solicitud de acceso puede estar sujeta a un cargo de 10 € para cubrir nuestros costos en proporcionarle los detalles de la información que tenemos sobre usted.",
+        "content-privacy-changes": "Todos los cambios que podemos hacer a nuestra política de privacidad en el futuro se publicarán en esta página y, en su caso, previa notificación a usted por correo electrónico. Sin embargo, le aconsejamos que revise esta página con regularidad para mantenerse al día con los cambios necesarios."
+    },
+    "about-component": {
+        "title": "Sobre nosotros",
+        "introduction": "Sobre nosostros? Mucho que decir, poco a comentar"
+    },
+    "cookie-consent-component": {
+        "disclaimer": "Estamos forzados a molestarte para decirte que este sitio web utiliza cookies",
+        "action-accept": "Aceptar"
+    },
+    "membership-component": {
+        "title-welcome": "Bienvenido",
+        "member-item": "Miembro",
+        "panel-item": "Panel",
+        "browse-item": "Navega"
+    },
+    "member-component": {
+        "username": "Usuario",
+        "email": "Email",
+        "cratedAt": "Creado en",
+        "failedAttempts": "Intentos fallidos de acceso"
+    },
+    "panel-component": {
+        "title-change-pwd": "Cambiar contraseña",
+        "title-process-relationships": "Procesar relaciones"
+    },
+    "change-password-component": {
+        "current-pwd": "Contraseña actual",
+        "new-pwd": "Nueva contraseña",
+        "confirm-pwd": "Confirma la contraseña",
+        "action-change": "Cambiar",
+        "failure-reason-one": "Las contraseñas no coinciden",
+        "failure-reason-two": "La contraseña actual es incorrecta",
+        "success-reason": "Tu contraseña ha sido cambiada correctamente"
+    },
+    "relationship-executor-component": {
+        "success-reason": "El proceso ha sido ejecutado",
+        "action": "Ejecutar"
+    },
+    "suggestions-component": {
+        "loading": "Cargando noticias ..."
+    }
+}

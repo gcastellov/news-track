@@ -1,0 +1,90 @@
+<div class="row form-group">
+  <div class="col-md-8">
+      <input class="form-control" id="url" type="text" [(ngModel)]="url" (keyup.enter)="onFind()"/>
+  </div>   
+  <div class="col-md-4">
+      <button type="submit" class="btn btn-secondary" (click)="onFind()">{{ 'browsing-component.action-find' | translate }}</button> 
+      <button type="submit" class="btn btn-secondary" [disabled]="!isSendEnabled()" (click)="onSetRelationship()" *ngIf="draft.draftRequest && draft.draftRequest.url">{{ 'browsing-component.action-relationship' | translate }}</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!isSendEnabled()" (click)="onSend()" *ngIf="draft.draftRequest && draft.draftRequest.url">{{ 'browsing-component.action-save' | translate }}</button>
+  </div>
+</div>
+
+<div class="row" *ngIf="isForbidden">
+  <div class="col-sm-12">
+    <div class="alert alert-danger" role="alert">
+      <span>{{ 'browsing-component.forbidden-url' | translate }}</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="draft && draft.browseResult && draft.draftRequest && draft.draftRequest.url">
+
+  <div class="row">
+    <div class="col-md-8">
+      <input 
+        id="typeahead-basic" 
+        type="text" 
+        class="form-control"      
+        [(ngModel)]="model"       
+        [ngbTypeahead]="getTags"
+        [resultTemplate]="formatter" 
+        (selectItem)="onSearchItemSelected($event)"
+        (keyup.enter)="addNewTag()"
+        />
+    </div>
+    <div class="col-md-4">
+      <ul class="list-inline" *ngIf="draft.draftRequest.tags">
+        <li *ngFor="let tag of draft.draftRequest.tags" role="button">
+          <span class="label label-default" (click)="removeTag(tag)">{{tag}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+        <ngb-panel *ngIf="draft.browseResult.pictures">
+          <ng-template ngbPanelTitle>
+            <span class="h2">{{ 'browsing-component.title-images' | translate }}</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <ul class="list-inline">  
+              <li class='list-inline-item' *ngFor='let url of draft.browseResult.pictures; let i = index'>
+                <app-browsing-picture [element]='url' [index]="i" [model]="draft.draftRequest"></app-browsing-picture>  
+              </li>
+            </ul>
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel *ngIf="draft.browseResult.titles">
+          <ng-template ngbPanelTitle>
+            <span class="h2">{{ 'browsing-component.title-titles' | translate }}</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+              <ul class="list-unstyled">
+                <li *ngFor='let title of draft.browseResult.titles; let i = index'>
+                  <app-browsing-title [element]='title' [index]="i" [model]="draft.draftRequest"></app-browsing-title>
+                </li>        
+              </ul>    
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel *ngIf="draft.browseResult.paragraphs">
+          <ng-template ngbPanelTitle>
+            <span class="h2">{{ 'browsing-component.title-paragraphs' | translate }}</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <ul class="list-unstyled">
+              <li *ngFor='let paragraph of draft.browseResult.paragraphs; let i = index'>
+                <app-browsing-paragraph [element]='paragraph' [model]="draft.draftRequest"></app-browsing-paragraph>
+              </li>
+            </ul>          
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+  </div>  
+</div>
+
+<ng-template #formatter let-r="result" let-t="term">  
+  <span>{{r}}</span>
+</ng-template>

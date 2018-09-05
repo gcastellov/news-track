@@ -1,0 +1,6 @@
+<div class="cookie-consent" *ngIf="!isAccepted">
+  <div class="cookie-consent-wrapper">
+      <span>{{ 'cookie-consent-component.disclaimer' | translate }}</span>
+      <a (click)="accept()" class="btn btn-default">{{ 'cookie-consent-component.action-accept' | translate }}</a>
+  </div>
+</div>

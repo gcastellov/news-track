@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-8 col-sm-12">
+    <div>
+
+    <input 
+      id="typeahead-http" 
+      type="text" 
+      class="form-control"      
+      [(ngModel)]="model"       
+      [ngbTypeahead]="search" 
+      [resultTemplate]="formatter" 
+      (selectItem)="onSearchItemSelected($event)"
+      />
+
+    </div>
+    <div *ngIf="drafts">
+      <div class="row drafts-container" *ngFor="let draft of drafts">
+        <div class="col-sm-12">
+            <app-draft [draft]="draft" [isExtended]="false"></app-draft>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <div class="row">
+      <div class="col-sm-12">
+        <app-latest></app-latest>
+      </div>      
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <app-tags (selectionChange)="onTagSelected($event)"></app-tags>
+      </div>      
+    </div>    
+    <div class="row">
+      <div class="col-sm-12">
+        <app-mostviewed></app-mostviewed>
+      </div>      
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+          <app-mostfucking></app-mostfucking>
+        </div>      
+      </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <app-websites (selectionChange)="onWebsiteSelected($event)"></app-websites>
+      </div>      
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="drafts">
+  <div class="col-sm-12">
+    <app-paginator *ngIf="numberOfPages > 1" [page]="page" [numberOfPages]="numberOfPages" (pageChange)="onPageChange($event)"></app-paginator>
+  </div>
+</div>
+
+
+<ng-template #formatter let-r="result" let-t="term">
+  {{r.content}}
+</ng-template>

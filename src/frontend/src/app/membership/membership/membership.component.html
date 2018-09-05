@@ -1,0 +1,20 @@
+<p>{{ 'membership-component.title-welcome' | translate }} <span>{{username}}</span></p>
+
+<div class="row">
+  <div class="col-md-2">
+    <ul class="list-group">
+      <li class="list-group-item" [ngClass]="{ 'active': isRouteActive('member') }">
+        <a [routerLink]="['./member']">{{ 'membership-component.member-item' | translate }}</a>
+      </li>
+      <li class="list-group-item" [ngClass]="{ 'active': isRouteActive('panel') }">
+        <a [routerLink]="['./panel']">{{ 'membership-component.panel-item' | translate }}</a>
+      </li>
+      <li class="list-group-item" [ngClass]="{ 'active': isRouteActive('browsing') }">
+        <a [routerLink]="['/browsing']">{{ 'membership-component.browse-item' | translate }}</a>
+      </li>
+    </ul>    
+  </div>
+  <div class="col-md-10">
+    <router-outlet></router-outlet>
+  </div>
+</div>

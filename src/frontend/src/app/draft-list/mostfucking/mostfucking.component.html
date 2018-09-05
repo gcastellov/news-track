@@ -1,0 +1,15 @@
+<div class="panel panel-default" *ngIf="mostFucking && mostFucking.length">      
+    <div class="panel-heading">
+      <h3 class="panel-title">        
+        <a [routerLink]="['/most-embarrasing']">{{ 'mostfucking-component.title-mostfucked' | translate }}</a>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <ul class="list-inline">
+        <li class="list-inline-item mostFucking-item" *ngFor="let draft of mostFucking">
+          <span class="badge badge-secondary">{{draft.fucks}}</span>
+          <a role="button" (click)="go(draft.id)">{{draft.title}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>

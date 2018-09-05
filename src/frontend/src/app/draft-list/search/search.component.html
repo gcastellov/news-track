@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-8">
+          <input class="form-control" id="pattern" type="text" [(ngModel)]="pattern" (keyup.enter)="onSearch()"/>
+      </div>
+      <div class="col-sm-2">
+        <button type="submit" class="btn btn-primary" (click)="onSearch()">{{ 'search-component.action-search' | translate }}</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <ul class="list-inline" *ngIf="tags">
+            <li *ngFor="let tag of tags" role="button">
+              <span class="label label-default" (click)="removeTag(tag)">{{tag}}</span>
+            </li>
+          </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="row" *ngFor="let draft of drafts">
+          <div class="col-sm-12">
+              <app-draft [draft]="draft" [isExtended]="false"></app-draft>
+          </div>      
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <app-tags (selectionChange)="onTagSelected($event)"></app-tags>
+        <app-websites (selectionChange)="onWebsiteSelected($event)"></app-websites>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+      <app-paginator *ngIf="numberOfPages > 1" [page]="page" [numberOfPages]="numberOfPages" (pageChange)="onPageChange($event)"></app-paginator>
+  </div>
+</div>

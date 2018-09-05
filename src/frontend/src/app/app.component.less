@@ -1,0 +1,27 @@
+@import '../less/variables.less';
+
+.footer {
+    border-top: 1px solid;
+    padding: 20px;
+}
+
+.footer-social, .footer-links, .footer-languages, .footer-brand, {
+    padding-top: 10px;
+    padding-bottom: 0;
+}
+
+.footer-languages {
+    a:hover {
+        cursor: pointer;
+        color: @navbar-default-link-hover-color;
+    }
+
+    a {
+        color: @navbar-default-link-color;
+    }
+}
+
+.navbar-default .navbar-nav > li > a.member {
+    color: @gray-dark;
+    font-weight: 200;
+}

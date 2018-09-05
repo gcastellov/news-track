@@ -1,0 +1,47 @@
+<div class="draft" *ngIf="!isExtended; else extended">
+  <div class="row">
+    <a class="h3" role="button" (click)="go(draft.id)">{{draft.title}}</a>
+  </div>  
+  <div class="row draft-body">
+    <div class="img-container">
+      <div class="draft-picture-container">
+        <img class="draft-picture" src="{{draft.picture}}" />
+      </div>    
+      <div class="draft-fuck">
+        <div class="draft-fuck-action">
+          <h3 *ngIf="isFucked()">
+              <span class="label label-default">{{ expression }}</span>
+          </h3>
+          <button class="btn btn-lg btn-default" *ngIf="!isFucked()" (click)="fuck()">{{ 'draft-component.action-fuck' | translate }}</button>
+        </div>
+      </div>
+    </div>
+    <p class="draft-paragraph">{{draft.paragraphs[0]}}</p>
+  </div>
+  <app-draft-footer [draft]="draft"></app-draft-footer> 
+</div>
+
+<ng-template #extended>
+  <div class="draft">
+    <div class="row">
+        <a class="h3" href="{{draft.uri}}" target="_blank">{{draft.title}}</a>
+      </div>
+      <div class="row draft-body">
+          <div class="img-container">
+              <div class="draft-picture-container">
+                <img class="draft-picture" src="{{draft.picture}}" />
+              </div>    
+              <div class="draft-fuck">
+                <div class="draft-fuck-action">
+                  <h3 *ngIf="isFucked()">
+                      <span class="label label-default">{{ expression }}</span>
+                  </h3>
+                  <button class="btn btn-lg btn-default" *ngIf="!isFucked()" (click)="fuck()">{{ 'draft-component.action-fuck' | translate }}</button>
+                </div>
+              </div>
+          </div>    
+        <p class="draft-paragraph" *ngFor="let paragraph of draft.paragraphs">{{paragraph}}</p>
+      </div>
+      <app-draft-footer [draft]="draft"></app-draft-footer>
+  </div>
+</ng-template>

@@ -1,0 +1,195 @@
+{
+    "app-component": {
+        "title-latest-news": "Latest",
+        "title-most-viewed-news": "Most viewed",
+        "title-most-fucked-news": "Most embarrassing",
+        "title-search": "Search",
+        "title-browse": "Browse",
+        "title-sing-in": "Sign in",
+        "title-about-us": "About us",
+        "title-terms-of-use": "Terms of use",
+        "title-privacy": "Privacy"
+    },
+    "authentication-component": {
+        "email-address": "Email address",
+        "password": "Password",
+        "failure-reason-one": "Something went wrong",
+        "failure-reason-two": "Invalid user or password",
+        "failure-reason-tree": "The account has been blocked for security reasons",
+        "sing-in": "Sign in"
+    },
+    "browsing-component": {
+        "title-images": "Pictures",
+        "title-titles": "Titles",
+        "title-paragraphs": "Paragraphs",
+        "forbidden-url": "Take into account that this URL belongs to a domain that has been included into the black list of not allowed domains",
+        "action-find": "Find",
+        "action-relationship": "Set relationship",
+        "action-save": "Save"
+    },
+    "browsing-relationship-component": {
+        "title-related": "Related",
+        "action-back": "Back",
+        "action-save": "Save"
+    },
+    "browsing-relationship-draft-component": {
+        "check-it": "Check it",
+        "views": "Views"
+    },
+    "draft-component": {
+        "action-fuck": "Oh là là"
+    },
+    "draft-entry-component": {
+        "title-related": "Related",
+        "title-suggested-tags": "Suggested tags",
+        "title-suggested-news": "Suggested news"
+    },
+    "draft-footer-component": {
+        "fucks": "Embarrassments:",
+        "source": "View source",
+        "related": "Related:",
+        "views": "Views:",
+        "created": "Created",
+        "by": "by"
+    },
+    "latest-component": {
+        "title-latest": "Latest"
+    },
+    "mostfucking-component": {
+        "title-mostfucked": "Most embarrassing"
+    },
+    "mostviewed-component": {
+        "title-mostviewed": "Most viewed"
+    },
+    "search-component": {
+        "action-search": "Search"
+    },
+    "tags-component": {
+        "title-tags": "Tags"
+    },
+    "websites-component": {
+        "title-websites": "Websites"
+    },
+    "paginator-component": {
+        "action-next": "Next",
+        "action-previous": "Previous"
+    },
+    "terms-component": {
+        "title": "Terms and conditions",
+        "title-introduction": "Introduction",
+        "title-intellectual-rights": "Intellectual Property Rights",
+        "title-restrictions": "Restrictions",
+        "title-content": "Your Content",
+        "title-warranties": "Warranties",
+        "title-liability": "Limitation of liability",
+        "title-indemnification": "Indemnification",
+        "title-severability": "Severability",
+        "title-variation-terms": "Variation of Terms",
+        "title-assignment": "Assignment",
+        "title-agreement": "Entire Agreement",
+        "title-jurisdiction": "Governing Law & Jurisdiction",
+        "content-introduction": "These Website Standard Terms And Conditions (these “Terms” or these “Website Standard Terms And Conditions”) contained herein on this webpage, shall govern your use of this website, including all pages within this website (collectively referred to herein below as this “Website”). These Terms apply in full force and effect to your use of this Website and by using this Website, you expressly accept all terms and conditions contained herein in full. You must not use this Website, if you have any objection to any of these Website Standard Terms And Conditions. This Website is not for use by any minors (defined as those who are not at least 18 years of age), and you must not use this Website if you a minor.",
+        "content-intellectual-rights": "Other than content you own, which you may have opted to include on this Website, under these Terms, {{company}} and/or its licensors own all rights to the intellectual property and material contained in this Website, and all such rights are reserved.  You are granted a limited license only, subject to the restrictions provided in these Terms, for purposes of viewing the material contained on this Website.",
+        "content-restrictions-1": "You are expressly and emphatically restricted from all of the following:",
+        "content-restrictions-li-1": "selling, sublicensing and/or otherwise commercializing any Website material",
+        "content-restrictions-li-2": "publicly performing and/or showing any Website material",
+        "content-restrictions-li-3": "using this Website in any way that is, or may be, damaging to this Website",
+        "content-restrictions-li-4": "using this Website in any way that impacts user access to this Website",
+        "content-restrictions-li-5": "using this Website contrary to applicable laws and regulations, or in a way that causes, or may cause, harm to the Website, or to any person or business entity",
+        "content-restrictions-li-6": "engaging in any data mining, data harvesting, data extracting or any other similar activity in relation to this Website, or while using this Website",
+        "content-restrictions-li-7": "using this Website to engage in any advertising or marketing",
+        "content-restrictions-2": "Certain areas of this Website are restricted from access by you and {{company}} may further restrict access by you to any areas of this Website, at any time, in its sole and absolute discretion.  Any user ID and password you may have for this Website are confidential and you must maintain confidentiality of such information.",
+        "content-content-1": "In these Website Standard Terms And Conditions, “Your Content” shall mean any audio, video, text, images or other material you choose to display on this Website. With respect to Your Content, by displaying it, you grant {{company}} a non-exclusive, worldwide, irrevocable, royalty-free, sublicensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media.",
+        "content-content-2": "Your Content must be your own and must not be infringing on any third party’s rights. {{company}} reserves the right to remove any of Your Content from this Website at any time, and for any reason, without notice.",
+        "content-warranties": "This Website is provided “as is,” with all faults, and {{company}} makes no express or implied representations or warranties, of any kind related to this Website or the materials contained on this Website. Additionally, nothing contained on this Website shall be construed as providing consult or advice to you.",
+        "content-liability": "In no event shall {{company}}, nor any of its officers, directors and employees, be liable to you for anything arising out of or in any way connected with your use of this Website, whether such liability is under contract, tort or otherwise, and {{company}}, including its officers, directors and employees shall not be liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.",
+        "content-indemnification": "You hereby indemnify to the fullest extent {{company}} from and against any and all liabilities, costs, demands, causes of action, damages and expenses (including reasonable attorney’s fees) arising out of or in any way related to your breach of any of the provisions of these Terms.",
+        "content-severability": "If any provision of these Terms is found to be unenforceable or invalid under any applicable law, such unenforceability or invalidity shall not render these Terms unenforceable or invalid as a whole, and such provisions shall be deleted without affecting the remaining provisions herein.",
+        "content-variation-terms": "{{company}} is permitted to revise these Terms at any time as it sees fit, and by using this Website you are expected to review such Terms on a regular basis to ensure you understand all terms and conditions governing use of this Website.",
+        "content-assignment": "{{company}} shall be permitted to assign, transfer, and subcontract its rights and/or obligations under these Terms without any notification or consent required. However, .you shall not be permitted to assign, transfer, or subcontract any of your rights and/or obligations under these Terms.",
+        "content-agreement": "These Terms, including any legal notices and disclaimers contained on this Website, constitute the entire agreement between {{company}} and you in relation to your use of this Website, and supersede all prior agreements and understandings with respect to the same.",
+        "content-jurisdiction": "These Terms will be governed by and construed in accordance with the laws of {{country}}, and you submit to the non-exclusive jurisdiction of the state and federal courts located in {{country}} for the resolution of any disputes."
+    },
+    "privacy-component": {
+        "title": "Privacy policy",
+        "title-information": "Information we can get from you",
+        "title-cookies": "IP address and cookies",
+        "title-personal-data": "Where you store your personal information",
+        "title-personal-data-use": "Use made of the information",
+        "title-spread-information": "Disclosure of your information",
+        "title-rights": "Your rights",
+        "title-data-access": "Access to information",
+        "title-privacy-changes": "Changes in our privacy policy",
+        "content-intro-1": "{{company}} is committed to protecting and respecting your privacy.",
+        "content-intro-2": "This policy (together with Terms of Use and any other document referenced in it) establishes the basis on which the personal data we obtain from you, or that you provide to us, will be processed by us. Please read the following carefully to understand our views and practices regarding your personal information. This policy states that we maintain certain basic information when you visit our website, recognize the importance of keeping information secure and let you know what we are going to do with it.",
+        "content-intro-3": "This policy only applies to our website. If you leave our site through a link or otherwise, you will be subject to that provider's policy. We have no control over the policy or terms of use of other portals, so you should review your policy before continuing to access the site.",
+        "content-information-li-1": "The information you provide when completing forms on our site. This includes the information provided at the time of registering to use our site, subscribing to our service or requesting additional services. We may also ask for information when a problem with our site is reported.",
+        "content-information-li-2": "If you contact us, we can keep a record of that correspondence.",
+        "content-information-li-3": "We may also ask you to complete surveys that we use for research purposes, although you do not have to answer them.",
+        "content-information-li-4": "The details of your visits to our site, including, but not limited to, traffic data, location data, logs, operating system, browser usage and other communication data and resources accessed.",
+        "content-cookies-1": "We can collect information about your computer, such as your IP address, operating system and browser type, for system administration. It is statistical data about the actions and browsing patterns of our users. They do not identify any person and will not collect personal information in any way.",
+        "content-cookies-2": "We can obtain information about your general Internet use through a cookie file that is stored on your computer's hard drive. The cookies contain information that is transferred to the hard disk of your computer. They help us improve our website and allow us to offer a better and more personalized service. Allows us:",
+        "content-cookies-li-1": "Estimate the size of our audience and usage patterns.",
+        "content-cookies-li-2": "Store information about your preferences, and thus be able to customize our website according to your individual interests.",
+        "content-cookies-li-3": "Speed up your searches.",
+        "content-cookies-li-4": "Recognize when you return to the website.",
+        "content-cookies-3": "You can refuse to accept cookies by activating the settings in your browser that allows you to refuse the installation of cookies. However, if you select this setting, you may not be able to access certain parts of our site. Unless you have set your browser to reject cookies, our system will emit cookies when you connect to our site.",
+        "content-personal-data-1": "The data we collect from you can be transferred and stored at a destination outside the European Economic Area ('EEA'). They can also be processed by personnel outside the EEA who work for us or for one of our suppliers. This staff prepares, among other things, in compliance with your order, the processing of payment data and the provision of support services. By submitting your personal data, you accept this transfer, storage or processing. We will take all reasonably necessary measures to ensure that your data is treated securely and in accordance with this privacy policy.",
+        "content-personal-data-2": "All the information you provide us is stored on our secure servers. Any payment transaction will be encrypted. You (or where you have chosen) have given a password that allows you to access certain parts of our website. You are responsible for maintaining the confidentiality of this password. We ask you not to share the password with anyone.",
+        "content-personal-data-3": "Unfortunately, the transmission of information through the Internet is not completely secure. Although we will do everything possible to protect your personal data, we can not guarantee the security of your data transmitted to our site; any transmission is at your own risk. Once we have received your information, we will use strict procedures and security features to try to prevent unauthorized access.",
+        "content-personal-data-use-1": "We use the information about you in the following ways:",
+        "content-personal-data-use-li-1": "To ensure that the content of our website is presented in the most effective manner for you and your team.",
+        "content-personal-data-use-li-2": "To provide you with information, products or services that you request or that we consider interesting for you, in which you have given your consent to be contacted for such purposes.",
+        "content-personal-data-use-li-3": "To carry out our obligations derived from any contract entered into between you and us.",
+        "content-personal-data-use-li-4": "To allow you to participate in interactive features of our service, when you choose to do so.",
+        "content-personal-data-use-li-5": "To notify you about changes in our service.",
+        "content-personal-data-use-2": "We may also use your information to provide you with information about products and services that may be of interest to you.",
+        "content-personal-data-use-3": "If you do not want us to use your information in this way, please check the corresponding box located on the form where we collect the information requested.",
+        "content-spread-information": "We may disclose your personal information to third parties:",
+        "content-spread-information-li-1": "We will never sell your data to third parties to seek a personal benefit.",
+        "content-spread-information-li-2": "If we see ourselves in the obligation to reveal or share your personal data in order to comply with any legal obligation, our clients or others. This includes the exchange of information with other companies and organizations for the purposes of protection against fraud and reduction of credit risk.",
+        "content-rights": "Our site may from time to time contain links to and from the websites of our partner networks, advertisers and affiliates. If you follow a link to any of these websites, please note that these websites have their own privacy policies and that we accept no responsibility or liability for these policies. Please review these policies before sending any personal information to these websites.",
+        "content-data-access": "The Law gives you the right to access the information we keep about you. Your right of access can be exercised with guarantees and in accordance with the law. Any access request may be subject to a charge of € 10 to cover our costs in providing you with the details of the information we have about you.",
+        "content-privacy-changes": "All changes that we can make to our privacy policy in the future will be published on this page and, where appropriate, prior notification to you by email. However, we advise you to check this page regularly to keep up with the necessary changes."
+    },
+    "about-component": {
+        "title": "About us",
+        "introduction": "What about us? A lot to say, less to comment"
+    },
+    "cookie-consent-component": {
+        "disclaimer": "We are forced to bother you telling you that this website uses cookies",
+        "action-accept": "Accept"
+    },
+    "membership-component": {
+        "title-welcome": "Welcome",
+        "member-item": "Member",
+        "panel-item": "Panel",
+        "browse-item": "Browsing"
+    },
+    "member-component": {
+        "username": "Username",
+        "email": "Email",
+        "cratedAt": "Created at",
+        "failedAttempts": "Sign in failed attempts"
+    },
+    "panel-component": {
+        "title-change-pwd": "Change password",
+        "title-process-relationships": "Process relationships"
+    },
+    "change-password-component": {
+        "current-pwd": "Current password",
+        "new-pwd": "New password",
+        "confirm-pwd": "Confirm password",
+        "action-change": "Change",
+        "failure-reason-one": "Passwords don't match",
+        "failure-reason-two": "Invalid current password",
+        "success-reason": "Your password has been changed successfuly"
+    },
+    "relationship-executor-component": {
+        "success-reason": "The process has been executed",
+        "action": "Execute"
+    },
+    "suggestions-component": {
+        "loading": "Loading news ..."
+    }
+}

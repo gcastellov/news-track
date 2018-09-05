@@ -1,0 +1,14 @@
+<div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+  <div class="row" *ngFor="let draft of drafts">
+    <div class="col-sm-12">
+        <app-draft [draft]="draft" [isExtended]="false"></app-draft>
+    </div>      
+  </div>
+  <div class="row" *ngIf="count !== drafts.length">
+    <div class="col-sm-12">
+      <div class="alert alert-info">
+          <p>{{ 'suggestions-component.loading' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="relationship-draft">
+  <a class="h3" href="{{draft.uri}}" target="_blank">{{draft.title}}</a>
+  <div class="relationship-draft-body">
+    <img class="relationship-draft-picture" src="{{draft.picture}}" />
+    <p class="relationship-draft-paragraph" *ngFor="let paragraph of draft.paragraphs">{{paragraph}}</p>
+  </div>
+  <div class="relationship-draft-footer">
+    <label for="{{draft.id}}">{{ 'browsing-relationship-draft-component.check-it' | translate }}</label>
+    <input id="{{draft.id}}" class="pull-left" type="checkbox" [(ngModel)]="isSelected" [value]="draft.id" (change)="onSelectionChange()"/>
+    <ul class="list-inline pull-right">
+      <li *ngIf="draft.tags">
+        <ul class="list-inline">
+          <li *ngFor="let tag of draft.tags">
+            <span class="label label-default">{{tag}}</span>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span>{{ 'browsing-relationship-draft-component.views' | translate }}: <b>{{draft.views}}</b> </span>
+      </li>
+      <li>
+        <span>{{ draft.createdAt | date: 'dd/MM/yyyy' }}</span>
+      </li>
+    </ul>                    
+  </div>
+</div>
