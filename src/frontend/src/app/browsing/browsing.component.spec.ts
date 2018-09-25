@@ -20,14 +20,17 @@ import { BrowsingRelationshipDraftComponent } from './browsing-relationship-draf
 import { SharedModule } from '../shared/shared.module';
 import { TestBedHelper } from '../testing/testbed.helper';
 import { DataBuilder } from '../testing/data.builder';
+import { IBrowseResult } from '../services/Dtos/IBrowseResult';
+import { WebsiteDto } from '../services/Dtos/WebsiteDto';
 
 describe('BrowsingComponent', () => {
   let component: BrowsingComponent;
   let fixture: ComponentFixture<BrowsingComponent>;
 
-  const tags = DataBuilder.getTags();
   const apiServiceMock = <BackendApiService>{
-    getTags: () => new Observable<string[]>(observer => observer.next(tags))
+    getTags: () => new Observable<string[]>(observer => observer.next(DataBuilder.getTags())),
+    checkWebsite: (url) => new Observable<WebsiteDto>(observer => observer.complete),
+    browse: (url) => new Observable<IBrowseResult>(observer => observer.complete)
   };
 
   beforeEach(async(() => {
@@ -66,6 +69,7 @@ describe('BrowsingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BrowsingComponent);
     component = fixture.componentInstance;
+    component.draft.draftRequest.tags = DataBuilder.getTags();
     TestBedHelper.setLanguage();
     fixture.detectChanges();
   });
@@ -73,4 +77,48 @@ describe('BrowsingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should add the desired tag if it is not already in the list', () => {
+    const tag = 'my-tag';
+    component.addTag(tag);
+    expect(component.draft.draftRequest.tags.indexOf(tag)).toBeGreaterThan(-1);
+  });
+
+  it('should avoid adding the tag if it is a duplicate', () => {
+    const tag = component.draft.draftRequest.tags[1];
+    component.addTag(tag);
+    expect(component.draft.draftRequest.tags.indexOf(tag)).toBeGreaterThan(-1);
+    expect(component.draft.draftRequest.tags.length).toBe(7);
+  });
+
+  it('should remove a tag if it is present in the list', () => {
+    const tag = component.draft.draftRequest.tags[1];
+    component.removeTag(tag);
+    expect(component.draft.draftRequest.tags.indexOf(tag)).toBe(-1);
+    expect(component.draft.draftRequest.tags.length).toBe(6);
+  });
+
+  it('should avoid removing a tag that does not exist', () => {
+    const tag = 'some-other-tag';
+    component.removeTag(tag);
+    expect(component.draft.draftRequest.tags.length).toBe(7);
+  });
+
+  it('should verify the requested URL and get the draft result', () => {
+    component.url = 'http://www.some.domain.com/resource';
+    const checkWebsiteMock = spyOn(apiServiceMock, 'checkWebsite').and.callThrough();
+    const browseMock = spyOn(apiServiceMock, 'browse').and.returnValue(
+      new Observable<IBrowseResult>(observer => observer.next({
+        uri: component.url,
+        titles: ['Title One', 'Title Two'],
+        paragraphs: ['Paragraph One', 'Paragraph Two'],
+        pictures: [ 'http://www.some.domain.com/pic.png']
+      })));
+
+    component.onFind();
+
+    expect(checkWebsiteMock).toHaveBeenCalledWith(component.url);
+    expect(browseMock).toHaveBeenCalledWith(component.url);
+  });
+
 });

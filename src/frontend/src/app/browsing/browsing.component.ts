@@ -39,8 +39,7 @@ export class BrowsingComponent implements OnInit {
       this.isForbidden = !r.isSuccessful;
     });
 
-    const result = this._apiService.browse(this.draft.url);
-    result.subscribe(data => {
+    this._apiService.browse(this.draft.url).subscribe(data => {
       this.draft.browseResult.uri = data.uri;
       this.draft.browseResult.titles = data.titles.map(t => new BrowsingElement(false, t));
       this.draft.browseResult.paragraphs = data.paragraphs.map(p => new BrowsingElement(false, p));
