@@ -24,6 +24,7 @@ import { StorageService } from '../../services/storage.service';
 import { AppSettingsService } from '../../services/app-settings.service';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
 
 describe('BrowsingRelationshipComponent', () => {
   let component: BrowsingRelationshipComponent;
@@ -39,6 +40,8 @@ describe('BrowsingRelationshipComponent', () => {
       return new Observable<DraftListDto>(observer => observer.next(draftList));
     }
   };
+
+  const selectedDraft = new DraftRelationshipDto('my-id', 'my-title', 'http://some.domain.com/resource');
 
   const settingsServiceMock = <AppSettingsService>{
     getExpressions: () => new Observable<string[]>(observer => observer.next(['expression one', 'expression two']))
@@ -83,11 +86,23 @@ describe('BrowsingRelationshipComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BrowsingRelationshipComponent);
     component = fixture.componentInstance;
+    component.draft = new BrowsingDraft(apiServiceMock);
     TestBedHelper.setLanguage();
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should add a related draft when is selected', () => {
+    component.onSelectionChange(selectedDraft);
+    expect(component.draft.relationship.indexOf(selectedDraft)).toBeGreaterThan(-1);
+  });
+
+  it('should remove a related draft when is unselected', () => {
+    component.draft.relationship.push(selectedDraft);
+    component.onSelectionChange(selectedDraft);
+    expect(component.draft.relationship.indexOf(selectedDraft)).toBe(-1);
   });
 });
