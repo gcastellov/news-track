@@ -15,7 +15,8 @@ describe('CookieConsentComponent', () => {
   let fixture: ComponentFixture<CookieConsentComponent>;
 
   const storageServiceMock = <StorageService>{
-    getItem: (key) => 'exists'
+    getItem: (key) => '',
+    setItem: (key, value) => {}
   };
 
   beforeEach(async(() => {
@@ -49,5 +50,16 @@ describe('CookieConsentComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should read storage to check for preferences', () => {
+     expect(component.isAccepted).toBeFalsy();
+  });
+
+  it('should save preferences to the storage when giving consent', () => {
+    const storageSaveMock = spyOn(storageServiceMock, 'setItem').and.callThrough();
+    component.accept();
+    expect(storageSaveMock).toHaveBeenCalled();
+    expect(component.isAccepted).toBeTruthy();
   });
 });
