@@ -93,4 +93,16 @@ describe('SearchComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should search with proper criteria on page changes', () => {
+    const newPage = 3;
+    component.website = 'http://some.domain.com';
+    component.page = 1;
+    component.take = 10;
+
+    const searchMock = spyOn(apiServiceMock, 'advancedSearch').and.callThrough();
+    component.onPageChange(newPage);
+    expect(searchMock).toHaveBeenCalledWith(component.website, component.pattern, component.tags, component.page, component.take);
+    expect(component.page).toBe(newPage);
+  });
 });
