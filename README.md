@@ -17,6 +17,8 @@ The project is made by using .NET Core API as backend and ElasticSearch as NoSQL
 #### Membership control panel
 Nowadays the membership is limited to admin purposes, meaning that only the admin can post news, change password, and dispatch the suggestion process. In a near feature full membership will be added for different kind of users.
 
+![Membership control panel](doc/membership_panel.png)
+
 To set your admin settings, update your backend appsettings.json file. Once the application wakes up it will create the user.
 
 ```
@@ -31,11 +33,17 @@ To set your admin settings, update your backend appsettings.json file. Once the 
 By using this feature the user is able to browse a given URL and choose an image, a title and some paragraphs that represent the news. At same time the user can relate this content to other content that is already on the system and tag it with the most representative words.
 It's important to tag and relate to other existing content properly because the suggestion process algorithm uses this information in order to accomplish more accurate suggestions.
 
+![Content browser](doc/browse.png)
+
 #### Search engine
 The user is able to search content by using relevant words and tags.
 
+![Search engine](doc/search.png)
+
 #### Last news
 This feature lists the last incoming news on the system.
+
+![News list](doc/list.png)
 
 #### Most popular news
 This feature lists the most viewed news on the system. Once a user get a certain news, the viewes counter gets increased.
