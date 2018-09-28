@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/gcastellov/news-track.svg?branch=master)](https://travis-ci.com/gcastellov/news-track)
+[![Build Status](https://travis-ci.com/gcastellov/news-track.svg?branch=master)](https://travis-ci.com/gcastellov/news-track) [![CircleCI](https://circleci.com/gh/gcastellov/news-track/tree/master.svg?style=svg)](https://circleci.com/gh/gcastellov/news-track/tree/master)
 
 # News Track
 News Track is a news tracking or news aggregator website where users can share the content they find on Internet and give to it certain visibility.
