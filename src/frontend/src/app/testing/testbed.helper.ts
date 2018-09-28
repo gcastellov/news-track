@@ -6,7 +6,7 @@ export class TestBedHelper {
     static setLanguage() {
         let http: HttpTestingController;
         let translate: TranslateService;
-        const TRANSLATIONS_EN = require('/assets/i18n/en.json');
+        const TRANSLATIONS_EN = require('../../assets/i18n/en.json');
 
         translate = TestBed.get(TranslateService);
         http = TestBed.get(HttpTestingController);

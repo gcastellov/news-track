@@ -1,35 +1,31 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/news-track/src/frontend
     docker:
-      - image: circleci/node:7.10
-    working_directory: ~/src/frontend
+      - image: circleci/node:8.11-browsers
+        environment:
+          CHROME_BIN: "/usr/bin/google-chrome"
     steps:
-            # Checkout the code from the branch into the working_directory
-            - checkout
-            # Log the current branch
-            - run:
-                name: Show current branch
-                command: echo ${CIRCLE_BRANCH}
-            # Restore local dependencies from cache
-            - restore_cache:
-                keys:
-                - v1-dependencies-{{ checksum "package.json" }}
-                - v1-dependencies-
-            # Install project dependencies
-            - run:
-                name: Install local dependencies
-                command: npm install
-            # Cache local dependencies if they don't exist
-            - save_cache:
-                key: v1-dependencies-{{ checksum "package.json" }}
-                paths:
-                    - node_modules
-            # Lint the source code
-            - run:
-                name: Linting
-                command: npm run lint
-            # Test the source code
-            - run:
-                name: Testing
-                command: npm run test
+      - checkout:
+          path: ~/news-track
+      - run:
+          name: Show current branch
+          command: echo ${CIRCLE_BRANCH}
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run:
+          name: Install local dependencies
+          command: npm install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Linting
+          command: npm run lint
+      - run:
+          name: Testing
+          command: npm run test-silent
