@@ -9,12 +9,15 @@ import { RelationshipExecutorComponent } from './relationship-executor.component
 import { httpLoaderFactory } from '../../app.module';
 import { BackendApiService } from '../../services/backend-api.service';
 import { TestBedHelper } from '../../testing/testbed.helper';
+import { Observable } from 'rxjs/Observable';
 
 describe('RelationshipExecutorComponent', () => {
   let component: RelationshipExecutorComponent;
   let fixture: ComponentFixture<RelationshipExecutorComponent>;
 
-  const apiServiceMock = <BackendApiService> {};
+  const apiServiceMock = <BackendApiService> {
+    processSuggestions: () => new Observable(observer => observer.complete)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -47,5 +50,15 @@ describe('RelationshipExecutorComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show proper message when it executes suggestions process', () => {
+    const processSuggestionsMock = spyOn(apiServiceMock, 'processSuggestions').and
+      .callFake(() => new Observable<boolean>(observer => observer.next(true)));
+
+      component.execute();
+
+      expect(processSuggestionsMock).toHaveBeenCalled();
+      expect(component.isExecuted).toBeTruthy();
   });
 });
