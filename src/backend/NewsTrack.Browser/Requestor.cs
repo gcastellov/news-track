@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NewsTrack.Browser
@@ -20,7 +21,8 @@ namespace NewsTrack.Browser
 
             if (response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.OK)
             {
-                return await response.Content.ReadAsStringAsync();
+                var payload = await response.Content.ReadAsByteArrayAsync();
+                return Encoding.UTF8.GetString(payload, 0, payload.Length - 1);
             }
 
             return null;
