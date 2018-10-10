@@ -96,3 +96,4 @@ Thumbs.db
 */dist/
 **/appsettings.Production.json
 **/environment.prod.ts
+**/*.log

@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace NewsTrack.WebApi
 {
@@ -7,14 +9,37 @@ namespace NewsTrack.WebApi
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .UseApplicationInsights()
-                .Build();
+            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            logger.Info("Initializing application...");
 
-            host.Run();
+            try
+            {
+                var host = new WebHostBuilder()
+                    .UseKestrel()
+                    .UseIISIntegration()
+                    .UseStartup<Startup>()
+                    .UseApplicationInsights()
+                    .ConfigureLogging(logging =>
+                    {
+                        logging.ClearProviders();
+                        logging.SetMinimumLevel(LogLevel.Trace);
+                    })
+                    .UseNLog()
+                    .Build();
+
+                logger.Info("Running application...");
+
+                host.Run();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "The application has crashed. Check this out.");
+                throw;
+            }
+            finally
+            {
+                NLog.LogManager.Shutdown();
+            }
         }
     }
 }
