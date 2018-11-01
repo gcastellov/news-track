@@ -10,3 +10,4 @@ script:
  - dotnet test ./src/backend/NewsTrack.Common.UnitTests/NewsTrack.Common.UnitTests.csproj
  - dotnet test ./src/backend/NewsTrack.Domain.UnitTests/NewsTrack.Domain.UnitTests.csproj
  - dotnet test ./src/backend/NewsTrack.Identity.UnitTests/NewsTrack.Identity.UnitTests.csproj
+ - dotnet test ./src/backend/NewsTrack.WebApi.UnitTests/NewsTrack.WebApi.UnitTests.csproj
