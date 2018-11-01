@@ -4,6 +4,7 @@ using System.Threading;
 using Microsoft.Extensions.Configuration;
 using NewsTrack.Data.Configuration;
 using NewsTrack.Domain.Services;
+using NewsTrack.Identity;
 using NewsTrack.Identity.Repositories;
 using NewsTrack.Identity.Results;
 using NewsTrack.Identity.Services;
@@ -64,7 +65,7 @@ namespace NewsTrack.WebApi.Components
 
             if (!_identityRepository.ExistsByUsername(username).Result)
             {
-                var result = _identityService.Save(username, email, password, password).Result;
+                var result = _identityService.Save(username, email, password, password, IdentityTypes.Admin).Result;
                 if (result == SaveIdentityResult.Ok)
                 {
                     Thread.Sleep(2000);

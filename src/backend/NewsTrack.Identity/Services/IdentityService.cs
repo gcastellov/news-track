@@ -27,7 +27,7 @@ namespace NewsTrack.Identity.Services
             SendNotificationEvent = handler;
         }
 
-        public async Task<SaveIdentityResult> Save(string username, string email, string password1, string password2)
+        public async Task<SaveIdentityResult> Save(string username, string email, string password1, string password2, IdentityTypes type)
         {
             username.CheckIfNull(nameof(username));
             email.CheckIfNull(nameof(email));
@@ -55,7 +55,7 @@ namespace NewsTrack.Identity.Services
             {
                 Username = username,
                 Email = email,
-                IdType = IdentityTypes.Admin,
+                IdType = type,
                 Password = _cryptoManager.HashPassword(password1),
                 SecurityStamp = Guid.NewGuid().ToString()
             };

@@ -6,7 +6,7 @@ namespace NewsTrack.Identity.Services
 {
     public interface IIdentityService
     {
-        Task<SaveIdentityResult> Save(string username, string email, string password1, string password2);
+        Task<SaveIdentityResult> Save(string username, string email, string password1, string password2, IdentityTypes type);
         Task<AuthenticateResult> Authenticate(string email, string password);
         Task<bool> Confirm(string email, string securityStamp);
 

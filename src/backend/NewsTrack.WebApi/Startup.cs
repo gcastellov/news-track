@@ -19,6 +19,7 @@ using NewsTrack.Identity.Encryption;
 using NewsTrack.Identity.Repositories;
 using NewsTrack.Identity.Services;
 using NewsTrack.WebApi.Components;
+using NewsTrack.WebApi.Configuration;
 using ConfigurationProvider = NewsTrack.WebApi.Configuration.ConfigurationProvider;
 using IConfigurationProvider = NewsTrack.Data.Configuration.IConfigurationProvider;
 
@@ -53,10 +54,10 @@ namespace NewsTrack.WebApi
             var configurationProvider = new ConfigurationProvider();
             configurationProvider.Set(Configuration);
             services.AddAuthentication(opt =>
-                {
-                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(cfg =>
                 {
                     cfg.RequireHttpsMetadata = false;
@@ -72,55 +73,18 @@ namespace NewsTrack.WebApi
                     };
                 });
 
-            // Create the container builder.
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
-            builder.RegisterType<Browser.Requestor>().As<Browser.IRequestor>();
-            builder.RegisterType<Browser.Broswer>().As<Browser.IBroswer>();
-            builder.RegisterType<DraftService>().As<IDraftService>().InstancePerLifetimeScope();
-            builder.RegisterType<WebsiteService>().As<IWebsiteService>().InstancePerLifetimeScope();
-            builder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope();
-            builder.Register(c =>
+            services.AddAuthorization(options =>
             {
-                var notificationManager = new NotificationManager(configurationProvider);
-                return new IdentityService(
-                    c.Resolve<IIdentityRepository>(),
-                    c.Resolve<ICryptoManager>(),
-                    notificationManager.Handle
-                );
-            }).As<IIdentityService>().InstancePerLifetimeScope();
-            builder.RegisterType<IdentityHelper>().As<IIdentityHelper>().InstancePerLifetimeScope();
-            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
-            builder.RegisterType<CryptoManager>().As<ICryptoManager>();
-            builder.RegisterType<Data.Repositories.ContentRepository>().As<IContentRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.DraftRepository>().As<IDraftRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.DraftRelationshipRepository>().As<IDraftRelationshipRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.DraftSuggestionsRepository>().As<IDraftSuggestionsRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.IdentityRepository>().As<IIdentityRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.WebsiteRepository>().As<IWebsiteRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.ContentRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.DraftRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.DraftRelationshipRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.IdentityRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.DraftSuggestionsRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.WebsiteRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Configuration.DataInitializer>().As<Data.Configuration.IDataInitializer>();
-            builder.Register(c => new Data.Configuration.ConfigurationProvider { ConnectionString = Configuration.GetConnectionString("ElasticSearch")})
-                .As<IConfigurationProvider>().SingleInstance();
-            builder.Register(c => configurationProvider).As<Configuration.IConfigurationProvider>().SingleInstance();
-            builder.Register(c => new Seeder(
-                    c.Resolve<Data.Configuration.IDataInitializer>(),
-                    c.Resolve<IIdentityService>(),
-                    c.Resolve<IWebsiteService>(),
-                    c.Resolve<IIdentityRepository>(),
-                    Configuration
-                ))
-                .As<ISeeder>();
-            ApplicationContainer = builder.Build();
+                options.AddPolicy(IdentityPolicies.RequireAdministratorRole, policy => policy.RequireRole(IdentityRoles.Administrator));
+            });
+
+            ApplicationContainer = CreateContainer(services, configurationProvider);
 
             // Create the IServiceProvider based on the container.
             return new AutofacServiceProvider(ApplicationContainer);
         }
+
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -171,6 +135,55 @@ namespace NewsTrack.WebApi
                 var logger = loggerFactory.CreateLogger<Startup>();
                 logger.LogError(e, "An exception has been thrown whilst trying to set default data");
             }
+        }
+
+        private IContainer CreateContainer(IServiceCollection services, ConfigurationProvider configurationProvider)
+        {
+            // Create the container builder.
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+            builder.RegisterType<Browser.Requestor>().As<Browser.IRequestor>();
+            builder.RegisterType<Browser.Broswer>().As<Browser.IBroswer>();
+            builder.RegisterType<DraftService>().As<IDraftService>().InstancePerLifetimeScope();
+            builder.RegisterType<WebsiteService>().As<IWebsiteService>().InstancePerLifetimeScope();
+            builder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope();
+            builder.Register(c =>
+            {
+                var notificationManager = new NotificationManager(configurationProvider);
+                return new IdentityService(
+                    c.Resolve<IIdentityRepository>(),
+                    c.Resolve<ICryptoManager>(),
+                    notificationManager.Handle
+                );
+            }).As<IIdentityService>().InstancePerLifetimeScope();
+            builder.RegisterType<IdentityHelper>().As<IIdentityHelper>().InstancePerLifetimeScope();
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+            builder.RegisterType<CryptoManager>().As<ICryptoManager>();
+            builder.RegisterType<Data.Repositories.ContentRepository>().As<IContentRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<Data.Repositories.DraftRepository>().As<IDraftRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<Data.Repositories.DraftRelationshipRepository>().As<IDraftRelationshipRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<Data.Repositories.DraftSuggestionsRepository>().As<IDraftSuggestionsRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<Data.Repositories.IdentityRepository>().As<IIdentityRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<Data.Repositories.WebsiteRepository>().As<IWebsiteRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<Data.Repositories.ContentRepository>().As<Data.Repositories.IRepositoryBase>();
+            builder.RegisterType<Data.Repositories.DraftRepository>().As<Data.Repositories.IRepositoryBase>();
+            builder.RegisterType<Data.Repositories.DraftRelationshipRepository>().As<Data.Repositories.IRepositoryBase>();
+            builder.RegisterType<Data.Repositories.IdentityRepository>().As<Data.Repositories.IRepositoryBase>();
+            builder.RegisterType<Data.Repositories.DraftSuggestionsRepository>().As<Data.Repositories.IRepositoryBase>();
+            builder.RegisterType<Data.Repositories.WebsiteRepository>().As<Data.Repositories.IRepositoryBase>();
+            builder.RegisterType<Data.Configuration.DataInitializer>().As<Data.Configuration.IDataInitializer>();
+            builder.Register(c => new Data.Configuration.ConfigurationProvider { ConnectionString = Configuration.GetConnectionString("ElasticSearch") })
+                .As<IConfigurationProvider>().SingleInstance();
+            builder.Register(c => configurationProvider).As<Configuration.IConfigurationProvider>().SingleInstance();
+            builder.Register(c => new Seeder(
+                    c.Resolve<Data.Configuration.IDataInitializer>(),
+                    c.Resolve<IIdentityService>(),
+                    c.Resolve<IWebsiteService>(),
+                    c.Resolve<IIdentityRepository>(),
+                    Configuration
+                ))
+                .As<ISeeder>();
+            return builder.Build();
         }
     }
 }

@@ -35,17 +35,20 @@ namespace NewsTrack.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
+                JwtSecurityToken token = null;
+
                 var result = await _identityService.Authenticate(dto.Username, dto.Password);
                 if (result == AuthenticateResult.Ok)
                 {
                     var identity = await _identityRepository.GetByEmail(dto.Username);
-                    var claims = new[]
+                    var claims = new []
                     {
                         new Claim(JwtRegisteredClaimNames.Sub, identity.Id.ToString()),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(ClaimTypes.Email, identity.Email),                        
                         new Claim(ClaimTypes.Name, identity.Username), 
-                        new Claim(ClaimTypes.Actor, identity.IdType.ToString())                      
+                        new Claim(ClaimTypes.Actor, identity.IdType.ToString()),
+                        new Claim(ClaimTypes.Role, IdentityRoles.ToRole(identity.IdType)) 
                     };
 
                     var creds = new SigningCredentials(
@@ -53,32 +56,25 @@ namespace NewsTrack.WebApi.Controllers
                         SecurityAlgorithms.HmacSha256
                     );
 
-                    var token = new JwtSecurityToken(
+                    token = new JwtSecurityToken(
                         _configurationProvider.TokenConfiguration.Issuer,
                         _configurationProvider.TokenConfiguration.Audience,
                         claims,
                         expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: creds
                     );
-
-                    return Ok(new TokenResponseDto
-                    {
-                        IsSuccessful = true,
-                        Username = dto.Username,
-                        Token = new JwtSecurityTokenHandler().WriteToken(token)
-                    });
                 }
 
-                return Ok(new TokenResponseDto
+                var response = TokenResponseDto.Create(result, dto.Username);
+                if (token != null)
                 {
-                    Username = dto.Username,
-                    Failure = result == AuthenticateResult.Failed 
-                        ? TokenResponseDto.FailureReason.Authentication
-                        : TokenResponseDto.FailureReason.Lockout
-                });
+                    response.Token = new JwtSecurityTokenHandler().WriteToken(token);
+                }
+
+                return Ok(response);
             }
 
             return BadRequest();
-        }
+        }       
     }
 }

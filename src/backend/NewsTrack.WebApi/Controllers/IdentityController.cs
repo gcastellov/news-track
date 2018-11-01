@@ -2,9 +2,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NewsTrack.Identity;
 using NewsTrack.Identity.Repositories;
 using NewsTrack.Identity.Services;
 using NewsTrack.WebApi.Components;
+using NewsTrack.WebApi.Configuration;
 using NewsTrack.WebApi.Dtos;
 
 namespace NewsTrack.WebApi.Controllers
@@ -57,6 +59,7 @@ namespace NewsTrack.WebApi.Controllers
 
         [HttpPost]
         [Route("create")]
+        [Authorize(Policy = IdentityPolicies.RequireAdministratorRole)]
         public async Task<IActionResult> Create([FromBody] CreateIdentityDto dto)
         {
             if (!ModelState.IsValid)
@@ -68,7 +71,8 @@ namespace NewsTrack.WebApi.Controllers
                 dto.Username,
                 dto.Email,
                 dto.Password,
-                dto.ConfirmPassword
+                dto.ConfirmPassword,
+                IdentityTypes.Contributor
             );
 
             var response = CreateIdentityResponseDto.Create(result);
