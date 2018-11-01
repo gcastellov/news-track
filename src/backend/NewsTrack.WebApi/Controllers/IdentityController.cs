@@ -3,7 +3,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewsTrack.Identity.Repositories;
-using NewsTrack.Identity.Results;
 using NewsTrack.Identity.Services;
 using NewsTrack.WebApi.Components;
 using NewsTrack.WebApi.Dtos;
@@ -52,14 +51,27 @@ namespace NewsTrack.WebApi.Controllers
 
             var id = _identityHelper.Id;
             var result = await _identityService.ChangePassword(id, dto.CurrentPassword, dto.Password, dto.ConfirmPassword);
-            var response = new ChangePasswordResponseDto { IsSuccessful = result == ChangePasswordResult.Ok };
-            if (!response.IsSuccessful)
+            var response = ChangePasswordResponseDto.Create(result);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> Create([FromBody] CreateIdentityDto dto)
+        {
+            if (!ModelState.IsValid)
             {
-                response.Failure = result == ChangePasswordResult.PasswordsDontMatch
-                    ? ChangePasswordResponseDto.FailureReason.PasswordsDontMatch
-                    : ChangePasswordResponseDto.FailureReason.InvalidCurrentPassword;
+                return BadRequest();
             }
 
+            var result = await _identityService.Save(
+                dto.Username,
+                dto.Email,
+                dto.Password,
+                dto.ConfirmPassword
+            );
+
+            var response = CreateIdentityResponseDto.Create(result);
             return Ok(response);
         }
     }

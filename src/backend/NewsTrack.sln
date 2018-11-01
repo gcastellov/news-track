@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.Common.UnitTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.Identity.UnitTests", "NewsTrack.Identity.UnitTests\NewsTrack.Identity.UnitTests.csproj", "{B3DAEE69-1F72-4182-B016-57237A4F54B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsTrack.WebApi.UnitTests", "NewsTrack.WebApi.UnitTests\NewsTrack.WebApi.UnitTests.csproj", "{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{B3DAEE69-1F72-4182-B016-57237A4F54B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3DAEE69-1F72-4182-B016-57237A4F54B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3DAEE69-1F72-4182-B016-57237A4F54B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{3DD20525-D8A5-4C46-BCB3-FA91CA12D1B2} = {28B5A3E7-225C-4372-8CAF-3A3E5FFA72AF}
 		{FF78863C-E210-48BB-AE56-56CCD3F9470B} = {28B5A3E7-225C-4372-8CAF-3A3E5FFA72AF}
 		{B3DAEE69-1F72-4182-B016-57237A4F54B1} = {28B5A3E7-225C-4372-8CAF-3A3E5FFA72AF}
+		{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC} = {28B5A3E7-225C-4372-8CAF-3A3E5FFA72AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6116294F-39CF-4C96-AC0A-7748F5528458}
