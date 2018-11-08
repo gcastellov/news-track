@@ -18,9 +18,10 @@ The project is made by using .NET Core API as backend and ElasticSearch as NoSQL
 - Corporate content (terms, privacy and about us)
 
 #### Membership control panel
-Nowadays the membership is limited to admin purposes, meaning that only the admin can post news, change password, and dispatch the suggestion process. In a near feature full membership will be added for different kind of users.
+Nowadays the membership is limited to admin purposes, meaning that only the admin and contributors can post news, create new users, change current password, and dispatch the suggestion process. In a near feature more kind of users will be added.
 
-![Membership control panel](doc/membership_panel.png)
+![Membership user panel](doc/membership_panel.png)
+![Membership management](doc/membership_panel2.png)
 
 To set your admin settings, update your backend appsettings.json file. Once the application wakes up it will create the user.
 
@@ -114,3 +115,13 @@ Set your SMTP settings in order to get email warnings in case your account has b
   }
 ```
 Set your JWT settings.
+
+```
+"ApiUrl": "http://localhost/NewsTrack.WebApi"
+```
+Set your public website domain (with or without path).
+
+```
+"SignInUrl": "http://localhost:4200/authentication"
+```
+Set your frontend authentication URL where the user has to be redirected once he confirms his membership.
