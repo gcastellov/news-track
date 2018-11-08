@@ -164,7 +164,8 @@
         "title-welcome": "Welcome",
         "member-item": "Member",
         "panel-item": "Panel",
-        "browse-item": "Browsing"
+        "browse-item": "Browsing",
+        "manage-item": "Management"
     },
     "member-component": {
         "username": "Username",
@@ -173,8 +174,11 @@
         "failedAttempts": "Sign in failed attempts"
     },
     "panel-component": {
-        "title-change-pwd": "Change password",
-        "title-process-relationships": "Process relationships"
+        "title-change-pwd": "Change password"        
+    },
+    "admin-panel-component": {
+        "title-process-relationships": "Process relationships",
+        "new-user": "Create new user"
     },
     "change-password-component": {
         "current-pwd": "Current password",
@@ -191,5 +195,17 @@
     },
     "suggestions-component": {
         "loading": "Loading news ..."
+    },
+    "new-user-component": {
+        "username": "Username",
+        "email": "Email",
+        "new-pwd": "New password",
+        "confirm-pwd": "Confirm new password",
+        "action-create": "Create",
+        "failure-reason-one": "Invalid email pattern",
+        "failure-reason-two": "Passwords don't match",
+        "failure-reason-three": "Invalid username",
+        "failure-reason-four": "Invalid email",
+        "success-reason": "The user has been created successfully"
     }
 }

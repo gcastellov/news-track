@@ -13,8 +13,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/core": "0.0.23",
-    "@angular-devkit/schematics": "0.0.42",
     "@angular/animations": "^5.2.11",
     "@angular/common": "^5.2.11",
     "@angular/compiler": "^5.2.11",
@@ -27,6 +25,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.1.2",
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^3.0.1",
+    "angular2-jwt": "^0.2.3",
     "bootstrap": "^3.3.7",
     "bootstrap-social": "^5.1.1",
     "core-js": "^2.5.7",
@@ -36,6 +35,8 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@angular-devkit/core": "^7.0.4",
+    "@angular-devkit/schematics": "0.0.45",
     "@angular/cli": "1.6.1",
     "@angular/compiler-cli": "^5.2.11",
     "@angular/language-service": "^5.2.11",

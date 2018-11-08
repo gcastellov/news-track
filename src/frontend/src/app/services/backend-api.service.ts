@@ -21,6 +21,8 @@ import { IdentityDto } from './Dtos/IdentityDto';
 import { ChangePasswordResponseDto } from './Dtos/ChangePasswordResponseDto';
 import { ChangePassworRequestDto } from './Dtos/ChangePasswordRequestDto';
 import { DraftSuggestionIdsDto } from './Dtos/DraftSuggestionIdsDto';
+import { CreateIdentityResponseDto } from './Dtos/CreateIdentityResponseDto';
+import { CreateIdentityRequestDto } from './Dtos/CreateIdentityRequestDto';
 
 @Injectable()
 export class BackendApiService {
@@ -183,6 +185,12 @@ export class BackendApiService {
     const url = `${environment.baseUrl}/api/content/suggestions`;
     const headers = this._authService.getTokenHeaders();
     return this._client.post(url, null, { headers: headers }).map((res: any) => res.statusCode === 202);
+  }
+
+  createUser(req: CreateIdentityRequestDto): Observable<CreateIdentityResponseDto> {
+    const url = `${environment.baseUrl}/api/identity/create`;
+    const headers = this._authService.getTokenHeaders();
+    return this._client.post<CreateIdentityResponseDto>(url, req, { headers: headers });
   }
 
 }

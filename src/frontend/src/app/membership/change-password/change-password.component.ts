@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BackendApiService } from '../../services/backend-api.service';
 import { ChangePassworRequestDto } from '../../services/Dtos/ChangePasswordRequestDto';
@@ -8,7 +8,7 @@ import { ChangePassworRequestDto } from '../../services/Dtos/ChangePasswordReque
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.less']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent {
 
   pwdForm: FormGroup;
   failureReason: number;
@@ -30,9 +30,6 @@ export class ChangePasswordComponent implements OnInit {
 
       return { 'status': false };
     });
-  }
-
-  ngOnInit() {
   }
 
   changePassword() {

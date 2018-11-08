@@ -10,6 +10,9 @@ import { AuthGuardService } from '../services/Guards/auth-guard.service';
 import { MembershipComponent } from './membership/membership.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { RelationshipExecutorComponent } from './relationship-executor/relationship-executor.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { NewUserComponent } from './new-user/new-user.component';
+import { AdminGuardService } from '../services/Guards/admin-guard.service';
 
 @NgModule({
   imports: [
@@ -21,10 +24,19 @@ import { RelationshipExecutorComponent } from './relationship-executor/relations
     RouterModule.forChild([
       { path: '', component: MembershipComponent, canActivate: [AuthGuardService], children: [
         { path: 'member', component: MemberComponent, canActivate: [AuthGuardService] },
-        { path: 'panel', component: PanelComponent, canActivate: [AuthGuardService] }
+        { path: 'panel', component: PanelComponent, canActivate: [AuthGuardService] },
+        { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuardService, AdminGuardService] }
       ]},
     ])
   ],
-  declarations: [MemberComponent, PanelComponent, MembershipComponent, ChangePasswordComponent, RelationshipExecutorComponent]
+  declarations: [
+    MemberComponent,
+    PanelComponent,
+    MembershipComponent,
+    ChangePasswordComponent,
+    RelationshipExecutorComponent,
+    AdminPanelComponent,
+    NewUserComponent
+  ]
 })
 export class MembershipModule { }

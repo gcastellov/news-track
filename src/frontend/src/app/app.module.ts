@@ -28,6 +28,7 @@ import { StorageService } from './services/storage.service';
 import { AuthInterceptor } from './services/Interceptors/auth-interceptor';
 import { SuggestionsComponent } from './draft-list/suggestions/suggestions.component';
 import { DraftListModule } from './draft-list/draft-list.module';
+import { AdminGuardService } from './services/Guards/admin-guard.service';
 
 export function httpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -85,6 +86,7 @@ export function authInterceptorFactory (router: Router) {
     BackendApiService,
     AuthenticationApiService,
     AuthGuardService,
+    AdminGuardService,
     AppSettingsService,
     StorageService
   ],

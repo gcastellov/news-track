@@ -164,7 +164,8 @@
         "title-welcome": "Bienvenido",
         "member-item": "Miembro",
         "panel-item": "Panel",
-        "browse-item": "Navega"
+        "browse-item": "Navega",
+        "manage-item": "Administración"
     },
     "member-component": {
         "username": "Usuario",
@@ -173,8 +174,11 @@
         "failedAttempts": "Intentos fallidos de acceso"
     },
     "panel-component": {
-        "title-change-pwd": "Cambiar contraseña",
-        "title-process-relationships": "Procesar relaciones"
+        "title-change-pwd": "Cambiar contraseña"        
+    },
+    "admin-panel-component": {
+        "title-process-relationships": "Procesar relaciones",
+        "new-user": "Crear nuevo usuario"
     },
     "change-password-component": {
         "current-pwd": "Contraseña actual",
@@ -191,5 +195,17 @@
     },
     "suggestions-component": {
         "loading": "Cargando noticias ..."
+    },
+    "new-user-component": {
+        "username": "Nombre de usuario",
+        "email": "Email",
+        "new-pwd": "Nueva contraseña",
+        "confirm-pwd": "Confirma la nueva contraseña",
+        "action-create": "Crear",
+        "failure-reason-one": "Patrón de email incorrecto",
+        "failure-reason-two": "Las contraseñas no coinciden",
+        "failure-reason-three": "Nombre de usuario incorrecto",
+        "failure-reason-four": "Email incorrecto",
+        "success-reason": "El usuario ha sido creado correctamente"
     }
 }

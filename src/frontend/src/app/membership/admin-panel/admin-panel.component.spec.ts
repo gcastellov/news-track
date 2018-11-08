@@ -1,32 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-
-import { MembershipComponent } from './membership.component';
 import { httpLoaderFactory } from '../../app.module';
-import { TestBedHelper } from '../../testing/testbed.helper';
-import { AuthenticationApiService } from '../../services/authentication-api.service';
-import { DataBuilder } from '../../testing/data.builder';
-import { AdminGuardService } from '../../services/Guards/admin-guard.service';
 
-describe('MembershipComponent', () => {
-  let component: MembershipComponent;
-  let fixture: ComponentFixture<MembershipComponent>;
+import { AdminPanelComponent } from './admin-panel.component';
+import { RelationshipExecutorComponent } from '../relationship-executor/relationship-executor.component';
+import { NewUserComponent } from '../new-user/new-user.component';
+import { BackendApiService } from '../../services/backend-api.service';
 
-  const authServiceMock = <AuthenticationApiService>{};
-  authServiceMock.username = DataBuilder.getIdentityDto().username;
-
-  const adminGuardMock = <AdminGuardService>{
-    canActivate: () => true
-  };
+describe('AdminPanelComponent', () => {
+  let component: AdminPanelComponent;
+  let fixture: ComponentFixture<AdminPanelComponent>;
+  
+  const apiServiceMock = <BackendApiService>{};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MembershipComponent ],
+      declarations: [
+        AdminPanelComponent,
+        RelationshipExecutorComponent,
+        NewUserComponent
+      ],
       imports: [
+        ReactiveFormsModule,
         HttpClientTestingModule,
         NgbModule.forRoot(),
         TranslateModule.forRoot({
@@ -39,17 +39,15 @@ describe('MembershipComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: AuthenticationApiService, useFactory: () => authServiceMock },
-        { provide: AdminGuardService, useFactory: () => adminGuardMock }
-      ]
+        { provide: BackendApiService, useFactory: () => apiServiceMock }
+       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MembershipComponent);
+    fixture = TestBed.createComponent(AdminPanelComponent);
     component = fixture.componentInstance;
-    TestBedHelper.setLanguage();
     fixture.detectChanges();
   });
 

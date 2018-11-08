@@ -9,6 +9,9 @@
       <li class="list-group-item" [ngClass]="{ 'active': isRouteActive('panel') }">
         <a [routerLink]="['./panel']">{{ 'membership-component.panel-item' | translate }}</a>
       </li>
+      <li class="list-group-item" *ngIf="adminGuard.canActivate()" [ngClass]="{ 'active': isRouteActive('admin') }">
+        <a [routerLink]="['./admin']">{{ 'membership-component.manage-item' | translate }}</a>
+      </li>
       <li class="list-group-item" [ngClass]="{ 'active': isRouteActive('browsing') }">
         <a [routerLink]="['/browsing']">{{ 'membership-component.browse-item' | translate }}</a>
       </li>

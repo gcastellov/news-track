@@ -8,7 +8,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { PanelComponent } from './panel.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
-import { RelationshipExecutorComponent } from '../relationship-executor/relationship-executor.component';
 import { httpLoaderFactory } from '../../app.module';
 import { BackendApiService } from '../../services/backend-api.service';
 import { TestBedHelper } from '../../testing/testbed.helper';
@@ -23,8 +22,7 @@ describe('PanelComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         PanelComponent,
-        ChangePasswordComponent,
-        RelationshipExecutorComponent
+        ChangePasswordComponent
       ],
       imports: [
         ReactiveFormsModule,
