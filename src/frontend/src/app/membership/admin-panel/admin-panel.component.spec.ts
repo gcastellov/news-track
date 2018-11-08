@@ -15,7 +15,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 describe('AdminPanelComponent', () => {
   let component: AdminPanelComponent;
   let fixture: ComponentFixture<AdminPanelComponent>;
-  
+
   const apiServiceMock = <BackendApiService>{};
 
   beforeEach(async(() => {
