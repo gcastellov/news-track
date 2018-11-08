@@ -78,5 +78,18 @@ namespace NewsTrack.WebApi.Controllers
             var response = CreateIdentityResponseDto.Create(result);
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("confirm/{email}/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Confirm(string email, string id, [FromQuery] string go)
+        {
+            if (!await _identityService.Confirm(email, id))
+            {
+                return BadRequest();
+            }
+
+            return Redirect(go);
+        }
     }
 }

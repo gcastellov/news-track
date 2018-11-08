@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using Microsoft.Extensions.Configuration;
 using NewsTrack.Data.Configuration;
 using NewsTrack.Domain.Services;
@@ -66,12 +65,9 @@ namespace NewsTrack.WebApi.Components
             if (!_identityRepository.ExistsByUsername(username).Result)
             {
                 var result = _identityService.Save(username, email, password, password, IdentityTypes.Admin).Result;
-                if (result == SaveIdentityResult.Ok)
+                if (result != SaveIdentityResult.Ok)
                 {
-                    Thread.Sleep(2000);
-                    var adminIdentity = _identityRepository.GetByEmail(email).Result;
-                    adminIdentity.IsEnabled = true;
-                    _identityRepository.Update(adminIdentity).Wait();
+                    throw new Exception("Impossible to create the admin user. Check this out!");
                 }
             }
         }

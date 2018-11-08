@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NewsTrack.Common.Events;
@@ -61,6 +62,7 @@ namespace NewsTrack.Identity.Services
             };
 
             await _identityRepository.Save(identity);
+            OnSendNotification(NotificationEventArgs.NotificationType.AccountCreated, identity);
             return SaveIdentityResult.Ok;
         }
 
@@ -141,17 +143,35 @@ namespace NewsTrack.Identity.Services
 
         private void OnSendNotification(NotificationEventArgs.NotificationType type, Identity identity)
         {
-            if (SendNotificationEvent != null)
-            {
-                var args = new NotificationEventArgs
-                {
-                    Type = type,
-                    To = identity.Email, 
-                    Username = identity.Username
-                };
+            var args = To(type, identity);
+            OnSendNotification(args);
+        }
 
+        private void OnSendNotification(NotificationEventArgs args)
+        {
+            if (SendNotificationEvent != null && args != null)
+            {
                 SendNotificationEvent.Invoke(this, args);
             }
+        }
+
+        private NotificationEventArgs To(NotificationEventArgs.NotificationType type, Identity identity)
+        {
+            var args =  new NotificationEventArgs
+            {
+                Type = type,
+                To = identity.Email,
+                Username = identity.Username
+            };
+
+            if (type == NotificationEventArgs.NotificationType.AccountCreated)
+            {
+                args.Model = new ExpandoObject();
+                args.Model.Email = identity.Email;
+                args.Model.SecurityStamp = identity.SecurityStamp;
+            }
+
+            return args;
         }
     }
 }
