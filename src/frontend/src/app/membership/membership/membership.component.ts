@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthenticationApiService } from '../../services/authentication-api.service';
 import { AdminGuardService } from '../../services/Guards/admin-guard.service';
 
@@ -11,18 +10,10 @@ import { AdminGuardService } from '../../services/Guards/admin-guard.service';
 export class MembershipComponent {
 
   username: string;
-  adminGuard: AdminGuardService;
+  isAdmin: boolean;
 
-  constructor(
-    private _router: Router,
-    authSerive: AuthenticationApiService,
-    adminGuard: AdminGuardService) {
+  constructor(authSerive: AuthenticationApiService, adminGuard: AdminGuardService) {
       this.username = authSerive.username;
-      this.adminGuard = adminGuard;
+      this.isAdmin = adminGuard.canActivate();
   }
-
-  isRouteActive(route: string): boolean {
-    return this._router.url.endsWith(route);
-  }
-
 }

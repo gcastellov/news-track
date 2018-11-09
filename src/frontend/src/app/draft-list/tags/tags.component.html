@@ -3,25 +3,7 @@
     <h3 class="panel-title">{{ 'tags-component.title-tags' | translate }}</h3>
   </div>
   <div class="panel-body">
-    <div *ngFor="let tag of tags" [ngSwitch]="tag.importance">
-      <h6 *ngSwitchCase="0">
-        <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
-      </h6>
-      <h5 *ngSwitchCase="1">
-        <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
-      </h5>
-      <h4 *ngSwitchCase="2">
-        <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
-      </h4>
-      <h3 *ngSwitchCase="3">
-        <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
-      </h3>
-      <h2 *ngSwitchCase="4">
-        <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
-      </h2>
-      <h1 *ngSwitchCase="5">
-        <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
-      </h1>
+    <div *ngFor="let tag of tags" [ngClass]="{ 'h1': tag.importance === 5, 'h2': tag.importance === 4, 'h3': tag.importance === 3, 'h4': tag.importance === 2, 'h5': tag.importance === 1, 'h6': tag.importance === 0 }">
+      <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
     </div>
-  </div>
 </div>

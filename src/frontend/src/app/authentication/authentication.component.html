@@ -14,9 +14,11 @@
   </form>
   <div class="col-md-7">
       <div *ngIf="failureReason !== 0" class="alert alert-danger" role="alert">
-        <span *ngIf="failureReason === -1">{{ 'authentication-component.failure-reason-one' | translate }}</span>
-        <span *ngIf="failureReason === 1">{{ 'authentication-component.failure-reason-two' | translate }}</span>
-        <span *ngIf="failureReason === 2">{{ 'authentication-component.failure-reason-tree' | translate }}</span>
+        <span [ngSwitch]="failureReason">
+            <ng-container *ngSwitchCase="-1">{{ 'authentication-component.failure-reason-one' | translate }}</ng-container>
+            <ng-container *ngSwitchCase="1">{{ 'authentication-component.failure-reason-two' | translate }}</ng-container>
+            <ng-container *ngSwitchCase="2">{{ 'authentication-component.failure-reason-tree' | translate }}</ng-container>
+        </span>
       </div>
   </div>
 </div>
