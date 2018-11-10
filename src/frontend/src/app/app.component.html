@@ -24,13 +24,13 @@
                     <li>
                         <a [routerLink]="['/search']">{{ 'app-component.title-search' | translate }}</a>
                     </li>
-                    <li *ngIf="authentication.token">
+                    <li *ngIf="authentication.isAuthenticated()">
                         <a [routerLink]="['/browsing']">{{ 'app-component.title-browse' | translate }}</a>
                     </li>
-                    <li *ngIf="!authentication.token">
+                    <li *ngIf="!authentication.isAuthenticated()">
                         <a [routerLink]="['/authentication']">{{ 'app-component.title-sing-in' | translate }}</a>
                     </li>
-                    <li *ngIf="authentication.token && authentication.username">
+                    <li *ngIf="authentication.isAuthenticated() && authentication.username">
                         <a class="member" [routerLink]="['/membership']">{{authentication.username}}</a>
                     </li>
                 </ul>
