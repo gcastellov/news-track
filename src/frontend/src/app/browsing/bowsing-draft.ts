@@ -4,6 +4,8 @@ import { DraftRequestDto } from '../services/Dtos/DraftRequestDto';
 import { DraftRelationshipDto } from '../services/Dtos/DraftRelationshipRequestDto';
 import { BackendApiService } from '../services/backend-api.service';
 import { Observable } from 'rxjs/Observable';
+import { IBrowseResult } from '../services/Dtos/IBrowseResult';
+import { BrowsingElement } from './browsing-element';
 
 @Injectable()
 export class BrowsingDraft {
@@ -43,12 +45,6 @@ export class BrowsingDraft {
             this.draftRequest.paragraphs.length > 0;
     }
 
-    private saveRelationship(id: string) {
-        if (id && this.relationship && this.relationship.length > 0) {
-          this._apiService.setDraftRelationship(id, this.relationship).subscribe();
-        }
-    }
-
     save(): Observable<boolean>  {
         return new Observable(observer => {
             this._apiService.setDraft(this.draftRequest).subscribe(r => {
@@ -59,5 +55,19 @@ export class BrowsingDraft {
                 }}
             );
         });
+    }
+
+    setData(data: IBrowseResult) {
+        this.browseResult.uri = data.uri;
+        this.browseResult.titles = data.titles.map(t => new BrowsingElement(false, t));
+        this.browseResult.paragraphs = data.paragraphs.map(p => new BrowsingElement(false, p));
+        this.browseResult.pictures = data.pictures.map(p => new BrowsingElement(false, p));
+        this.draftRequest.url = this.browseResult.uri;
+    }
+
+    private saveRelationship(id: string) {
+        if (id && this.relationship && this.relationship.length > 0) {
+          this._apiService.setDraftRelationship(id, this.relationship).subscribe();
+        }
     }
 }

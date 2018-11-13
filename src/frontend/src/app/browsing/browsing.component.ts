@@ -3,7 +3,6 @@ import { BackendApiService } from '../services/backend-api.service';
 import { Router } from '@angular/router';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
-import { BrowsingElement } from './browsing-element';
 import { BrowsingDraft } from './bowsing-draft';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
@@ -34,25 +33,16 @@ export class BrowsingComponent implements OnInit {
   }
 
   onFind(): void {
-
     this.draft.initialize();
     this.draft.url = this.url;
-
     this._apiService.checkWebsite(this.draft.url).subscribe(r => {
       this.isForbidden = !r.isSuccessful;
     });
-
-    this._apiService.browse(this.draft.url).subscribe(data => {
-      this.draft.browseResult.uri = data.uri;
-      this.draft.browseResult.titles = data.titles.map(t => new BrowsingElement(false, t));
-      this.draft.browseResult.paragraphs = data.paragraphs.map(p => new BrowsingElement(false, p));
-      this.draft.browseResult.pictures = data.pictures.map(p => new BrowsingElement(false, p));
-      this.draft.draftRequest.url = this.draft.browseResult.uri;
-    });
+    this._apiService.browse(this.draft.url).subscribe(data => this.draft.setData(data));
   }
 
   onSend(): void {
-    this.draft.save().subscribe();
+    this.draft.save().subscribe(() => this.url = this.draft.browseResult.uri);
   }
 
   onSetRelationship(): void {
