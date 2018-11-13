@@ -121,4 +121,14 @@ describe('BrowsingComponent', () => {
     expect(browseMock).toHaveBeenCalledWith(component.url);
   });
 
+  it('should enable find button', () => {
+    component.url = 'http://www.some.domain.com/resource';
+    expect(component.isFindEnabled()).toBeTruthy();
+  });
+
+  it('should disable find button', () => {
+    component.url = 'http://www.some.domain.com/resource';
+    expect(component.isFindEnabled()).toBeFalsy();
+  });
+
 });

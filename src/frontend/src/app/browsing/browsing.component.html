@@ -1,9 +1,9 @@
 <div class="row form-group">
   <div class="col-md-8">
-      <input class="form-control" id="url" type="text" [(ngModel)]="url" (keyup.enter)="onFind()"/>
+      <input class="form-control" id="url" type="text" [(ngModel)]="url" (keyup.enter)="onFind()" (click)="$event.target.select()" />
   </div>   
   <div class="col-md-4">
-      <button type="submit" class="btn btn-secondary" (click)="onFind()">{{ 'browsing-component.action-find' | translate }}</button> 
+      <button type="submit" class="btn btn-secondary" [disabled]="!isFindEnabled()" (click)="onFind()">{{ 'browsing-component.action-find' | translate }}</button> 
       <button type="submit" class="btn btn-secondary" [disabled]="!isSendEnabled()" (click)="onSetRelationship()" *ngIf="draft.draftRequest && draft.draftRequest.url">{{ 'browsing-component.action-relationship' | translate }}</button>
       <button type="submit" class="btn btn-primary" [disabled]="!isSendEnabled()" (click)="onSend()" *ngIf="draft.draftRequest && draft.draftRequest.url">{{ 'browsing-component.action-save' | translate }}</button>
   </div>

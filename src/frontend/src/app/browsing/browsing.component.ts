@@ -28,6 +28,9 @@ export class BrowsingComponent implements OnInit {
   ngOnInit(): void {
     const availableTags = this._apiService.getTags();
     availableTags.subscribe(data => this.tags = data);
+    if (this.draft.browseResult) {
+      this.url = this.draft.browseResult.uri;
+    }
   }
 
   onFind(): void {
@@ -58,6 +61,10 @@ export class BrowsingComponent implements OnInit {
 
   isSendEnabled(): boolean {
     return this.draft && this.draft.isCompleted();
+  }
+
+  isFindEnabled(): boolean {
+    return !!this.url;
   }
 
   onSearchItemSelected(event: NgbTypeaheadSelectItemEvent) {
