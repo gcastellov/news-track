@@ -127,7 +127,7 @@ describe('BrowsingComponent', () => {
   });
 
   it('should disable find button', () => {
-    component.url = 'http://www.some.domain.com/resource';
+    component.url = '';
     expect(component.isFindEnabled()).toBeFalsy();
   });
 
