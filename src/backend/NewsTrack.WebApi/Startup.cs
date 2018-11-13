@@ -142,7 +142,7 @@ namespace NewsTrack.WebApi
             // Create the container builder.
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterType<Browser.Requestor>().As<Browser.IRequestor>();
+            builder.RegisterType<Browser.Requestor>().As<Browser.IRequestor>().InstancePerLifetimeScope();
             builder.RegisterType<Browser.Broswer>().As<Browser.IBroswer>();
             builder.RegisterType<DraftService>().As<IDraftService>().InstancePerLifetimeScope();
             builder.RegisterType<WebsiteService>().As<IWebsiteService>().InstancePerLifetimeScope();

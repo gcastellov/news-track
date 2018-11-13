@@ -8,16 +8,16 @@ namespace NewsTrack.Browser
 {
     public class Requestor : IRequestor
     {
-        private readonly HttpClient _httpClient;
+        private readonly Lazy<HttpClient> _httpClient;
 
         public Requestor()
         {
-            _httpClient = new HttpClient();
+            _httpClient = new Lazy<HttpClient>();
         }
 
         public async Task<string> Get(Uri uri)
         {
-            var response = await _httpClient.GetAsync(uri);
+            var response = await _httpClient.Value.GetAsync(uri);
 
             if (response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.OK)
             {
@@ -26,6 +26,14 @@ namespace NewsTrack.Browser
             }
 
             return null;
+        }
+
+        public void Dispose()
+        {
+            if (_httpClient.IsValueCreated)
+            {
+                _httpClient.Value.Dispose();
+            }
         }
     }
 }
