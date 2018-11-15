@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -23,22 +24,21 @@ namespace NewsTrack.WebApi.Components
         {
             var message = new MailMessage
             {
-                From = new MailAddress(_smtpConfiguration.From),
+                From = new MailAddress(_smtpConfiguration.From ?? "sender@news-track.com"),
                 Subject = GetSubject(args.Type),
                 Body = GetBody(args.Type, args.Model),
                 IsBodyHtml = true
             };
 
             message.To.Add(args.To);
-            
+
             Task.Run(() => SendEmail(message));
         }
 
         private void SendEmail(MailMessage message)
         {
-            using (var emailSender = new SmtpClient(_smtpConfiguration.Host, _smtpConfiguration.Port))
-            {                
-                emailSender.Credentials = new NetworkCredential(_smtpConfiguration.Username, _smtpConfiguration.Password);
+            using (var emailSender = GetClient())
+            {
                 emailSender.Send(message);
             }
         }
@@ -87,6 +87,32 @@ namespace NewsTrack.WebApi.Components
             sBuilder.Append("</p>");
             sBuilder.Append("</html>");
             return sBuilder.ToString();
+        }
+
+        private SmtpClient GetClient()
+        {
+            if (_configuration.SmtpConfiguration.IsSet)
+            {
+                return new SmtpClient(_smtpConfiguration.Host, _smtpConfiguration.Port)
+                {
+                    Credentials = new NetworkCredential(_smtpConfiguration.Username, _smtpConfiguration.Password)
+                };
+            }
+
+            var outbox = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "outbox");
+            if (!Directory.Exists(outbox))
+            {
+                Directory.CreateDirectory(outbox);
+            }
+
+            return new SmtpClient
+            {
+                DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+                PickupDirectoryLocation = outbox,
+                Host = "localhost",
+                UseDefaultCredentials = true,
+                EnableSsl = false
+            };
         }
     }
 }
