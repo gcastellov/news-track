@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BackendApiService } from '../../services/backend-api.service';
-import { BrowsingDraft } from '../bowsing-draft';
+import { BrowsingDraft } from '../browsing-draft/bowsing-draft';
 import { DraftDto } from '../../services/Dtos/DraftDto';
 import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
 

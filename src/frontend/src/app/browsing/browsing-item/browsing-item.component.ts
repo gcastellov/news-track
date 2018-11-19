@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BrowsingElement } from '../browsing-element';
+import { BrowsingElement } from '../browsing-draft/browsing-element';
 import { DraftRequestDto } from '../../services/Dtos/DraftRequestDto';
 
 @Component({

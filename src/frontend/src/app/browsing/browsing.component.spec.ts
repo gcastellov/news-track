@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { BrowsingComponent } from './browsing.component';
 import { httpLoaderFactory } from '../app.module';
 import { BackendApiService } from '../services/backend-api.service';
-import { BrowsingDraft } from './bowsing-draft';
+import { BrowsingDraft } from './browsing-draft/bowsing-draft';
 import { BrowsingItemComponent } from './browsing-item/browsing-item.component';
 import { BrowsingPictureComponent } from './browsing-picture/browsing-picture.component';
 import { BrowsingTitleComponent } from './browsing-title/browsing-title.component';

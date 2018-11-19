@@ -11,7 +11,7 @@ import { BrowsingItemComponent } from './browsing-item/browsing-item.component';
 import { BrowsingPictureComponent } from './browsing-picture/browsing-picture.component';
 import { BrowsingTitleComponent } from './browsing-title/browsing-title.component';
 import { BrowsingParagraphComponent } from './browsing-paragraph/browsing-paragraph.component';
-import { BrowsingDraft } from './bowsing-draft';
+import { BrowsingDraft } from './browsing-draft/bowsing-draft';
 import { BrowsingRelationshipComponent } from './browsing-relationship/browsing-relationship.component';
 import { BrowsingRelationshipDraftComponent } from './browsing-relationship-draft/browsing-relationship-draft.component';
 import { AuthGuardService } from '../services/Guards/auth-guard.service';

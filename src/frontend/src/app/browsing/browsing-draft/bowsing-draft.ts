@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BrowsingObject } from './browsing-object';
-import { DraftRequestDto } from '../services/Dtos/DraftRequestDto';
-import { DraftRelationshipDto } from '../services/Dtos/DraftRelationshipRequestDto';
-import { BackendApiService } from '../services/backend-api.service';
+import { DraftRequestDto } from '../../services/Dtos/DraftRequestDto';
+import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
+import { BackendApiService } from '../../services/backend-api.service';
 import { Observable } from 'rxjs/Observable';
-import { IBrowseResult } from '../services/Dtos/IBrowseResult';
+import { IBrowseResult } from '../../services/Dtos/IBrowseResult';
 import { BrowsingElement } from './browsing-element';
 
 @Injectable()

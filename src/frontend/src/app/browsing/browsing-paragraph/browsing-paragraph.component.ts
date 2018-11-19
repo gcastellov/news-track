@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BrowsingItemComponent } from '../browsing-item/browsing-item.component';
-import { BrowsingElement } from '../browsing-element';
+import { BrowsingElement } from '../browsing-draft/browsing-element';
 
 @Component({
     selector: 'app-browsing-paragraph',
