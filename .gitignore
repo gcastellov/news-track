@@ -93,7 +93,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
-*/dist/
+**/dist/
 **/appsettings.Production.json
 **/environment.prod.ts
 **/*.log
