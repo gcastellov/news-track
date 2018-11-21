@@ -125,3 +125,9 @@ Set your public website domain (with or without path).
 "SignInUrl": "http://localhost:4200/authentication"
 ```
 Set your frontend authentication URL where the user has to be redirected once he confirms his membership.
+
+## Live demo
+
+You can find a live demo at the following URL:
+
+[Disgrace.Info](http://www.disgrace.info)
