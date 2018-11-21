@@ -71,7 +71,8 @@ namespace NewsTrack.Identity.Services
             if (!_cryptoManager.CheckPassword(password, identity.Password))
             {
                 var status = AuthenticateResult.Failed;
-                identity.AccessFailedCount++;                
+                identity.AccessFailedCount++;
+                identity.LastAccessFailureAt = DateTime.UtcNow;
                 if (identity.AccessFailedCount > 5)
                 {                    
                     identity.LockoutEnd = DateTime.UtcNow.AddMinutes(5);
@@ -87,9 +88,10 @@ namespace NewsTrack.Identity.Services
             {
                 identity.AccessFailedCount = 0;
                 identity.LockoutEnd = null;
-                await _identityRepository.Update(identity);
             }
-            
+
+            identity.LastAccessAt = DateTime.UtcNow;
+            await _identityRepository.Update(identity);
             return AuthenticateResult.Ok;
         }
 

@@ -158,7 +158,7 @@ namespace NewsTrack.Identity.UnitTests
         }
 
         [TestMethod]
-        public async Task WhenUserAuthenticatesWithGood_ThenReurnsOk()
+        public async Task WhenUserAuthenticatesWithGood_ThenReturnsOk()
         {
             var identity = new Identity
             {
@@ -174,7 +174,7 @@ namespace NewsTrack.Identity.UnitTests
 
             _identityRepositoryMock.Verify(m => m.GetByEmail(Email), Times.Once);
             _cryptoManagerMock.Verify(m => m.CheckPassword(Pwd, identity.Password), Times.Once);
-            _identityRepositoryMock.Verify(m => m.Update(identity), Times.Never);
+            _identityRepositoryMock.Verify(m => m.Update(identity), Times.Once);
         }
 
         [TestMethod]

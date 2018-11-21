@@ -8,8 +8,9 @@ namespace NewsTrack.WebApi.Dtos
         public string Username { get; set; }
         public string Email { get; set; }
         public bool IsEnabled { get; set; }
-        public uint AccessFailedCount { get; set; }
         public IdentityTypes IdType { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime? LastAccessAt { get; set; }
+        public DateTime? LastAccessFailureAt { get; set; }
     }
 }

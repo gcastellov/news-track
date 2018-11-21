@@ -10,6 +10,8 @@ namespace NewsTrack.Identity
         public bool IsEnabled { get; set; }
         public string Password { get; set; }
         public DateTime? LockoutEnd { get; set; }
+        public DateTime? LastAccessAt { get; set; }
+        public DateTime? LastAccessFailureAt { get; set; }
         public uint AccessFailedCount { get; set; }
         public string SecurityStamp { get; set; }
         public IdentityTypes IdType { get; set; }

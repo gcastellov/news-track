@@ -2,7 +2,8 @@ export class IdentityDto {
     username: string;
     email: string;
     isEnabled: boolean;
-    accessFailedCount: number;
     idType: number;
     createdAt: string;
+    lastAccessAt: string;
+    lastAccessFailureAt: string;
 }

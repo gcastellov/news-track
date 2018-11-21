@@ -171,7 +171,8 @@
         "username": "Usuario",
         "email": "Email",
         "cratedAt": "Creado en",
-        "failedAttempts": "Intentos fallidos de acceso"
+        "lastAccessAt": "Último acceso en",
+        "lastAccessFailureAt": "Último acceso fallido en"
     },
     "panel-component": {
         "title-change-pwd": "Cambiar contraseña"        

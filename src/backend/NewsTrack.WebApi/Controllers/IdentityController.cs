@@ -52,7 +52,12 @@ namespace NewsTrack.WebApi.Controllers
             }
 
             var id = _identityHelper.Id;
-            var result = await _identityService.ChangePassword(id, dto.CurrentPassword, dto.Password, dto.ConfirmPassword);
+            var result = await _identityService.ChangePassword(
+                id, 
+                dto.CurrentPassword, 
+                dto.Password, 
+                dto.ConfirmPassword);
+
             var response = ChangePasswordResponseDto.Create(result);
             return Ok(response);
         }

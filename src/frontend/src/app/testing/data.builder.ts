@@ -116,9 +116,11 @@ export class DataBuilder {
     }
 
     static getIdentityDto(): IdentityDto {
+        const date = new Date().toUTCString();
         const identity = new IdentityDto();
-        identity.accessFailedCount = 1;
-        identity.createdAt = new Date().toUTCString();
+        identity.lastAccessAt = date;
+        identity.lastAccessFailureAt = date;
+        identity.createdAt = date;
         identity.email = 'subject@domain.com';
         identity.idType = 1;
         identity.isEnabled = true;

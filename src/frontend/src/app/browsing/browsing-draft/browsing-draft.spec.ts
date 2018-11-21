@@ -8,7 +8,7 @@ import { DraftResponseDto } from '../../services/Dtos/DraftResponseDto';
 import { DraftRelationshipResponseDto } from '../../services/Dtos/DraftRelationshipResponseDto';
 import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
 
-fdescribe('BrowsingDraft', () => {
+describe('BrowsingDraft', () => {
 
     let component: BrowsingDraft;
     let data: IBrowseResult;

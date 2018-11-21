@@ -12,7 +12,11 @@
     <span id="createdAt">{{identity.createdAt | date: 'medium'}}</span>    
   </div>
   <div class="form-group row">
-    <label for="failedAttempts" class="col-sm-2 col-form-label">{{ 'member-component.failedAttempts' | translate }}</label>
-    <span id="failedAttempts">{{identity.accessFailedCount}}</span>    
+    <label for="failedAttempts" class="col-sm-2 col-form-label">{{ 'member-component.lastAccessAt' | translate }}</label>
+    <span id="failedAttempts">{{identity.lastAccessAt | date: 'medium'}}</span>    
   </div>  
+  <div class="form-group row" *ngIf="identity.lastAccessFailureAt">
+    <label for="failedAttempts" class="col-sm-2 col-form-label">{{ 'member-component.lastAccessFailureAt' | translate }}</label>
+    <span id="failedAttempts">{{identity.lastAccessFailureAt | date: 'medium'}}</span>    
+  </div>
 </div>

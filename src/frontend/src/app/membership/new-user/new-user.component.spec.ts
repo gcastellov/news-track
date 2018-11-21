@@ -57,12 +57,9 @@ describe('NewUserComponent', () => {
 
   it('should create a user', () => {
     const username = 'MyUsername';
-    const newPwd = 'MyNewPwd';
     const email = 'MyEmail';
     component.usrForm.controls['username'].setValue(username);
     component.usrForm.controls['email'].setValue(email);
-    component.usrForm.controls['password1'].setValue(newPwd);
-    component.usrForm.controls['password2'].setValue(newPwd);
 
     const responseDto = new CreateIdentityResponseDto();
     responseDto.isSuccessful = true;
@@ -75,18 +72,13 @@ describe('NewUserComponent', () => {
     expect(createUserMock).toHaveBeenCalled();
     expect(component.usrForm.get('username').value).toBe('');
     expect(component.usrForm.get('email').value).toBe('');
-    expect(component.usrForm.get('password1').value).toBe('');
-    expect(component.usrForm.get('password2').value).toBe('');
   });
 
   it('should show proper message when creating user fails', () => {
     const username = 'MyUsername';
-    const newPwd = 'MyNewPwd';
-    const email = 'MyEmail';
+        const email = 'MyEmail';
     component.usrForm.controls['username'].setValue(username);
     component.usrForm.controls['email'].setValue(email);
-    component.usrForm.controls['password1'].setValue(newPwd);
-    component.usrForm.controls['password2'].setValue(newPwd);
 
     const responseDto = new CreateIdentityResponseDto();
     responseDto.isSuccessful = false;
@@ -101,7 +93,5 @@ describe('NewUserComponent', () => {
     expect(component.failureReason).toBe(responseDto.failure);
     expect(component.usrForm.get('username').value).toBe(username);
     expect(component.usrForm.get('email').value).toBe(email);
-    expect(component.usrForm.get('password1').value).toBe(newPwd);
-    expect(component.usrForm.get('password2').value).toBe(newPwd);
   });
 });
