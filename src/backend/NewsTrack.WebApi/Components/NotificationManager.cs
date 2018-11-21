@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using NewsTrack.Common.Events;
+using NewsTrack.Common.Validations;
 using NewsTrack.WebApi.Configuration;
 
 namespace NewsTrack.WebApi.Components
@@ -74,8 +75,17 @@ namespace NewsTrack.WebApi.Components
                     uBuilder.Path += $"/api/identity/confirm/{model.Email}/{model.SecurityStamp}";
                     uBuilder.Query = "go=" + _configuration.SignInUrl;
                     sBuilder.Append("Your account has been created. Please confirm it by clicking the next link:");
-                    sBuilder.Append("<br/>");
+                    sBuilder.Append("<br/><br/>");
                     sBuilder.Append($"<a href='{uBuilder.Uri.AbsoluteUri}'>Confirm your account</a>");
+                    if (((object)model).HasProperty("Password"))
+                    {
+                        sBuilder.Append("<br/><br/>");
+                        sBuilder.Append("A password has been provided, however, you can change it at any time:");
+                        sBuilder.Append("<br/><br/>");
+                        sBuilder.Append("<b>");
+                        sBuilder.Append(model.Password);
+                        sBuilder.Append("</b>");
+                    }
                     break;
                 case NotificationEventArgs.NotificationType.AccountConfirmed:
                     sBuilder.Append("Your account is enabled and ready to be used.");

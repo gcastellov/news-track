@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NewsTrack.Identity.Results;
 using NewsTrack.WebApi.Dtos;
+using static NewsTrack.Identity.Results.SaveIdentityResult.ResultType;
 
 namespace NewsTrack.WebApi.UnitTests
 {
@@ -10,19 +11,19 @@ namespace NewsTrack.WebApi.UnitTests
         [TestMethod]
         public void GivenGoodSaveIdentityResult_WhenMapping_ThenGetSuccess()
         {
-            var saveIdResult = SaveIdentityResult.Ok;
+            var saveIdResult = Ok;
 
             var dto = CreateIdentityResponseDto.Create(saveIdResult);
 
             Assert.IsTrue(dto.IsSuccessful);
         }
 
-        [DataRow(SaveIdentityResult.InvalidEmail)]
-        [DataRow(SaveIdentityResult.InvalidEmailPattern)]
-        [DataRow(SaveIdentityResult.InvalidUsername)]
-        [DataRow(SaveIdentityResult.PasswordsDontMatch)]
+        [DataRow(InvalidEmail)]
+        [DataRow(InvalidEmailPattern)]
+        [DataRow(InvalidUsername)]
+        [DataRow(PasswordsDontMatch)]
         [TestMethod]
-        public void GivenWrongSaveIdentityResult_WhenMapping_ThenGetFailure(SaveIdentityResult saveIdResult)
+        public void GivenWrongSaveIdentityResult_WhenMapping_ThenGetFailure(SaveIdentityResult.ResultType saveIdResult)
         {
             var dto = CreateIdentityResponseDto.Create(saveIdResult);
 

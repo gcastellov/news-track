@@ -65,7 +65,7 @@ namespace NewsTrack.WebApi.Components
             if (!_identityRepository.ExistsByUsername(username).Result)
             {
                 var result = _identityService.Save(username, email, password, password, IdentityTypes.Admin).Result;
-                if (result != SaveIdentityResult.Ok)
+                if (result.Type != SaveIdentityResult.ResultType.Ok)
                 {
                     throw new Exception("Impossible to create the admin user. Check this out!");
                 }

@@ -14,9 +14,9 @@ namespace NewsTrack.WebApi.Dtos
 
         public CreateIdentityResponseDto() { }
 
-        private CreateIdentityResponseDto(SaveIdentityResult result)
+        private CreateIdentityResponseDto(SaveIdentityResult.ResultType result)
         {
-            IsSuccessful = result == SaveIdentityResult.Ok;
+            IsSuccessful = result == SaveIdentityResult.ResultType.Ok;
             if (!IsSuccessful)
             {
                 Failure = (FailureReason)result;
@@ -26,7 +26,7 @@ namespace NewsTrack.WebApi.Dtos
         public FailureReason Failure { get; protected set; }
 
 
-        public static CreateIdentityResponseDto Create(SaveIdentityResult result)
+        public static CreateIdentityResponseDto Create(SaveIdentityResult.ResultType result)
         {
             return new CreateIdentityResponseDto(result);
         }

@@ -7,6 +7,8 @@ using NewsTrack.Common.Validations;
 using NewsTrack.Identity.Encryption;
 using NewsTrack.Identity.Repositories;
 using NewsTrack.Identity.Results;
+using static NewsTrack.Identity.Results.SaveIdentityResult.ResultType;
+using static NewsTrack.Common.Events.NotificationEventArgs.NotificationType;
 
 namespace NewsTrack.Identity.Services
 {
@@ -28,42 +30,27 @@ namespace NewsTrack.Identity.Services
             SendNotificationEvent = handler;
         }
 
+        public async Task<SaveIdentityResult> Save(string username, string email, IdentityTypes type)
+        {
+            string password = Guid.NewGuid().ToString("N").Substring(0, 8);
+            var result = await Create(username, email, password, password, type);
+            if (result.Type == Ok)
+            {
+                var args = To(AccountCreated, result.Identity);
+                args.Model.Password = password;
+                OnSendNotification(args);
+            }
+            return result;
+        }
+
         public async Task<SaveIdentityResult> Save(string username, string email, string password1, string password2, IdentityTypes type)
         {
-            username.CheckIfNull(nameof(username));
-            email.CheckIfNull(nameof(email));
-            password1.CheckIfNull(nameof(password1));
-            password2.CheckIfNull(nameof(password2));
-
-            if (!Regex.IsMatch(email, EmailPattern, RegexOptions.IgnoreCase))
+            var result = await Create(username, email, password1, password2, type);
+            if (result.Type == Ok)
             {
-                return SaveIdentityResult.InvalidEmailPattern;
+                OnSendNotification(AccountCreated, result.Identity);
             }
-            if (password1 != password2)
-            {
-                return SaveIdentityResult.PasswordsDontMatch;
-            }
-            if (await _identityRepository.ExistsByUsername(username))
-            {
-                return SaveIdentityResult.InvalidUsername;
-            }
-            if (await _identityRepository.ExistsByEmail(email))
-            {
-                return SaveIdentityResult.InvalidEmail;
-            }
-
-            var identity = new Identity
-            {
-                Username = username,
-                Email = email,
-                IdType = type,
-                Password = _cryptoManager.HashPassword(password1),
-                SecurityStamp = Guid.NewGuid().ToString()
-            };
-
-            await _identityRepository.Save(identity);
-            OnSendNotification(NotificationEventArgs.NotificationType.AccountCreated, identity);
-            return SaveIdentityResult.Ok;
+            return result;
         }
 
         public async Task<AuthenticateResult> Authenticate(string email, string password)
@@ -89,7 +76,7 @@ namespace NewsTrack.Identity.Services
                 {                    
                     identity.LockoutEnd = DateTime.UtcNow.AddMinutes(5);
                     status = AuthenticateResult.Lockout;
-                    OnSendNotification(NotificationEventArgs.NotificationType.AccountLockout, identity);
+                    OnSendNotification(AccountLockout, identity);
                 }
 
                 await _identityRepository.Update(identity);
@@ -111,7 +98,7 @@ namespace NewsTrack.Identity.Services
             var identity = await _identityRepository.GetByEmail(email);
             if (identity?.IsEnabled == false && identity.SecurityStamp == securityStamp)
             {
-                OnSendNotification(NotificationEventArgs.NotificationType.AccountConfirmed, identity);
+                OnSendNotification(AccountConfirmed, identity);
                 identity.IsEnabled = true;
                 await _identityRepository.Update(identity);
                 return true;
@@ -141,6 +128,48 @@ namespace NewsTrack.Identity.Services
             return ChangePasswordResult.Ok;
         }
 
+        private async Task<SaveIdentityResult> Create(
+            string username, 
+            string email, 
+            string password1, 
+            string password2, 
+            IdentityTypes type)
+        {
+            username.CheckIfNull(nameof(username));
+            email.CheckIfNull(nameof(email));
+            password1.CheckIfNull(nameof(password1));
+            password2.CheckIfNull(nameof(password2));
+
+            if (!Regex.IsMatch(email, EmailPattern, RegexOptions.IgnoreCase))
+            {
+                return SaveIdentityResult.Create(InvalidEmail);
+            }
+            if (password1 != password2)
+            {
+                return SaveIdentityResult.Create(PasswordsDontMatch);
+            }
+            if (await _identityRepository.ExistsByUsername(username))
+            {
+                return SaveIdentityResult.Create(InvalidUsername);
+            }
+            if (await _identityRepository.ExistsByEmail(email))
+            {
+                return SaveIdentityResult.Create(InvalidEmail);
+            }
+
+            var identity = new Identity
+            {
+                Username = username,
+                Email = email,
+                IdType = type,
+                Password = _cryptoManager.HashPassword(password1),
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            await _identityRepository.Save(identity);
+            return SaveIdentityResult.Create(identity, Ok);
+        }
+
         private void OnSendNotification(NotificationEventArgs.NotificationType type, Identity identity)
         {
             var args = To(type, identity);
@@ -164,7 +193,7 @@ namespace NewsTrack.Identity.Services
                 Username = identity.Username
             };
 
-            if (type == NotificationEventArgs.NotificationType.AccountCreated)
+            if (type == AccountCreated)
             {
                 args.Model = new ExpandoObject();
                 args.Model.Email = identity.Email;

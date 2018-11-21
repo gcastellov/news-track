@@ -70,12 +70,10 @@ namespace NewsTrack.WebApi.Controllers
             var result = await _identityService.Save(
                 dto.Username,
                 dto.Email,
-                dto.Password,
-                dto.ConfirmPassword,
                 IdentityTypes.Contributor
             );
 
-            var response = CreateIdentityResponseDto.Create(result);
+            var response = CreateIdentityResponseDto.Create(result.Type);
             return Ok(response);
         }
 
