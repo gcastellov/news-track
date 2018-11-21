@@ -199,8 +199,6 @@
     "new-user-component": {
         "username": "Nombre de usuario",
         "email": "Email",
-        "new-pwd": "Nueva contraseña",
-        "confirm-pwd": "Confirma la nueva contraseña",
         "action-create": "Crear",
         "failure-reason-one": "Patrón de email incorrecto",
         "failure-reason-two": "Las contraseñas no coinciden",

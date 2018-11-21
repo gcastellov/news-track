@@ -199,8 +199,6 @@
     "new-user-component": {
         "username": "Username",
         "email": "Email",
-        "new-pwd": "New password",
-        "confirm-pwd": "Confirm new password",
         "action-create": "Create",
         "failure-reason-one": "Invalid email pattern",
         "failure-reason-two": "Passwords don't match",
