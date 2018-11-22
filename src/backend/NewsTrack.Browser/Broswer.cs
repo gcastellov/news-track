@@ -149,7 +149,7 @@ namespace NewsTrack.Browser
                                 continue;
                             }
 
-                            elements.Add(htmlNode.Attributes[attribute].Value);
+                            elements.Add(WebUtility.HtmlDecode(htmlNode.Attributes[attribute].Value));
                         }
                     }
                 }
