@@ -105,7 +105,7 @@ Set your website black list in order to warn you that the content you are about 
     "Port": "25"
   }
 ```
-Set your SMTP settings in order to get email warnings in case your account has been blocked.
+Set your SMTP settings in order to get email warnings in case your account has been blocked, account created or account confirmed. Leaving the settings as empty the engine will generate email files into a directory called **outbox**.
 
 ```
   "Tokens": {
