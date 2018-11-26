@@ -13,7 +13,7 @@
       />
 
     </div>
-    <div *ngIf="drafts">
+    <div *ngIf="drafts; else loading">
       <div class="row drafts-container" *ngFor="let draft of drafts">
         <div class="col-sm-12">
             <app-draft [draft]="draft" [isExtended]="false"></app-draft>
@@ -58,4 +58,8 @@
 
 <ng-template #formatter let-r="result" let-t="term">
   {{r.content}}
+</ng-template>
+
+<ng-template #loading>
+  <app-loader></app-loader>
 </ng-template>
