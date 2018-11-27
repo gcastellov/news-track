@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-8" *ngIf="drafts; else loading">
         <div class="row" *ngFor="let draft of drafts">
           <div class="col-sm-12">
               <app-draft [draft]="draft" [isExtended]="false"></app-draft>
@@ -37,3 +37,9 @@
       <app-paginator *ngIf="numberOfPages > 1" [page]="page" [numberOfPages]="numberOfPages" (pageChange)="onPageChange($event)"></app-paginator>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="col-sm-8">
+    <app-loader></app-loader>
+  </div>
+</ng-template>
