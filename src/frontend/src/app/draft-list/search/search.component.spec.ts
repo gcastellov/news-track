@@ -20,6 +20,7 @@ import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
 import { StorageService } from '../../services/storage.service';
 import { AppSettingsService } from '../../services/app-settings.service';
+import { LoaderComponent } from '../../shared/loader/loader.component';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -51,7 +52,8 @@ describe('SearchComponent', () => {
         DraftFooterComponent,
         TagsComponent,
         WebsitesComponent,
-        PaginatorComponent
+        PaginatorComponent,
+        LoaderComponent
        ],
       imports: [
         FormsModule,
