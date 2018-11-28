@@ -17,7 +17,7 @@ namespace NewsTrack.WebApi.UnitTests
 
             var dto = TokenResponseDto.Create(authResult, Username);
 
-            Assert.IsTrue(dto.IsSuccessful);
+            Assert.IsNull(dto.Failure);
         }
 
         [DataRow(AuthenticateResult.Lockout)]
@@ -27,7 +27,7 @@ namespace NewsTrack.WebApi.UnitTests
         {
             var dto = TokenResponseDto.Create(authResult, Username);
 
-            Assert.IsFalse(dto.IsSuccessful);
+            Assert.IsNotNull(dto.Failure);
             Assert.AreEqual((int)dto.Failure, (int)authResult);
         }
     }

@@ -38,6 +38,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var model = await client.GetAsync<Model.Identity>(id);
+            CheckResponse(model);
             return To(model.Source);
         }
 
@@ -54,6 +55,8 @@ namespace NewsTrack.Data.Repositories
 
             var client = GetClient();
             var query = await client.SearchAsync<Model.Identity>(request);
+
+            CheckResponse(query);
             return query.Documents.Count > 0 ? To(query.Documents.ElementAt(0)) : null;
         }
 
@@ -70,6 +73,8 @@ namespace NewsTrack.Data.Repositories
 
             var client = GetClient();
             var query = await client.SearchAsync<Model.Identity>(request);
+
+            CheckResponse(query);
             return query.Documents.Count > 0;
         }
 

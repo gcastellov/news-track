@@ -1,4 +1,5 @@
-﻿using Nest;
+﻿using System;
+using Nest;
 using NewsTrack.Data.Configuration;
 using NewsTrack.Data.Model;
 
@@ -8,19 +9,14 @@ namespace NewsTrack.Data.Repositories
         where TK: class
     {
         protected const int MaxQuerySize = 10000;
-        private readonly IConfigurationProvider _configurationProvider;
-        private static ClientManager ClientManager;
+        private readonly ClientManager _clientManager;
 
         public abstract string IndexName { get; }
         public abstract string TypeName { get; }
 
         protected RepositoryBase(IConfigurationProvider configurationProvider)
         {
-            _configurationProvider = configurationProvider;
-            if (ClientManager == null)
-            {
-                ClientManager = new ClientManager(_configurationProvider);
-            }
+            _clientManager = ClientManager.Create(configurationProvider);
         }
 
         public virtual void Initialize()
@@ -34,10 +30,16 @@ namespace NewsTrack.Data.Repositories
 
         protected ElasticClient GetClient()
         {
-            return ClientManager.GetClient<T>(IndexName, TypeName);
+            return _clientManager.GetClient<T>(IndexName, TypeName);
         }
 
         protected abstract TK To(T model);
         protected abstract T From(TK entity);
+
+        protected void CheckResponse(IResponse response)
+        {
+            if (!response.IsValid)
+                throw new ApplicationException("Impossible to get requested data", response.OriginalException);
+        }
     }
 }

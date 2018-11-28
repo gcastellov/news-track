@@ -39,6 +39,7 @@ namespace NewsTrack.Data.Repositories
                     .Query(m => m.MatchAll())
             );
 
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 
@@ -52,6 +53,7 @@ namespace NewsTrack.Data.Repositories
                     .Query(m => m.MatchAll())
             );
 
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 
@@ -65,6 +67,7 @@ namespace NewsTrack.Data.Repositories
                     .Query(m => m.MatchAll())
             );
 
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 
@@ -80,6 +83,8 @@ namespace NewsTrack.Data.Repositories
 
             var client = GetClient();
             var query = await client.SearchAsync<Model.Draft>(searchDescriptor);
+
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 
@@ -102,6 +107,8 @@ namespace NewsTrack.Data.Repositories
 
             var client = GetClient();
             var query = await client.SearchAsync<Model.Draft>(searchDescriptor);
+
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 
@@ -115,6 +122,7 @@ namespace NewsTrack.Data.Repositories
                     .Sort(o => o.Descending(m => m.CreatedAt))
             );
 
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 
@@ -122,6 +130,8 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var query = await client.CountAsync<Model.Draft>();
+
+            CheckResponse(query);
             return query.Count;
         }
 
@@ -133,12 +143,16 @@ namespace NewsTrack.Data.Repositories
 
             var client = GetClient();
             var query = await client.CountAsync<Model.Draft>(countDescriptor);
+
+            CheckResponse(query);
             return query.Count;
         }
 
         public async Task<IEnumerable<string>> GetTags()
         {
             var query = await GetTagsStatsQuery();
+
+            CheckResponse(query);
             return ((BucketAggregate) query.Aggregations[GroupByTag]).Items
                 .Cast<KeyedBucket<object>>()
                 .Select(t => t.Key.ToString())
@@ -152,12 +166,15 @@ namespace NewsTrack.Data.Repositories
                 m => m.SourceInclude(sf => sf.Tags)
                 );
 
+            CheckResponse(query);
             return query.Source.Tags;
         }
 
         public async Task<IDictionary<string, long>> GetTagsStats()
         {
             var query = await GetTagsStatsQuery();
+
+            CheckResponse(query);
             return ((BucketAggregate)query.Aggregations[GroupByTag]).Items
                 .Cast<KeyedBucket<object>>()
                 .ToDictionary(
@@ -178,6 +195,7 @@ namespace NewsTrack.Data.Repositories
                     .Query(q => q.Wildcard(m => m.Field(f => f.Title).Value(pattern+"*").Strict(false)))                    
             );
 
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 
@@ -190,6 +208,8 @@ namespace NewsTrack.Data.Repositories
                     );
 
             var result = await client.GetAsync<Model.Draft>(id);
+
+            CheckResponse(result);
             return result.Source.Views;
         }
 
@@ -202,6 +222,8 @@ namespace NewsTrack.Data.Repositories
             );
 
             var result = await client.GetAsync<Model.Draft>(id);
+
+            CheckResponse(result);
             return result.Source.Fucks;
         }
 
@@ -209,6 +231,8 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var query = await client.GetAsync<Model.Draft>(id);
+
+            CheckResponse(query);
             return To(query.Source);
         }
 
@@ -232,6 +256,7 @@ namespace NewsTrack.Data.Repositories
                 )
             );
 
+            CheckResponse(query);
             return ((BucketAggregate)query.Aggregations[GroupByWebsite]).Items
                 .Cast<KeyedBucket<object>>()
                 .ToDictionary(
@@ -250,6 +275,7 @@ namespace NewsTrack.Data.Repositories
                     .Sort(o => o.Descending(m => m.Views))
             );
 
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 
@@ -263,6 +289,7 @@ namespace NewsTrack.Data.Repositories
                     .Sort(o => o.Descending(m => m.Fucks))
             );
 
+            CheckResponse(query);
             return query.Documents.Select(To);
         }
 

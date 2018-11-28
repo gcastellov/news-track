@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using NewsTrack.Common.Validations;
 using NewsTrack.Identity.Repositories;
 using NewsTrack.Identity.Results;
 using NewsTrack.Identity.Services;
@@ -13,7 +14,7 @@ using NewsTrack.WebApi.Dtos;
 namespace NewsTrack.WebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthenticationController : Controller
+    public class AuthenticationController : BaseController
     {
         private readonly IConfigurationProvider _configurationProvider;
         private readonly IIdentityService _identityService;
@@ -35,43 +36,49 @@ namespace NewsTrack.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                JwtSecurityToken token = null;
-
-                var result = await _identityService.Authenticate(dto.Username, dto.Password);
-                if (result == AuthenticateResult.Ok)
+                var responseDto = await Envelope(async () =>
                 {
-                    var identity = await _identityRepository.GetByEmail(dto.Username);
-                    var claims = new []
+                    JwtSecurityToken token = null;
+                    var result = await _identityService.Authenticate(dto.Username, dto.Password);
+                    if (result == AuthenticateResult.Ok)
                     {
-                        new Claim(JwtRegisteredClaimNames.Sub, identity.Id.ToString()),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        new Claim(ClaimTypes.Email, identity.Email),                        
-                        new Claim(ClaimTypes.Name, identity.Username), 
-                        new Claim(ClaimTypes.Actor, identity.IdType.ToString()),
-                        new Claim(ClaimTypes.Role, IdentityRoles.ToRole(identity.IdType)) 
-                    };
+                        var identity = await _identityRepository.GetByEmail(dto.Username);
+                        var claims = new[]
+                        {
+                            new Claim(JwtRegisteredClaimNames.Sub, identity.Id.ToString()),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(ClaimTypes.Email, identity.Email),
+                            new Claim(ClaimTypes.Name, identity.Username),
+                            new Claim(ClaimTypes.Actor, identity.IdType.ToString()),
+                            new Claim(ClaimTypes.Role, IdentityRoles.ToRole(identity.IdType))
+                        };
 
-                    var creds = new SigningCredentials(
-                        _configurationProvider.TokenConfiguration.SigningKey,
-                        SecurityAlgorithms.HmacSha256
-                    );
+                        var creds = new SigningCredentials(
+                            _configurationProvider.TokenConfiguration.SigningKey,
+                            SecurityAlgorithms.HmacSha256
+                        );
 
-                    token = new JwtSecurityToken(
-                        _configurationProvider.TokenConfiguration.Issuer,
-                        _configurationProvider.TokenConfiguration.Audience,
-                        claims,
-                        expires: DateTime.Now.AddMinutes(30),
-                        signingCredentials: creds
-                    );
-                }
+                        token = new JwtSecurityToken(
+                            _configurationProvider.TokenConfiguration.Issuer,
+                            _configurationProvider.TokenConfiguration.Audience,
+                            claims,
+                            expires: DateTime.Now.AddMinutes(30),
+                            signingCredentials: creds
+                        );
+                    }
 
-                var response = TokenResponseDto.Create(result, dto.Username);
-                if (token != null)
-                {
-                    response.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                }
+                    var response = TokenResponseDto.Create(result, dto.Username);
+                    if (token != null)
+                    {
+                        response.Token = new JwtSecurityTokenHandler()
+                            .WriteToken(token);
+                    }
 
-                return Ok(response);
+                    return response;
+                });
+
+                responseDto.IsSuccessful = responseDto.Payload.Token.HasValue();
+                return Ok(responseDto);
             }
 
             return BadRequest();

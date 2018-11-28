@@ -10,7 +10,7 @@ namespace NewsTrack.WebApi.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    public class BrowserController : Controller
+    public class BrowserController : BaseController
     {
         private readonly IBroswer _broswer;
         private readonly IMapper _mapper;
@@ -26,9 +26,11 @@ namespace NewsTrack.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _broswer.Get(url.AbsoluteUri);
-                var dto = _mapper.Map<BrowseResponseDto>(response);
-                return Ok(dto);
+                return await Execute(async () =>
+                {
+                    var response = await _broswer.Get(url.AbsoluteUri);
+                    return _mapper.Map<BrowseResponseDto>(response);
+                });
             }
 
             return BadRequest();

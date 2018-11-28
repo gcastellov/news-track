@@ -7,8 +7,10 @@ namespace NewsTrack.Data
     internal class ClientManager
     {
         private readonly IConfigurationProvider _configurationProvider;
+        private static readonly object Locker = new object();
+        private static ClientManager _manager;
 
-        public ClientManager(IConfigurationProvider configurationProvider)
+        private ClientManager(IConfigurationProvider configurationProvider)
         {
             _configurationProvider = configurationProvider;
         }
@@ -24,6 +26,19 @@ namespace NewsTrack.Data
                 );
 
             return new ElasticClient(settings);
+        }
+
+        public static ClientManager Create(IConfigurationProvider configurationProvider)
+        {
+            lock (Locker)
+            {
+                if (_manager == null)
+                {
+                    _manager = new ClientManager(configurationProvider);
+                }
+            }
+
+            return _manager;
         }
     }
 }

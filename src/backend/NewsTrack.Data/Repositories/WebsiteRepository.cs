@@ -50,6 +50,8 @@ namespace NewsTrack.Data.Repositories
 
             var client = GetClient();
             var query = await client.SearchAsync<Model.Website>(request);
+
+            CheckResponse(query);
             return query.Documents.Count > 0;
         }
 

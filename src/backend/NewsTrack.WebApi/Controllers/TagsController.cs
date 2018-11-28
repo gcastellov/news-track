@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NewsTrack.Domain.Repositories;
@@ -8,7 +7,7 @@ using NewsTrack.WebApi.Dtos;
 namespace NewsTrack.WebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class TagsController : Controller
+    public class TagsController : BaseController
     {
         private readonly IDraftRepository _draftRepository;
 
@@ -18,28 +17,31 @@ namespace NewsTrack.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<string>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _draftRepository.GetTags();
+            return await Execute(async () => await _draftRepository.GetTags());
         }
 
         [HttpGet]
         [Route("stats")]
-        public async Task<TagsStatsResponseDto> GetStats()
+        public async Task<IActionResult> GetStats()
         {
-            var tags = await _draftRepository.GetTagsStats();
-            if (tags.Any())
+            return await Execute(async () =>
             {
-                return new TagsStatsResponseDto
+                var tags = await _draftRepository.GetTagsStats();
+                if (tags.Any())
                 {
-                    TagsScore = tags.Select(t => new TagsScoreDto { Tag = t.Key, Score = t.Value }),
-                    AverageScore = tags.Values.Average(),
-                    MaxScore = tags.Values.Max(),
-                    Count = tags.Count
-                };
-            }
+                    return new TagsStatsResponseDto
+                    {
+                        TagsScore = tags.Select(t => new TagsScoreDto { Tag = t.Key, Score = t.Value }),
+                        AverageScore = tags.Values.Average(),
+                        MaxScore = tags.Values.Max(),
+                        Count = tags.Count
+                    };
+                }
 
-            return new TagsStatsResponseDto();
+                return new TagsStatsResponseDto();
+            });
         }
     }
 }

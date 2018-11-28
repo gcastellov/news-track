@@ -28,6 +28,8 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var query = await client.GetAsync<Model.DraftRelationship>(id);
+
+            CheckResponse(query);
             return To(query.Source);
         }
 

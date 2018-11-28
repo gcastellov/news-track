@@ -13,7 +13,7 @@ namespace NewsTrack.WebApi.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    public class IdentityController : Controller
+    public class IdentityController : BaseController
     {
         private readonly IIdentityHelper _identityHelper;
         private readonly IIdentityRepository _identityRepository;
@@ -35,11 +35,12 @@ namespace NewsTrack.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var id = _identityHelper.Id;
-            var identity = await _identityRepository.Get(id);
-            var dto = _mapper.Map<IdentityDto>(identity);
-            dto.IsSuccessful = true;
-            return Ok(dto);
+            return await Execute(async () =>
+            {
+                var id = _identityHelper.Id;
+                var identity = await _identityRepository.Get(id);
+                return _mapper.Map<IdentityDto>(identity);
+            });
         }
 
         [HttpPost]
@@ -51,15 +52,17 @@ namespace NewsTrack.WebApi.Controllers
                 return BadRequest();
             }
 
-            var id = _identityHelper.Id;
-            var result = await _identityService.ChangePassword(
-                id, 
-                dto.CurrentPassword, 
-                dto.Password, 
-                dto.ConfirmPassword);
+            return await Execute(async () =>
+            {
+                var id = _identityHelper.Id;
+                var result = await _identityService.ChangePassword(
+                    id,
+                    dto.CurrentPassword,
+                    dto.Password,
+                    dto.ConfirmPassword);
 
-            var response = ChangePasswordResponseDto.Create(result);
-            return Ok(response);
+                return ChangePasswordResponseDto.Create(result);
+            });
         }
 
         [HttpPost]
@@ -72,14 +75,16 @@ namespace NewsTrack.WebApi.Controllers
                 return BadRequest();
             }
 
-            var result = await _identityService.Save(
-                dto.Username,
-                dto.Email,
-                IdentityTypes.Contributor
-            );
+            return await Execute(async () =>
+            {
+                var result = await _identityService.Save(
+                    dto.Username,
+                    dto.Email,
+                    IdentityTypes.Contributor
+                );
 
-            var response = CreateIdentityResponseDto.Create(result.Type);
-            return Ok(response);
+                return CreateIdentityResponseDto.Create(result.Type);
+            });
         }
 
         [HttpGet]

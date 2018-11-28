@@ -9,7 +9,7 @@ namespace NewsTrack.WebApi.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    public class WebsiteController : Controller
+    public class WebsiteController : BaseController
     {
         private readonly IWebsiteRepository _websiteRepository;
 
@@ -22,15 +22,16 @@ namespace NewsTrack.WebApi.Controllers
         [Route("check")]
         public async Task<IActionResult> Check(Uri uri)
         {
-            var baseUri = new Uri(uri.Host, UriKind.Relative);
-            var isForbidden = await _websiteRepository.Exists(baseUri);
-            var response = new WebsiteDto
+            return await Execute(async () =>
             {
-                IsSuccessful = !isForbidden,
-                Uri = uri
-            };
-
-            return Ok(response);
+                var baseUri = new Uri(uri.Host, UriKind.Relative);
+                var isForbidden = await _websiteRepository.Exists(baseUri);
+                return new WebsiteDto
+                {
+                    IsSuccessful = !isForbidden,
+                    Uri = uri
+                };
+            });
         }
     }
 }

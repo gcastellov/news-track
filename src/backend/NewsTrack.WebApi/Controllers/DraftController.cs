@@ -15,7 +15,7 @@ namespace NewsTrack.WebApi.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    public class DraftController : Controller
+    public class DraftController : BaseController
     {
         private readonly IDraftService _draftService;
         private readonly IBroswer _broswer;
@@ -39,26 +39,27 @@ namespace NewsTrack.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                var content = await _broswer.GetContent(request.Url);
-                
-                var draft = new Draft
+                return await Execute(async () =>
                 {
-                    Uri = new Uri(request.Url),
-                    Picture = new Uri(request.Picture),
-                    Title = request.Title,
-                    Paragraphs = request.Paragraphs,
-                    Tags = request.Tags,
-                    User = new User
-                    {
-                        Id = _identityHelper.Id,
-                        Username = _identityHelper.Username
-                    }
-                };
+                    var content = await _broswer.GetContent(request.Url);
 
-                await _draftService.Save(draft, content);
-                var dto = _mapper.Map<DraftResponseDto>(draft);
-                dto.IsSuccessful = true;
-                return Ok(dto);
+                    var draft = new Draft
+                    {
+                        Uri = new Uri(request.Url),
+                        Picture = new Uri(request.Picture),
+                        Title = request.Title,
+                        Paragraphs = request.Paragraphs,
+                        Tags = request.Tags,
+                        User = new User
+                        {
+                            Id = _identityHelper.Id,
+                            Username = _identityHelper.Username
+                        }
+                    };
+
+                    await _draftService.Save(draft, content);
+                    return _mapper.Map<DraftResponseDto>(draft);
+                });
             }
 
             return BadRequest();
@@ -69,18 +70,21 @@ namespace NewsTrack.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                var items = relationship.ToArray();
-                if (items.Length > 0)
+                return await Execute(async () =>
                 {
-                    await _draftService.SetRelationships(id, items.Select(i => new DraftRelationshipItem
+                    var items = relationship.ToArray();
+                    if (items.Length > 0)
                     {
-                        Id = i.Id,
-                        Title = i.Title,
-                        Url = i.Url
-                    }));
+                        await _draftService.SetRelationships(id, items.Select(i => new DraftRelationshipItem
+                        {
+                            Id = i.Id,
+                            Title = i.Title,
+                            Url = i.Url
+                        }));                        
+                    }
 
-                    return Ok(new DraftRelationshipResponseDto { Id = id, IsSuccessful = true });
-                }
+                    return new DraftRelationshipResponseDto { Id = id, IsSuccessful = true };
+                });
             }
 
             return BadRequest();

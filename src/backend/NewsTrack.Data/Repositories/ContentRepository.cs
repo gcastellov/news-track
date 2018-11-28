@@ -49,6 +49,7 @@ namespace NewsTrack.Data.Repositories
                     )
             );
 
+            CheckResponse(query);
             return query.Hits.ToDictionary(
                 h => h.Id,
                 h => h.Highlights.Values.SelectMany(v => v.Highlights)

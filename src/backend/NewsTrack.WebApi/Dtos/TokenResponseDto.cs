@@ -2,7 +2,7 @@
 
 namespace NewsTrack.WebApi.Dtos
 {
-    public class TokenResponseDto : ResponseBaseDto
+    public class TokenResponseDto
     {
         public enum FailureReason
         {
@@ -12,13 +12,12 @@ namespace NewsTrack.WebApi.Dtos
 
         public string Token { get; set; }
         public string Username { get; protected set; }
-        public FailureReason Failure { get; protected set; }
+        public FailureReason? Failure { get; protected set; }
 
         private TokenResponseDto(AuthenticateResult result, string username)
         {
-            IsSuccessful = result == AuthenticateResult.Ok;
             Username = username;
-            if (!IsSuccessful)
+            if (result != AuthenticateResult.Ok)
             {
                 Failure = (FailureReason)result;
             }
