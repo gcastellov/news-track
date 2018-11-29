@@ -12,13 +12,14 @@ import { TestBedHelper } from '../../testing/testbed.helper';
 import { BackendApiService } from '../../services/backend-api.service';
 import { Observable } from 'rxjs/Observable';
 import { ChangePasswordResponseDto } from '../../services/Dtos/ChangePasswordResponseDto';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
 
   const apiServiceMock = <BackendApiService>{
-    changePassword: (r) => new Observable<ChangePasswordResponseDto>(observer => observer.complete)
+    changePassword: (r) => new Observable<Envelope<ChangePasswordResponseDto>>(observer => observer.complete)
   };
 
   beforeEach(async(() => {
@@ -63,10 +64,9 @@ describe('ChangePasswordComponent', () => {
     component.pwdForm.controls['password2'].setValue(newPwd);
 
     const responseDto = new ChangePasswordResponseDto();
-    responseDto.isSuccessful = true;
 
     const changePasswordMock = spyOn(apiServiceMock, 'changePassword').and
-      .callFake(() => new Observable<ChangePasswordResponseDto>(o => o.next(responseDto)));
+      .callFake(() => new Observable<Envelope<ChangePasswordResponseDto>>(o => o.next(new Envelope(responseDto))));
 
     component.changePassword();
 
@@ -83,17 +83,16 @@ describe('ChangePasswordComponent', () => {
     component.pwdForm.controls['password1'].setValue(newPwd);
     component.pwdForm.controls['password2'].setValue(newPwd);
 
-    const responseDto = new ChangePasswordResponseDto();
-    responseDto.isSuccessful = false;
-    responseDto.failure = 1;
+    const dto = new ChangePasswordResponseDto();
+    dto.failure = 1;
 
     const changePasswordMock = spyOn(apiServiceMock, 'changePassword').and
-      .callFake(() => new Observable<ChangePasswordResponseDto>(o => o.next(responseDto)));
+      .callFake(() => new Observable<Envelope<ChangePasswordResponseDto>>(o => o.next(Envelope.AsFailure(dto))));
 
     component.changePassword();
 
     expect(changePasswordMock).toHaveBeenCalled();
-    expect(component.failureReason).toBe(responseDto.failure);
+    expect(component.failureReason).toBe(dto.failure);
     expect(component.pwdForm.get('currentPassword').value).toBe(currentPwd);
     expect(component.pwdForm.get('password1').value).toBe(newPwd);
     expect(component.pwdForm.get('password2').value).toBe(newPwd);

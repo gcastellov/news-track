@@ -18,7 +18,7 @@ export class MostfuckingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.getMostFucking(this.take).subscribe(l => this.mostFucking = l);
+    this.apiService.getMostFucking(this.take).subscribe(l => this.mostFucking = l.payload);
   }
 
   go(id: string) {

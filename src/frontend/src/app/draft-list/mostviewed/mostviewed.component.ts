@@ -19,7 +19,7 @@ export class MostviewedComponent implements OnInit {
    }
 
   ngOnInit() {
-    this._apiService.getMostViewed(this.take).subscribe(l => this.mostViewed = l);
+    this._apiService.getMostViewed(this.take).subscribe(l => this.mostViewed = l.payload);
   }
 
   go(id: string) {

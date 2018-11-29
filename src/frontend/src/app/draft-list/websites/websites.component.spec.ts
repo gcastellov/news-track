@@ -12,6 +12,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 import { WebsiteStatsDto } from '../../services/Dtos/WebsiteStatsDto';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('WebsitesComponent', () => {
   let component: WebsitesComponent;
@@ -19,7 +20,7 @@ describe('WebsitesComponent', () => {
   const websiteStats = DataBuilder.getWebsitesStatsDto();
 
   const apiServiceMock = <BackendApiService>{
-    getWebsites: (take) => new Observable<WebsiteStatsDto[]>(observer => observer.next(websiteStats))
+    getWebsites: (take) => new Observable<Envelope<WebsiteStatsDto[]>>(observer => observer.next(new Envelope(websiteStats)))
   };
 
   beforeEach(async(() => {

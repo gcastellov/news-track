@@ -24,9 +24,9 @@ export class TagsComponent implements OnInit {
     this._apiService.getStatsTags().subscribe(
       t => {
         this.tags = [];
-        if (t.tagsScore) {
-          this.averageScore = t.averageScore;
-          this.calcScores(t.tagsScore);
+        if (t.payload.tagsScore) {
+          this.averageScore = t.payload.averageScore;
+          this.calcScores(t.payload.tagsScore);
         }
       });
   }

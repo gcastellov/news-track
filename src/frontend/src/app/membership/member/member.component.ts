@@ -14,7 +14,7 @@ export class MemberComponent implements OnInit {
   constructor(private _apiService: BackendApiService) { }
 
   ngOnInit() {
-    this._apiService.getIdentity().subscribe(i => this.identity = i);
+    this._apiService.getIdentity().subscribe(i => this.identity = i.payload);
   }
 
 }

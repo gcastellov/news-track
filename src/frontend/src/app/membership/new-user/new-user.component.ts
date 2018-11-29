@@ -32,7 +32,7 @@ export class NewUserComponent {
           this.usrForm.controls['username'].setValue('');
           this.usrForm.controls['email'].setValue('');
         } else {
-          this.failureReason = p.failure;
+          this.failureReason = p.payload.failure;
         }
     });
   }

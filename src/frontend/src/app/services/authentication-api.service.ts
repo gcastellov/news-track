@@ -7,6 +7,7 @@ import { AuthenticationDto } from './Dtos/AuthenticationDto';
 import { TokenResponseDto } from './Dtos/TokenResponseDto';
 import { AuthenticationResult } from './Dtos/AuthenticationResult';
 import { StorageService } from './storage.service';
+import { Envelope } from './Dtos/Envelope';
 
 @Injectable()
 export class AuthenticationApiService {
@@ -28,14 +29,14 @@ export class AuthenticationApiService {
         return new Observable(observer => {
             const result = new AuthenticationResult();
             result.username = auth.username;
-            this._client.post<TokenResponseDto>(authUrl, auth).subscribe(
+            this._client.post<Envelope<TokenResponseDto>>(authUrl, auth).subscribe(
                 d => {
                     if (d.isSuccessful) {
-                        this.setCredential(d.token, d.username);
-                        result.token = d.token;
+                        this.setCredential(d.payload.token, d.payload.username);
+                        result.token = d.payload.token;
                         result.isSuccess = true;
                     } else {
-                        result.failureReason = d.failure;
+                        result.failureReason = d.payload.failure;
                     }
 
                     observer.next(result);

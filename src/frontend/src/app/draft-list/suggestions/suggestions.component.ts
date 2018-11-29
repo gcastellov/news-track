@@ -27,7 +27,7 @@ export class SuggestionsComponent implements OnInit {
     this.draftIds = new Observable<string[]>(observer => this.ob = observer);
     this.draftIds.subscribe(s => {
       s.forEach(id => {
-        _apiService.getDraft(id).subscribe(d => this.drafts.push(d));
+        _apiService.getDraft(id).subscribe(d => this.drafts.push(d.payload));
       });
     });
   }
@@ -49,8 +49,8 @@ export class SuggestionsComponent implements OnInit {
 
   private getSuggestions() {
     this._apiService.getAllDraftSuggestions(this.id, this.take, this.skip).subscribe(s => {
-      this.ob.next(s.suggestedIds);
-      this.count = s.count;
+      this.ob.next(s.payload.suggestedIds);
+      this.count = s.payload.count;
     });
   }
 }

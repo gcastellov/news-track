@@ -11,6 +11,7 @@ import { httpLoaderFactory } from '../../app.module';
 import { BackendApiService } from '../../services/backend-api.service';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('LatestComponent', () => {
   let component: LatestComponent;
@@ -18,7 +19,7 @@ describe('LatestComponent', () => {
 
   const draftDigests = DataBuilder.getDraftDigestsDto();
   const apiServiceMock = <BackendApiService>{
-    getLatest: (take) => new Observable(observer => observer.next(draftDigests))
+    getLatest: (take) => new Observable(observer => observer.next(new Envelope(draftDigests)))
   };
 
   beforeEach(async(() => {

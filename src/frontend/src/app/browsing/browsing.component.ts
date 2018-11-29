@@ -26,7 +26,7 @@ export class BrowsingComponent implements OnInit {
 
   ngOnInit(): void {
     const availableTags = this._apiService.getTags();
-    availableTags.subscribe(data => this.tags = data);
+    availableTags.subscribe(data => this.tags = data.payload);
     if (this.draft.browseResult) {
       this.url = this.draft.browseResult.uri;
     }
@@ -36,9 +36,9 @@ export class BrowsingComponent implements OnInit {
     this.draft.initialize();
     this.draft.url = this.url;
     this._apiService.checkWebsite(this.draft.url).subscribe(r => {
-      this.isForbidden = !r.isSuccessful;
+      this.isForbidden = !r.payload.isAccepted;
     });
-    this._apiService.browse(this.draft.url).subscribe(data => this.draft.setData(data));
+    this._apiService.browse(this.draft.url).subscribe(data => this.draft.setData(data.payload));
   }
 
   onSend(): void {

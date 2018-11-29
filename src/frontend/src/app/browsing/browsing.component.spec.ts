@@ -22,15 +22,16 @@ import { TestBedHelper } from '../testing/testbed.helper';
 import { DataBuilder } from '../testing/data.builder';
 import { IBrowseResult } from '../services/Dtos/IBrowseResult';
 import { WebsiteDto } from '../services/Dtos/WebsiteDto';
+import { Envelope } from '../services/Dtos/Envelope';
 
 describe('BrowsingComponent', () => {
   let component: BrowsingComponent;
   let fixture: ComponentFixture<BrowsingComponent>;
 
   const apiServiceMock = <BackendApiService>{
-    getTags: () => new Observable<string[]>(observer => observer.next(DataBuilder.getTags())),
-    checkWebsite: (url) => new Observable<WebsiteDto>(observer => observer.complete),
-    browse: (url) => new Observable<IBrowseResult>(observer => observer.complete)
+    getTags: () => new Observable<Envelope<string[]>>(observer => observer.next(new Envelope(DataBuilder.getTags()))),
+    checkWebsite: (url) => new Observable<Envelope<WebsiteDto>>(observer => observer.complete),
+    browse: (url) => new Observable<Envelope<IBrowseResult>>(observer => observer.complete)
   };
 
   beforeEach(async(() => {
@@ -108,12 +109,13 @@ describe('BrowsingComponent', () => {
     component.url = 'http://www.some.domain.com/resource';
     const checkWebsiteMock = spyOn(apiServiceMock, 'checkWebsite').and.callThrough();
     const browseMock = spyOn(apiServiceMock, 'browse').and.returnValue(
-      new Observable<IBrowseResult>(observer => observer.next({
+      new Observable<Envelope<IBrowseResult>>(observer => observer.next(
+        new Envelope({
         uri: component.url,
         titles: ['Title One', 'Title Two'],
         paragraphs: ['Paragraph One', 'Paragraph Two'],
         pictures: [ 'http://www.some.domain.com/pic.png']
-      })));
+      }))));
 
     component.onFind();
 

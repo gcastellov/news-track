@@ -11,6 +11,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 import { httpLoaderFactory } from '../../app.module';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('MostfuckingComponent', () => {
   let component: MostfuckingComponent;
@@ -18,7 +19,7 @@ describe('MostfuckingComponent', () => {
 
   const draftDigests = DataBuilder.getDraftDigestsDto();
   const apiServiceMock = <BackendApiService>{
-    getMostFucking: (take) => new Observable(observer => observer.next(draftDigests))
+    getMostFucking: (take) => new Observable(observer => observer.next(new Envelope(draftDigests)))
   };
 
   beforeEach(async(() => {

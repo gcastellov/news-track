@@ -12,6 +12,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 import { TagsStatsResponseDto, TagScore } from '../../services/Dtos/TagsStatsResponseDto';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('TagsComponent', () => {
   let component: TagsComponent;
@@ -19,7 +20,7 @@ describe('TagsComponent', () => {
   const stats = DataBuilder.getTagsStatsDto();
 
   const apiServiceMock = <BackendApiService>{
-    getStatsTags: () => new Observable<TagsStatsResponseDto>(observer => observer.next(stats))
+    getStatsTags: () => new Observable<Envelope<TagsStatsResponseDto>>(observer => observer.next(new Envelope(stats)))
   };
 
   beforeEach(async(() => {

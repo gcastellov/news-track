@@ -20,7 +20,7 @@ export class WebsitesComponent implements OnInit {
    }
 
   ngOnInit() {
-    this._apiService.getWebsites(this.take).subscribe(w => this.websites = w);
+    this._apiService.getWebsites(this.take).subscribe(w => this.websites = w.payload);
   }
 
   onSelected(website: string) {

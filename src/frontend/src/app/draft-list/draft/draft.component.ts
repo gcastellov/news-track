@@ -43,7 +43,7 @@ export class DraftComponent {
 
   fuck() {
     this._storageService.setItem(this.draft.id, this.draft.id);
-    this._apiService.setFuck(this.draft.id).subscribe(f => this.draft.fucks = f.amount);
+    this._apiService.setFuck(this.draft.id).subscribe(f => this.draft.fucks = f.payload.amount);
   }
 
   getExpression(expresssions: string[]): string {

@@ -49,8 +49,8 @@ export class SearchComponent implements OnInit {
 
   search() {
     this._apiService.advancedSearch(this.website, this.pattern, this.tags, this.page, this.take).subscribe(d => {
-      this.count = d.count;
-      this.drafts = d.news;
+      this.count = d.payload.count;
+      this.drafts = d.payload.news;
       this.numberOfPages = this.count / this.take;
     });
   }

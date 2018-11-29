@@ -1,5 +1,4 @@
 export class WebsiteDto {
-    isSuccessful: boolean;
+    isAccepted: boolean;
     uri: string;
-    at: Date;
 }

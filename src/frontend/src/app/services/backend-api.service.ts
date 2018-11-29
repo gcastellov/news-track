@@ -23,6 +23,7 @@ import { ChangePassworRequestDto } from './Dtos/ChangePasswordRequestDto';
 import { DraftSuggestionIdsDto } from './Dtos/DraftSuggestionIdsDto';
 import { CreateIdentityResponseDto } from './Dtos/CreateIdentityResponseDto';
 import { CreateIdentityRequestDto } from './Dtos/CreateIdentityRequestDto';
+import { Envelope } from './Dtos/Envelope';
 
 @Injectable()
 export class BackendApiService {
@@ -30,124 +31,124 @@ export class BackendApiService {
   constructor(private _client: HttpClient, private _authService: AuthenticationApiService) {
   }
 
-  browse(url: string): Observable<IBrowseResult> {
+  browse(url: string): Observable<Envelope<IBrowseResult>> {
     const browseUrl = `${environment.baseUrl}/api/browser/browse`;
     const params = new HttpParams().set('url', url);
     const headers = this._authService.getTokenHeaders();
-    return this._client.get<IBrowseResult>(browseUrl, {params: params, headers: headers});
+    return this._client.get<Envelope<IBrowseResult>>(browseUrl, {params: params, headers: headers});
   }
 
-  setDraft(request: DraftRequestDto): Observable<DraftResponseDto> {
+  setDraft(request: DraftRequestDto): Observable<Envelope<DraftResponseDto>> {
     const draftUrl = `${environment.baseUrl}/api/draft`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.post<DraftResponseDto>(draftUrl, request, {headers: headers});
+    return this._client.post<Envelope<DraftResponseDto>>(draftUrl, request, {headers: headers});
   }
 
-  setDraftRelationship(id: string, relationship: DraftRelationshipDto[]): Observable<DraftRelationshipResponseDto> {
+  setDraftRelationship(id: string, relationship: DraftRelationshipDto[]): Observable<Envelope<DraftRelationshipResponseDto>> {
     const relationshipUrl = `${environment.baseUrl}/api/draft/${id}/relationship`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.post<DraftRelationshipResponseDto>(relationshipUrl, relationship, {headers: headers});
+    return this._client.post<Envelope<DraftRelationshipResponseDto>>(relationshipUrl, relationship, {headers: headers});
   }
 
-  setVisit(id: string): Observable<IncrementalResponseDto> {
+  setVisit(id: string): Observable<Envelope<IncrementalResponseDto>> {
     const setVisitUrl = `${environment.baseUrl}/api/news/entry/${id}/visit`;
-    return this._client.patch<IncrementalResponseDto>(setVisitUrl, null);
+    return this._client.patch<Envelope<IncrementalResponseDto>>(setVisitUrl, null);
   }
 
-  setFuck(id: string): Observable<IncrementalResponseDto> {
+  setFuck(id: string): Observable<Envelope<IncrementalResponseDto>> {
     const setFuckUrl = `${environment.baseUrl}/api/news/entry/${id}/fuck`;
-    return this._client.patch<IncrementalResponseDto>(setFuckUrl, null);
+    return this._client.patch<Envelope<IncrementalResponseDto>>(setFuckUrl, null);
   }
 
-  getLatestDrafts(page: number, take: number): Observable<DraftListDto> {
+  getLatestDrafts(page: number, take: number): Observable<Envelope<DraftListDto>> {
     const newsUrl = `${environment.baseUrl}/api/news/latest`;
     const params = new HttpParams()
       .set('page', page.toString())
       .set('count', take.toString());
-    return this._client.get<DraftListDto>(newsUrl, {params: params});
+    return this._client.get<Envelope<DraftListDto>>(newsUrl, {params: params});
   }
 
-  getMostViewedDrafts(page: number, take: number): Observable<DraftListDto> {
+  getMostViewedDrafts(page: number, take: number): Observable<Envelope<DraftListDto>> {
     const newsUrl = `${environment.baseUrl}/api/news/mostviewed`;
     const params = new HttpParams()
       .set('page', page.toString())
       .set('count', take.toString());
-    return this._client.get<DraftListDto>(newsUrl, {params: params});
+    return this._client.get<Envelope<DraftListDto>>(newsUrl, {params: params});
   }
 
-  getMostFuckedDrafts(page: number, take: number): Observable<DraftListDto> {
+  getMostFuckedDrafts(page: number, take: number): Observable<Envelope<DraftListDto>> {
     const newsUrl = `${environment.baseUrl}/api/news/mostfucked`;
     const params = new HttpParams()
       .set('page', page.toString())
       .set('count', take.toString());
-    return this._client.get<DraftListDto>(newsUrl, {params: params});
+    return this._client.get<Envelope<DraftListDto>>(newsUrl, {params: params});
   }
 
-  getLatest(take: number): Observable<DraftDigestDto[]> {
+  getLatest(take: number): Observable<Envelope<DraftDigestDto[]>> {
     const latestUrl = `${environment.baseUrl}/api/news/top/latest`;
     const params = new HttpParams().set('take', take.toString());
-    return this._client.get<DraftDigestDto[]>(latestUrl, {params: params});
+    return this._client.get<Envelope<DraftDigestDto[]>>(latestUrl, {params: params});
   }
 
-  getMostViewed(take: number): Observable<DraftDigestDto[]> {
+  getMostViewed(take: number): Observable<Envelope<DraftDigestDto[]>> {
     const mostViewedUrl = `${environment.baseUrl}/api/news/top/viewed`;
     const params = new HttpParams().set('take', take.toString());
-    return this._client.get<DraftDigestDto[]>(mostViewedUrl, {params: params});
+    return this._client.get<Envelope<DraftDigestDto[]>>(mostViewedUrl, {params: params});
   }
 
-  getMostFucking(take: number): Observable<DraftDigestDto[]> {
+  getMostFucking(take: number): Observable<Envelope<DraftDigestDto[]>> {
     const mostFuckingUrl = `${environment.baseUrl}/api/news/top/fucking`;
     const params = new HttpParams().set('take', take.toString());
-    return this._client.get<DraftDigestDto[]>(mostFuckingUrl, {params: params});
+    return this._client.get<Envelope<DraftDigestDto[]>>(mostFuckingUrl, {params: params});
   }
 
-  getDraft(id: string): Observable<DraftDto> {
+  getDraft(id: string): Observable<Envelope<DraftDto>> {
     const newsUrl = `${environment.baseUrl}/api/news/entry/${id}`;
-    return this._client.get<DraftDto>(newsUrl);
+    return this._client.get<Envelope<DraftDto>>(newsUrl);
   }
 
-  getDraftRelationship(id: string): Observable<DraftDigestDto[]> {
+  getDraftRelationship(id: string): Observable<Envelope<DraftDigestDto[]>> {
     const relationshipUrl = `${environment.baseUrl}/api/news/entry/${id}/relationship`;
-    return this._client.get<DraftDigestDto[]>(relationshipUrl);
+    return this._client.get<Envelope<DraftDigestDto[]>>(relationshipUrl);
   }
 
-  getDraftSuggestions(id: string, take: number): Observable<DraftSuggestionsDto> {
+  getDraftSuggestions(id: string, take: number): Observable<Envelope<DraftSuggestionsDto>> {
     const params = new HttpParams().set('take', take.toString());
     const relationshipUrl = `${environment.baseUrl}/api/news/entry/${id}/suggestions`;
-    return this._client.get<DraftSuggestionsDto>(relationshipUrl, {params: params});
+    return this._client.get<Envelope<DraftSuggestionsDto>>(relationshipUrl, {params: params});
   }
 
-  getAllDraftSuggestions(id: string, take: number, skip: number): Observable<DraftSuggestionIdsDto> {
+  getAllDraftSuggestions(id: string, take: number, skip: number): Observable<Envelope<DraftSuggestionIdsDto>> {
     const params = new HttpParams()
       .set('take', take.toString())
       .set('skip', skip.toString());
     const relationshipUrl = `${environment.baseUrl}/api/news/entry/${id}/suggestions/all`;
-    return this._client.get<DraftSuggestionIdsDto>(relationshipUrl, {params: params});
+    return this._client.get<Envelope<DraftSuggestionIdsDto>>(relationshipUrl, {params: params});
   }
 
-  getTags(): Observable<string[]> {
+  getTags(): Observable<Envelope<string[]>> {
     const tagsUrl = `${environment.baseUrl}/api/tags`;
-    return this._client.get<string[]>(tagsUrl);
+    return this._client.get<Envelope<string[]>>(tagsUrl);
   }
 
-  getWebsites(take: number): Observable<WebsiteStatsDto[]> {
+  getWebsites(take: number): Observable<Envelope<WebsiteStatsDto[]>> {
     const websitesUrl = `${environment.baseUrl}/api/news/top/websites`;
     const params = new HttpParams().set('take', take.toString());
-    return this._client.get<WebsiteStatsDto[]>(websitesUrl, {params: params});
+    return this._client.get<Envelope<WebsiteStatsDto[]>>(websitesUrl, {params: params});
   }
 
-  getStatsTags(): Observable<TagsStatsResponseDto> {
+  getStatsTags(): Observable<Envelope<TagsStatsResponseDto>> {
     const tagsUrl = `${environment.baseUrl}/api/tags/stats`;
-    return this._client.get<TagsStatsResponseDto>(tagsUrl);
+    return this._client.get<Envelope<TagsStatsResponseDto>>(tagsUrl);
   }
 
-  search(pattern: string): Observable<SearchResultDto[]> {
+  search(pattern: string): Observable<Envelope<SearchResultDto[]>> {
     const searchUrl = `${environment.baseUrl}/api/search`;
     const params = new HttpParams().set('query', pattern);
-    return this._client.get<SearchResultDto[]>(searchUrl, {params: params});
+    return this._client.get<Envelope<SearchResultDto[]>>(searchUrl, {params: params});
   }
 
-  advancedSearch(website: string, pattern: string, tags: string[], page: number, take: number): Observable<DraftListDto> {
+  advancedSearch(website: string, pattern: string, tags: string[], page: number, take: number): Observable<Envelope<DraftListDto>> {
     const newsUrl = `${environment.baseUrl}/api/search/advanced`;
     let params = new HttpParams()
       .set('website', website)
@@ -159,26 +160,26 @@ export class BackendApiService {
         params = params.append('tags', tags[i]);
     }
 
-    return this._client.get<DraftListDto>(newsUrl, {params: params});
+    return this._client.get<Envelope<DraftListDto>>(newsUrl, {params: params});
   }
 
-  checkWebsite(url: string): Observable<WebsiteDto> {
+  checkWebsite(url: string): Observable<Envelope<WebsiteDto>> {
     const checkUrl = `${environment.baseUrl}/api/website/check`;
     const params = new HttpParams().set('uri', url);
     const headers = this._authService.getTokenHeaders();
-    return this._client.get<WebsiteDto>(checkUrl, {params: params, headers: headers});
+    return this._client.get<Envelope<WebsiteDto>>(checkUrl, {params: params, headers: headers});
   }
 
-  getIdentity(): Observable<IdentityDto> {
+  getIdentity(): Observable<Envelope<IdentityDto>> {
     const url = `${environment.baseUrl}/api/identity`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.get<IdentityDto>(url, {headers: headers});
+    return this._client.get<Envelope<IdentityDto>>(url, {headers: headers});
   }
 
-  changePassword(req: ChangePassworRequestDto): Observable<ChangePasswordResponseDto> {
+  changePassword(req: ChangePassworRequestDto): Observable<Envelope<ChangePasswordResponseDto>> {
     const url = `${environment.baseUrl}/api/identity/password/change`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.post<ChangePasswordResponseDto>(url, req, { headers: headers });
+    return this._client.post<Envelope<ChangePasswordResponseDto>>(url, req, { headers: headers });
   }
 
   processSuggestions(): Observable<boolean> {
@@ -187,10 +188,10 @@ export class BackendApiService {
     return this._client.post(url, null, { headers: headers }).map((res: any) => res.statusCode === 202);
   }
 
-  createUser(req: CreateIdentityRequestDto): Observable<CreateIdentityResponseDto> {
+  createUser(req: CreateIdentityRequestDto): Observable<Envelope<CreateIdentityResponseDto>> {
     const url = `${environment.baseUrl}/api/identity/create`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.post<CreateIdentityResponseDto>(url, req, { headers: headers });
+    return this._client.post<Envelope<CreateIdentityResponseDto>>(url, req, { headers: headers });
   }
 
 }

@@ -11,6 +11,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 import { httpLoaderFactory } from '../../app.module';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('MostviewedComponent', () => {
   let component: MostviewedComponent;
@@ -18,7 +19,7 @@ describe('MostviewedComponent', () => {
 
   const draftDigests = DataBuilder.getDraftDigestsDto();
   const apiServiceMock = <BackendApiService>{
-    getMostViewed: (take) => new Observable(observer => observer.next(draftDigests))
+    getMostViewed: (take) => new Observable(observer => observer.next(new Envelope(draftDigests)))
   };
 
   beforeEach(async(() => {

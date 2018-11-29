@@ -24,6 +24,7 @@ import { AppSettingsService } from '../../services/app-settings.service';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
 import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('BrowsingRelationshipComponent', () => {
   let component: BrowsingRelationshipComponent;
@@ -36,7 +37,7 @@ describe('BrowsingRelationshipComponent', () => {
       const draftList = new DraftListDto();
       draftList.count = drafts.length;
       draftList.news = drafts;
-      return new Observable<DraftListDto>(observer => observer.next(draftList));
+      return new Observable<Envelope<DraftListDto>>(observer => observer.next(new Envelope(draftList)));
     }
   };
 

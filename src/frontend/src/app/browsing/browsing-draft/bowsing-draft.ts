@@ -49,7 +49,7 @@ export class BrowsingDraft {
         return new Observable(observer => {
             this._apiService.setDraft(this.draftRequest).subscribe(r => {
                 if (r.isSuccessful) {
-                    this.saveRelationship(r.id);
+                    this.saveRelationship(r.payload.id);
                     this.initialize();
                     observer.next(true);
                 }}

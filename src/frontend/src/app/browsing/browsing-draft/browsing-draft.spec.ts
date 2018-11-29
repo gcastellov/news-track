@@ -7,14 +7,15 @@ import { Observable } from 'rxjs/Observable';
 import { DraftResponseDto } from '../../services/Dtos/DraftResponseDto';
 import { DraftRelationshipResponseDto } from '../../services/Dtos/DraftRelationshipResponseDto';
 import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('BrowsingDraft', () => {
 
     let component: BrowsingDraft;
     let data: IBrowseResult;
     const apiServiceMock = <BackendApiService> {
-        setDraft: (d) => new Observable<DraftResponseDto>((observer) => observer.complete()),
-        setDraftRelationship: (i, r) => new Observable<DraftRelationshipResponseDto>((observer) => observer.complete())
+        setDraft: (d) => new Observable<Envelope<DraftResponseDto>>((observer) => observer.complete()),
+        setDraftRelationship: (i, r) => new Observable<Envelope<DraftRelationshipResponseDto>>((observer) => observer.complete())
     };
 
     beforeEach(() => {
@@ -117,13 +118,12 @@ describe('BrowsingDraft', () => {
     it('should save the draft along with relationships and initialize the model again', () => {
         const dto = new DraftResponseDto();
         dto.id = 'response-id';
-        dto.isSuccessful = true;
 
         const setDataMock = spyOn(apiServiceMock, 'setDraft')
-            .and.returnValue(new Observable<DraftResponseDto>((o) => o.next(dto)));
+            .and.returnValue(new Observable<Envelope<DraftResponseDto>>((o) => o.next(new Envelope(dto))));
 
         const setRelationshipMock = spyOn(apiServiceMock, 'setDraftRelationship')
-            .and.returnValue(new Observable<DraftRelationshipResponseDto>((o) => o.complete));
+            .and.returnValue(new Observable<Envelope<DraftRelationshipResponseDto>>((o) => o.complete));
 
         component.save().subscribe((o) => {
             expect(o).toBeTruthy();

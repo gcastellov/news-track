@@ -18,7 +18,7 @@ export class LatestComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.apiService.getLatest(this.take).subscribe(l => this.latest = l);
+    this.apiService.getLatest(this.take).subscribe(l => this.latest = l.payload);
   }
 
   go(id: string) {

@@ -16,6 +16,7 @@ import { StorageService } from '../../services/storage.service';
 import { AppSettingsService } from '../../services/app-settings.service';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('DraftEntryComponent', () => {
   let component: DraftEntryComponent;
@@ -30,10 +31,10 @@ describe('DraftEntryComponent', () => {
   const suggestion = DataBuilder.getDraftSuggestionDto();
   const expressions = DataBuilder.getExpressions();
   const apiServiceMock = <BackendApiService>{
-    getDraft: (id) => new Observable(observer => observer.next(draft)),
+    getDraft: (id) => new Observable(observer => observer.next(new Envelope(draft))),
     setVisit: (id) => new Observable(observer => observer.complete),
-    getDraftRelationship: (id) => new Observable(observer => observer.next(relatedDrafts)),
-    getDraftSuggestions: (id, take) => new Observable(observer => observer.next(suggestion))
+    getDraftRelationship: (id) => new Observable(observer => observer.next(new Envelope(relatedDrafts))),
+    getDraftSuggestions: (id, take) => new Observable(observer => observer.next(new Envelope(suggestion)))
   };
 
   const storageService = <StorageService>{

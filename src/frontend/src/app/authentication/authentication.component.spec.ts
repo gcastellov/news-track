@@ -13,6 +13,7 @@ import { TestBedHelper } from '../testing/testbed.helper';
 import { Observable } from 'rxjs/Observable';
 import { AuthenticationResult } from '../services/Dtos/AuthenticationResult';
 import { element, by } from 'protractor';
+import { Envelope } from '../services/Dtos/Envelope';
 
 describe('AuthenticationComponent', () => {
   let component: AuthenticationComponent;
@@ -60,12 +61,11 @@ describe('AuthenticationComponent', () => {
 
     const username = 'my-user@domain.com';
     const authDto = new AuthenticationResult();
-    authDto.isSuccess = false;
     authDto.username = username;
     authDto.failureReason = 1;
 
     const authSpy = spyOn(authServiceMock, 'authenticate').and.returnValue(
-      new Observable<AuthenticationResult>(observer => observer.next(authDto))
+      new Observable<Envelope<AuthenticationResult>>(observer => observer.next(Envelope.AsFailure(authDto)))
     );
 
     component.authForm.setValue({username: username, password: 'my-password'});

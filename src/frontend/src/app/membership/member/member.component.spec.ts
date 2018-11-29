@@ -13,6 +13,7 @@ import { Observable } from '../../../../node_modules/rxjs/Observable';
 import { IdentityDto } from '../../services/Dtos/IdentityDto';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('MemberComponent', () => {
   let component: MemberComponent;
@@ -20,7 +21,7 @@ describe('MemberComponent', () => {
   const identity = DataBuilder.getIdentityDto();
 
   const apiServiceMock = <BackendApiService> {
-    getIdentity: () => new Observable<IdentityDto>(observer => observer.next(identity))
+    getIdentity: () => new Observable<Envelope<IdentityDto>>(observer => observer.next(new Envelope(identity)))
   };
 
   beforeEach(async(() => {

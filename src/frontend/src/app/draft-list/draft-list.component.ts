@@ -13,6 +13,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/merge';
+import { DraftListDto } from '../services/Dtos/DraftListDto';
 
 @Component({
   selector: 'app-draft-list',
@@ -59,25 +60,19 @@ export class DraftListComponent implements OnInit {
 
   getLatest() {
     this._apiService.getLatestDrafts(this.page, this.take).subscribe(d => {
-      this.count = d.count;
-      this.drafts = d.news;
-      this.numberOfPages = this.count / this.take;
+      this.loadDrafts(d.payload);
     });
   }
 
   getMostViewed() {
     this._apiService.getMostViewedDrafts(this.page, this.take).subscribe(d => {
-      this.count = d.count;
-      this.drafts = d.news;
-      this.numberOfPages = this.count / this.take;
+      this.loadDrafts(d.payload);
     });
   }
 
   getMostFucked() {
     this._apiService.getMostFuckedDrafts(this.page, this.take).subscribe(d => {
-      this.count = d.count;
-      this.drafts = d.news;
-      this.numberOfPages = this.count / this.take;
+      this.loadDrafts(d.payload);
     });
   }
 
@@ -111,11 +106,18 @@ export class DraftListComponent implements OnInit {
     .switchMap(term =>
       this._apiService.search(term)
         .do(() => this.searchFailed = false)
+        .map(r => r.payload)
         .catch(() => {
           this.searchFailed = true;
           return of([]);
         }))
     .do(() => this.searching = false)
     .merge(this.hideSearchingWhenUnsubscribed)
+
+  private loadDrafts(payload: DraftListDto) {
+    this.count = payload.count;
+    this.drafts = payload.news;
+    this.numberOfPages = this.count / this.take;
+  }
 
 }

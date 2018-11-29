@@ -19,6 +19,7 @@ import { DraftFooterComponent } from '../draft-footer/draft-footer.component';
 import { DraftSuggestionIdsDto } from '../../services/Dtos/DraftSuggestionIdsDto';
 import { DataBuilder } from '../../testing/data.builder';
 import { DraftDto } from '../../services/Dtos/DraftDto';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('SuggestionsComponent', () => {
   let component: SuggestionsComponent;
@@ -27,8 +28,9 @@ describe('SuggestionsComponent', () => {
 
   const suggestions = DataBuilder.getDraftSuggesionIdsDto(draftId);
   const apiServiceMock = <BackendApiService>{
-    getAllDraftSuggestions: (id, take, skip) => new Observable<DraftSuggestionIdsDto>(observer => observer.next(suggestions)),
-    getDraft: (id) => new Observable<DraftDto>(observer => observer.complete)
+    getAllDraftSuggestions: (id, take, skip) => new Observable<Envelope<DraftSuggestionIdsDto>>(
+      observer => observer.next(new Envelope(suggestions))),
+    getDraft: (id) => new Observable<Envelope<DraftDto>>(observer => observer.complete)
   };
 
   beforeEach(async(() => {

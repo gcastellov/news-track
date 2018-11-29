@@ -12,13 +12,14 @@ import { BackendApiService } from '../../services/backend-api.service';
 import { Observable } from 'rxjs/Observable';
 import { CreateIdentityResponseDto } from '../../services/Dtos/CreateIdentityResponseDto';
 import { TestBedHelper } from '../../testing/testbed.helper';
+import { Envelope } from '../../services/Dtos/Envelope';
 
 describe('NewUserComponent', () => {
   let component: NewUserComponent;
   let fixture: ComponentFixture<NewUserComponent>;
 
   const apiServiceMock = <BackendApiService>{
-    createUser: (r) => new Observable<CreateIdentityResponseDto>(observer => observer.complete)
+    createUser: (r) => new Observable<Envelope<CreateIdentityResponseDto>>(observer => observer.complete)
   };
 
   beforeEach(async(() => {
@@ -62,10 +63,9 @@ describe('NewUserComponent', () => {
     component.usrForm.controls['email'].setValue(email);
 
     const responseDto = new CreateIdentityResponseDto();
-    responseDto.isSuccessful = true;
 
     const createUserMock = spyOn(apiServiceMock, 'createUser').and
-      .callFake(() => new Observable<CreateIdentityResponseDto>(o => o.next(responseDto)));
+      .callFake(() => new Observable<Envelope<CreateIdentityResponseDto>>(o => o.next(new Envelope(responseDto))));
 
     component.createUser();
 
@@ -80,17 +80,16 @@ describe('NewUserComponent', () => {
     component.usrForm.controls['username'].setValue(username);
     component.usrForm.controls['email'].setValue(email);
 
-    const responseDto = new CreateIdentityResponseDto();
-    responseDto.isSuccessful = false;
-    responseDto.failure = 1;
+    const dto = new CreateIdentityResponseDto();
+    dto.failure = 1;
 
     const changePasswordMock = spyOn(apiServiceMock, 'createUser').and
-      .callFake(() => new Observable<CreateIdentityResponseDto>(o => o.next(responseDto)));
+      .callFake(() => new Observable<Envelope<CreateIdentityResponseDto>>(o => o.next(Envelope.AsFailure(dto))));
 
     component.createUser();
 
     expect(changePasswordMock).toHaveBeenCalled();
-    expect(component.failureReason).toBe(responseDto.failure);
+    expect(component.failureReason).toBe(dto.failure);
     expect(component.usrForm.get('username').value).toBe(username);
     expect(component.usrForm.get('email').value).toBe(email);
   });

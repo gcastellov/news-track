@@ -25,6 +25,7 @@ import { TagsStatsResponseDto } from '../services/Dtos/TagsStatsResponseDto';
 import { WebsiteStatsDto } from '../services/Dtos/WebsiteStatsDto';
 import { TestBedHelper } from '../testing/testbed.helper';
 import { DataBuilder } from '../testing/data.builder';
+import { Envelope } from '../services/Dtos/Envelope';
 
 describe('DraftListComponent', () => {
   let component: DraftListComponent;
@@ -35,11 +36,11 @@ describe('DraftListComponent', () => {
   const tags = DataBuilder.getTagsStatsDto();
 
   const apiServiceMock = <BackendApiService> {
-    getLatest: (take) => new Observable<DraftDigestDto[]>(observer => observer.next(drafts)),
-    getStatsTags: () => new Observable<TagsStatsResponseDto>(observer => observer.next(tags)),
-    getMostViewed: (take) => new Observable<DraftDigestDto[]>(observer => observer.next(drafts)),
-    getMostFucking: (take) => new Observable<DraftDigestDto[]>(observer => observer.next(drafts)),
-    getWebsites: (take) => new Observable<WebsiteStatsDto[]>(observer => observer.next(websites))
+    getLatest: (take) => new Observable<Envelope<DraftDigestDto[]>>(observer => observer.next(new Envelope(drafts))),
+    getStatsTags: () => new Observable<Envelope<TagsStatsResponseDto>>(observer => observer.next(new Envelope(tags))),
+    getMostViewed: (take) => new Observable<Envelope<DraftDigestDto[]>>(observer => observer.next(new Envelope(drafts))),
+    getMostFucking: (take) => new Observable<Envelope<DraftDigestDto[]>>(observer => observer.next(new Envelope(drafts))),
+    getWebsites: (take) => new Observable<Envelope<WebsiteStatsDto[]>>(observer => observer.next(new Envelope(websites)))
   };
 
   beforeEach(async(() => {

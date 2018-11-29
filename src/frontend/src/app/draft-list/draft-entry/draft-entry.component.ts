@@ -29,9 +29,9 @@ export class DraftEntryComponent implements OnInit {
     this._route.params.subscribe(params => {
       this.id = params['id'];
       this._apiService.setVisit(this.id).subscribe();
-      this._apiService.getDraft(this.id).subscribe(s => this.draft = s);
-      this._apiService.getDraftRelationship(this.id).subscribe(s => this.relationship = s);
-      this._apiService.getDraftSuggestions(this.id, this.take).subscribe(s => this.suggestions = s);
+      this._apiService.getDraft(this.id).subscribe(s => this.draft = s.payload);
+      this._apiService.getDraftRelationship(this.id).subscribe(s => this.relationship = s.payload);
+      this._apiService.getDraftSuggestions(this.id, this.take).subscribe(s => this.suggestions = s.payload);
    });
   }
 

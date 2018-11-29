@@ -32,8 +32,8 @@ export class BrowsingRelationshipComponent implements OnInit {
 
   getDrafts() {
     this._apiService.getLatestDrafts(this.page, this.take).subscribe(d => {
-      this.count = d.count;
-      this.drafts = d.news;
+      this.count = d.payload.count;
+      this.drafts = d.payload.news;
       this.numberOfPages = this.count / this.take;
     });
   }
