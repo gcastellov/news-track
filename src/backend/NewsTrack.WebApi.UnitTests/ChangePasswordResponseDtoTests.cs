@@ -14,7 +14,7 @@ namespace NewsTrack.WebApi.UnitTests
 
             var dto = ChangePasswordResponseDto.Create(changePwdResult);
 
-            Assert.IsTrue(dto.IsSuccessful);
+            Assert.IsNull(dto.Failure);
         }
 
         [DataRow(ChangePasswordResult.InvalidCurrentPassword)]
@@ -24,7 +24,7 @@ namespace NewsTrack.WebApi.UnitTests
         {
             var dto = ChangePasswordResponseDto.Create(changePwdResult);
 
-            Assert.IsFalse(dto.IsSuccessful);
+            Assert.IsNotNull(dto.Failure);
             Assert.AreEqual((int)dto.Failure, (int)changePwdResult);
         }
     }

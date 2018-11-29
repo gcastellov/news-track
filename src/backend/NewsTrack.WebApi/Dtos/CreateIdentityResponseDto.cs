@@ -22,7 +22,7 @@ namespace NewsTrack.WebApi.Dtos
             }
         }
 
-        public FailureReason Failure { get; protected set; }
+        public FailureReason? Failure { get; protected set; }
 
 
         public static CreateIdentityResponseDto Create(SaveIdentityResult.ResultType result)

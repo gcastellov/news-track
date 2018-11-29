@@ -210,7 +210,7 @@ namespace NewsTrack.WebApi.Controllers
             });
         }
 
-        private async Task<IActionResult> GetNews(Func<int, int, Task<IEnumerable<Draft>>> getDraftsFunc, uint count, uint page)
+        private async Task<IActionResult> GetNews(Func<int, int, Task<IEnumerable<Draft>>> getDraftsFunc, uint page, uint count)
         {
             if (count > 0)
             {

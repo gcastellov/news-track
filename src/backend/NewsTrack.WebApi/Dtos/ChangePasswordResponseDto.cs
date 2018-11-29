@@ -10,7 +10,7 @@ namespace NewsTrack.WebApi.Dtos
             InvalidCurrentPassword = 2
         }
 
-        public FailureReason Failure { get; protected set; }
+        public FailureReason? Failure { get; protected set; }
 
         private ChangePasswordResponseDto(ChangePasswordResult result)
         {

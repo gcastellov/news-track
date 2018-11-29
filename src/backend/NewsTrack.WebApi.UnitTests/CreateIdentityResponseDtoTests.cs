@@ -15,7 +15,7 @@ namespace NewsTrack.WebApi.UnitTests
 
             var dto = CreateIdentityResponseDto.Create(saveIdResult);
 
-            Assert.IsTrue(dto.IsSuccessful);
+            Assert.IsNull(dto.Failure);
         }
 
         [DataRow(InvalidEmail)]
@@ -27,7 +27,7 @@ namespace NewsTrack.WebApi.UnitTests
         {
             var dto = CreateIdentityResponseDto.Create(saveIdResult);
 
-            Assert.IsFalse(dto.IsSuccessful);
+            Assert.IsNotNull(dto.Failure);
             Assert.AreEqual((int)dto.Failure, (int)saveIdResult);
         }
     }
