@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { FailureComponent } from './failure.component';
+import { httpLoaderFactory } from '../../app.module';
+import { TestBedHelper } from '../../testing/testbed.helper';
 
 describe('FailureComponent', () => {
   let component: FailureComponent;
@@ -8,6 +14,17 @@ describe('FailureComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        NgbModule.forRoot(),
+        TranslateModule.forRoot({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: httpLoaderFactory,
+              deps: [HttpClient]
+          }
+        })
+      ],
       declarations: [ FailureComponent ]
     })
     .compileComponents();
@@ -16,6 +33,7 @@ describe('FailureComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FailureComponent);
     component = fixture.componentInstance;
+    TestBedHelper.setLanguage();
     fixture.detectChanges();
   });
 

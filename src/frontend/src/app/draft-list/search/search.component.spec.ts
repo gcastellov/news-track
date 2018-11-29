@@ -22,6 +22,7 @@ import { StorageService } from '../../services/storage.service';
 import { AppSettingsService } from '../../services/app-settings.service';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { Envelope } from '../../services/Dtos/Envelope';
+import { FailureComponent } from '../../shared/failure/failure.component';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -54,7 +55,8 @@ describe('SearchComponent', () => {
         TagsComponent,
         WebsitesComponent,
         PaginatorComponent,
-        LoaderComponent
+        LoaderComponent,
+        FailureComponent
        ],
       imports: [
         FormsModule,
