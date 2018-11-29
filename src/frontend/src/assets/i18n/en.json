@@ -206,5 +206,8 @@
         "failure-reason-three": "Invalid username",
         "failure-reason-four": "Invalid email",
         "success-reason": "The user has been created successfully"
+    },
+    "failure-component": {
+        "general-message": "Ooooops... Something went wrong!"
     }
 }

@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   website: string;
   numberOfPages: number;
   drafts: DraftDto[];
+  errorMessage: string = null;
 
   constructor(private _apiService: BackendApiService, private _route: ActivatedRoute, private _router: Router) {
     this.take = 5;
@@ -49,9 +50,16 @@ export class SearchComponent implements OnInit {
 
   search() {
     this._apiService.advancedSearch(this.website, this.pattern, this.tags, this.page, this.take).subscribe(d => {
-      this.count = d.payload.count;
-      this.drafts = d.payload.news;
-      this.numberOfPages = this.count / this.take;
+      this.count = 0;
+      this.drafts = null;
+      this.errorMessage = null;
+      if (d.isSuccessful) {
+        this.count = d.payload.count;
+        this.drafts = d.payload.news;
+        this.numberOfPages = this.count / this.take;
+      } else {
+        this.errorMessage = d.errorMessage;
+      }
     });
   }
 

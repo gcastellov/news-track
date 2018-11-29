@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { LoaderComponent } from './loader/loader.component';
+import { FailureComponent } from './failure/failure.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { LoaderComponent } from './loader/loader.component';
     FormsModule,
     TranslateModule
   ],
-  declarations: [PaginatorComponent, LoaderComponent],
-  exports: [PaginatorComponent, LoaderComponent]
+  declarations: [PaginatorComponent, LoaderComponent, FailureComponent],
+  exports: [PaginatorComponent, LoaderComponent, FailureComponent]
 })
 export class SharedModule { }

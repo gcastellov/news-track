@@ -40,6 +40,10 @@
 
 <ng-template #loading>
   <div class="col-sm-8">
-    <app-loader></app-loader>
+    <app-loader *ngIf="!errorMessage; else loadfailed"></app-loader>
   </div>
+</ng-template>
+
+<ng-template #loadfailed>
+  <app-failure [errorMessage]="errorMessage"></app-failure>
 </ng-template>

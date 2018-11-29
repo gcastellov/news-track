@@ -61,5 +61,10 @@
 </ng-template>
 
 <ng-template #loading>
-  <app-loader></app-loader>
+  <app-loader *ngIf="!errorMessage; else loadfailed"></app-loader>
+</ng-template>
+
+<ng-template #loadfailed>
+  <br />
+  <app-failure [errorMessage]="errorMessage"></app-failure>
 </ng-template>

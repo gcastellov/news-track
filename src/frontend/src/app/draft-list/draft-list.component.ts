@@ -14,6 +14,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/merge';
 import { DraftListDto } from '../services/Dtos/DraftListDto';
+import { Envelope } from '../services/Dtos/Envelope';
 
 @Component({
   selector: 'app-draft-list',
@@ -33,6 +34,7 @@ export class DraftListComponent implements OnInit {
   searchFailed = false;
   hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
   currentRoute: string;
+  errorMessage: string = null;
 
   constructor(public _apiService: BackendApiService, private _router: Router, private _activatedRoute: ActivatedRoute) {
     this.take = 5;
@@ -60,19 +62,19 @@ export class DraftListComponent implements OnInit {
 
   getLatest() {
     this._apiService.getLatestDrafts(this.page, this.take).subscribe(d => {
-      this.loadDrafts(d.payload);
+      this.loadDrafts(d);
     });
   }
 
   getMostViewed() {
     this._apiService.getMostViewedDrafts(this.page, this.take).subscribe(d => {
-      this.loadDrafts(d.payload);
+      this.loadDrafts(d);
     });
   }
 
   getMostFucked() {
     this._apiService.getMostFuckedDrafts(this.page, this.take).subscribe(d => {
-      this.loadDrafts(d.payload);
+      this.loadDrafts(d);
     });
   }
 
@@ -114,10 +116,17 @@ export class DraftListComponent implements OnInit {
     .do(() => this.searching = false)
     .merge(this.hideSearchingWhenUnsubscribed)
 
-  private loadDrafts(payload: DraftListDto) {
-    this.count = payload.count;
-    this.drafts = payload.news;
-    this.numberOfPages = this.count / this.take;
+  private loadDrafts(response: Envelope<DraftListDto>) {
+    this.count = 0;
+    this.drafts = null;
+    this.errorMessage = null;
+    if (response.isSuccessful) {
+      this.count = response.payload.count;
+      this.drafts = response.payload.news;
+      this.numberOfPages = this.count / this.take;
+    } else {
+      this.errorMessage = response.errorMessage;
+    }
   }
 
 }

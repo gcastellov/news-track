@@ -206,5 +206,8 @@
         "failure-reason-three": "Nombre de usuario incorrecto",
         "failure-reason-four": "Email incorrecto",
         "success-reason": "El usuario ha sido creado correctamente"
+    },
+    "failure-component": {
+        "general-message": "Ooooops... Algo fue mal!"
     }
 }
