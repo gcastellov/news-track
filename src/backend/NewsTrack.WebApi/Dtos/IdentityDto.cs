@@ -3,7 +3,7 @@ using NewsTrack.Identity;
 
 namespace NewsTrack.WebApi.Dtos
 {
-    public class IdentityDto : ResponseBaseDto
+    public class IdentityDto
     {
         public string Username { get; set; }
         public string Email { get; set; }

@@ -6,6 +6,7 @@ namespace NewsTrack.WebApi.Dtos
     {
         public bool IsSuccessful { get; set; }
         public DateTime At { get; set; }
+        public string ErrorMessage { get; set; }
         public T Payload { get; set; }
 
         public Envelope()

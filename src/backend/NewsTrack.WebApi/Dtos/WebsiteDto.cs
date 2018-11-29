@@ -2,8 +2,9 @@
 
 namespace NewsTrack.WebApi.Dtos
 {
-    public class WebsiteDto : ResponseBaseDto
+    public class WebsiteDto
     {
+        public bool IsAccepted { get; set; }
         public Uri Uri { get; set; }
     }
 }

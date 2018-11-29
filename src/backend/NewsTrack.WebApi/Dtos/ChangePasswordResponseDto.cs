@@ -2,7 +2,7 @@
 
 namespace NewsTrack.WebApi.Dtos
 {
-    public class ChangePasswordResponseDto : ResponseBaseDto
+    public class ChangePasswordResponseDto
     {
         public enum FailureReason
         {
@@ -14,8 +14,7 @@ namespace NewsTrack.WebApi.Dtos
 
         private ChangePasswordResponseDto(ChangePasswordResult result)
         {
-            IsSuccessful = result == ChangePasswordResult.Ok;
-            if (!IsSuccessful)
+            if (result != ChangePasswordResult.Ok)
             {
                 Failure = (FailureReason) result;
             }

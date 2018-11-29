@@ -2,7 +2,7 @@
 
 namespace NewsTrack.WebApi.Dtos
 {
-    public class DraftResponseDto : ResponseBaseDto
+    public class DraftResponseDto
     {
         public Guid Id { get; set; }
         public Uri Url { get; set; }

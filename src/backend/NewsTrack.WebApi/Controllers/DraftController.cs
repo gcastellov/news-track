@@ -83,7 +83,7 @@ namespace NewsTrack.WebApi.Controllers
                         }));                        
                     }
 
-                    return new DraftRelationshipResponseDto { Id = id, IsSuccessful = true };
+                    return new DraftRelationshipResponseDto { Id = id };
                 });
             }
 

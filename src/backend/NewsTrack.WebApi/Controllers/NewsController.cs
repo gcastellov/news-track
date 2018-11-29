@@ -195,7 +195,7 @@ namespace NewsTrack.WebApi.Controllers
             return await Execute(async () =>
             {
                 var result = await _draftRepository.AddViews(id);
-                return new IncrementalResponseDto {Amount = result, IsSuccessful = true};
+                return new IncrementalResponseDto {Amount = result};
             });
         }
 
@@ -206,7 +206,7 @@ namespace NewsTrack.WebApi.Controllers
             return await Execute(async () =>
             {
                 var result = await _draftRepository.AddFuck(id);
-                return new IncrementalResponseDto {Amount = result, IsSuccessful = true};
+                return new IncrementalResponseDto {Amount = result};
             });
         }
 

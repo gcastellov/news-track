@@ -16,6 +16,7 @@ namespace NewsTrack.WebApi.Controllers
         protected async Task<Envelope<T>> Envelope<T>(Func<Task<T>> action) where T : class
         {
             var envelope = new Envelope<T>();
+
             try
             {
                 envelope.Payload = await action();
@@ -23,8 +24,14 @@ namespace NewsTrack.WebApi.Controllers
             }
             catch (Exception e)
             {
-                if (!(e is ApplicationException))
+                if (e is ApplicationException)
+                {
+                    envelope.ErrorMessage = e.Message;
+                }
+                else
+                {
                     throw;
+                }
             }
 
             return envelope;

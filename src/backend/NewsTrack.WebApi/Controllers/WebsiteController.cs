@@ -28,7 +28,7 @@ namespace NewsTrack.WebApi.Controllers
                 var isForbidden = await _websiteRepository.Exists(baseUri);
                 return new WebsiteDto
                 {
-                    IsSuccessful = !isForbidden,
+                    IsAccepted = !isForbidden,
                     Uri = uri
                 };
             });

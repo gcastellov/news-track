@@ -2,7 +2,7 @@
 
 namespace NewsTrack.WebApi.Dtos
 {
-    public class CreateIdentityResponseDto : ResponseBaseDto
+    public class CreateIdentityResponseDto
     {
         public enum FailureReason
         {
@@ -16,8 +16,7 @@ namespace NewsTrack.WebApi.Dtos
 
         private CreateIdentityResponseDto(SaveIdentityResult.ResultType result)
         {
-            IsSuccessful = result == SaveIdentityResult.ResultType.Ok;
-            if (!IsSuccessful)
+            if (result != SaveIdentityResult.ResultType.Ok)
             {
                 Failure = (FailureReason)result;
             }
