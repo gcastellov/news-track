@@ -20,6 +20,7 @@ import { DraftSuggestionIdsDto } from '../../services/Dtos/DraftSuggestionIdsDto
 import { DataBuilder } from '../../testing/data.builder';
 import { DraftDto } from '../../services/Dtos/DraftDto';
 import { Envelope } from '../../services/Dtos/Envelope';
+import { SharedModule } from '../../shared/shared.module';
 
 describe('SuggestionsComponent', () => {
   let component: SuggestionsComponent;
@@ -38,6 +39,7 @@ describe('SuggestionsComponent', () => {
       declarations: [ SuggestionsComponent, DraftComponent, DraftFooterComponent ],
       imports: [
         FormsModule,
+        SharedModule,
         InfiniteScrollModule,
         HttpClientTestingModule,
         NgbModule.forRoot(),

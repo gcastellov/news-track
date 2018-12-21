@@ -6,9 +6,7 @@
   </div>
   <div class="row" *ngIf="count !== drafts.length">
     <div class="col-sm-12">
-      <div class="alert alert-info">
-          <p>{{ 'suggestions-component.loading' | translate }}</p>
-      </div>
+      <app-loader></app-loader>
     </div>
   </div>
 </div>
