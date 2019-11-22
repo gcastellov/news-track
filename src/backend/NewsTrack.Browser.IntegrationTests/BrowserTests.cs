@@ -17,7 +17,7 @@ namespace NewsTrack.Browser.IntegrationTests
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Titles.Any());
             Assert.IsTrue(response.Paragraphs.Any());
-            Assert.IsTrue(response.Pictures.Any());
+            Assert.IsFalse(response.Pictures.Any());
         }
     }
 }
