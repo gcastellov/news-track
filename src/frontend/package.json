@@ -26,7 +26,7 @@
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^3.0.1",
     "angular2-jwt": "^0.2.3",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "bootstrap-social": "^5.1.1",
     "core-js": "^2.5.7",
     "font-awesome": "^4.7.0",
