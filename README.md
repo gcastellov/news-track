@@ -125,3 +125,13 @@ Set your public website domain (with or without path).
 "SignInUrl": "http://localhost:4200/authentication"
 ```
 Set your frontend authentication URL where the user has to be redirected once he confirms his membership.
+
+## Docker
+
+```
+docker pull docker.elastic.co/elasticsearch/elasticsearch:5.4.3
+```
+
+```
+docker run -d -p 9200:9200 --name elasticsearch -e "http.host=0.0.0.0" -e "transport.host=127.0.0.1" -e "xpack.security.enabled=false" docker.elastic.co/elasticsearch/elasticsearch:5.4.3
+```
