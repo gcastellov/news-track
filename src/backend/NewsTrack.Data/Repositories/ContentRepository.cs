@@ -11,7 +11,6 @@ namespace NewsTrack.Data.Repositories
     public class ContentRepository : RepositoryBase<Model.Content, Content>, IContentRepository
     {
         public override string IndexName => "news-content";
-        public override string TypeName => "content";
         
         public ContentRepository(IConfigurationProvider configurationProvider) 
             : base(configurationProvider)
@@ -22,7 +21,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var model = From(content);
-            await client.IndexAsync(model);
+            await client.IndexDocumentAsync(model);
         }
 
         public async Task<IDictionary<string, IEnumerable<string>>> GetHighlights(IEnumerable<string> tags)
@@ -52,7 +51,7 @@ namespace NewsTrack.Data.Repositories
             CheckResponse(query);
             return query.Hits.ToDictionary(
                 h => h.Id,
-                h => h.Highlights.Values.SelectMany(v => v.Highlights)
+                h => h.Highlight.Values.SelectMany(v => v)
             );
         }
 

@@ -11,7 +11,6 @@ namespace NewsTrack.Data.Repositories
     public class DraftSuggestionsRepository : RepositoryBase<Model.DraftSuggestions, DraftSuggestions>, IDraftSuggestionsRepository
     {
         public override string IndexName => "news-suggestions";
-        public override string TypeName => "suggestions";
 
         public DraftSuggestionsRepository(IConfigurationProvider configurationProvider) 
             : base(configurationProvider)

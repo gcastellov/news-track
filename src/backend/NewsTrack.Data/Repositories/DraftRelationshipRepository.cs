@@ -10,7 +10,6 @@ namespace NewsTrack.Data.Repositories
     public class DraftRelationshipRepository : RepositoryBase<Model.DraftRelationship, DraftRelationship>, IDraftRelationshipRepository
     {
         public override string IndexName => "news-draft-relationship";
-        public override string TypeName => "draft-relationship";
 
         public DraftRelationshipRepository(IConfigurationProvider configurationProvider) 
             : base(configurationProvider)
@@ -21,7 +20,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var model = From(relationship);
-            await client.IndexAsync(model);
+            await client.IndexDocumentAsync(model);
         }
 
         public async Task<DraftRelationship> Get(Guid id)

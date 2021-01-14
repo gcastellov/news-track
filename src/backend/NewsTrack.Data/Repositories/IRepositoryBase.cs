@@ -1,7 +1,9 @@
-﻿namespace NewsTrack.Data.Repositories
+﻿using System.Threading.Tasks;
+
+namespace NewsTrack.Data.Repositories
 {
     public interface IRepositoryBase
     {
-        void Initialize();
+        Task Initialize();
     }
 }
