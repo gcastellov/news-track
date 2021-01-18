@@ -1,7 +1,9 @@
-﻿namespace NewsTrack.WebApi.Components
+﻿using System.Threading.Tasks;
+
+namespace NewsTrack.WebApi.Components
 {
     public interface ISeeder
     {
-        void Initialize();
+        Task Initialize();
     }
 }

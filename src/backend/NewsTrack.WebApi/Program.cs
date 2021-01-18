@@ -16,9 +16,7 @@ namespace NewsTrack.WebApi
             {
                 var host = new WebHostBuilder()
                     .UseKestrel()
-                    .UseIISIntegration()
                     .UseStartup<Startup>()
-                    .UseApplicationInsights()
                     .ConfigureLogging(logging =>
                     {
                         logging.ClearProviders();
