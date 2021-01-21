@@ -1,17 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Net;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NewsTrack.Domain.Repositories;
 using NewsTrack.Domain.Services;
@@ -20,8 +15,7 @@ using NewsTrack.Identity.Repositories;
 using NewsTrack.Identity.Services;
 using NewsTrack.WebApi.Components;
 using NewsTrack.WebApi.Configuration;
-using ConfigurationProvider = NewsTrack.WebApi.Configuration.ConfigurationProvider;
-using IConfigurationProvider = NewsTrack.Data.Configuration.IConfigurationProvider;
+using NewsTrack.WebApi.Dtos.Profiles;
 
 namespace NewsTrack.WebApi
 {
@@ -38,152 +32,122 @@ namespace NewsTrack.WebApi
         }
 
         public IConfigurationRoot Configuration { get; }
-        public IContainer ApplicationContainer { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             //Add AutoMapper
-            services.AddAutoMapper();
-
-            // Add framework services.
-            services.AddMvc();
-            services.AddCors();
+            services.AddAutoMapper(map => map.AddProfiles(new Profile[]
+            {
+                new BrowserProfile(),
+                new DraftProfile(),
+                new IdentityProfile(),
+                new NewsProfile()
+            }));
 
             // Add authentication
-            var configurationProvider = new ConfigurationProvider();
+            var configurationProvider = new Configuration.ConfigurationProvider();
             configurationProvider.Set(Configuration);
+
+            services.AddScoped<Configuration.IConfigurationProvider>(provider => configurationProvider);
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer(cfg =>
+            .AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
                 {
-                    cfg.RequireHttpsMetadata = false;
-                    cfg.SaveToken = true;
-                    cfg.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = configurationProvider.TokenConfiguration.Issuer,
-                        ValidAudience = configurationProvider.TokenConfiguration.Audience,
-                        IssuerSigningKey = configurationProvider.TokenConfiguration.SigningKey
-                    };
-                });
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configurationProvider.TokenConfiguration.Issuer,
+                    ValidAudience = configurationProvider.TokenConfiguration.Audience,
+                    IssuerSigningKey = configurationProvider.TokenConfiguration.SigningKey
+                };
+            });
 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(IdentityPolicies.RequireAdministratorRole, policy => policy.RequireRole(IdentityRoles.Administrator));
             });
 
-            ApplicationContainer = CreateContainer(services, configurationProvider);
+            services.AddHostedService<SeederHostedService>();
 
-            // Create the IServiceProvider based on the container.
-            return new AutofacServiceProvider(ApplicationContainer);
-        }
-
-        
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            app.UseExceptionHandler(
-                options =>
-                {
-                    options.Run(
-                        async context =>
-                        {
-                            var message = "An unhandled exception has been thrown";
-                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                            context.Response.ContentType = "text/plain";
-                            context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-                            var ex = context.Features.Get<IExceptionHandlerFeature>();
-                            if (ex != null)
-                            {
-                                var logger = loggerFactory.CreateLogger<Startup>();
-                                logger.LogError(ex.Error, message);
-                            }
-
-                            await context.Response.WriteAsync(message).ConfigureAwait(false);
-                        });
-                }
-            );
-
-            app.UseStatusCodePages(async context =>
-            {
-                context.HttpContext.Response.ContentType = "text/plain";
-                await context.HttpContext.Response.WriteAsync("Status code page, status code: " + context.HttpContext.Response.StatusCode)
-                    .ConfigureAwait(false);
-            });
-
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
-            app.UseAuthentication();
-            app.UseMvc();
-
-            try
-            {
-                var seeder = ApplicationContainer.Resolve<ISeeder>();
-                seeder.Initialize();
-            }
-            catch(Exception e)
-            {
-                var logger = loggerFactory.CreateLogger<Startup>();
-                logger.LogError(e, "An exception has been thrown whilst trying to set default data");
-            }
-        }
-
-        private IContainer CreateContainer(IServiceCollection services, ConfigurationProvider configurationProvider)
-        {
-            // Create the container builder.
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
-            builder.RegisterType<Browser.Requestor>().As<Browser.IRequestor>().InstancePerLifetimeScope();
-            builder.RegisterType<Browser.Broswer>().As<Browser.IBroswer>();
-            builder.RegisterType<DraftService>().As<IDraftService>().InstancePerLifetimeScope();
-            builder.RegisterType<WebsiteService>().As<IWebsiteService>().InstancePerLifetimeScope();
-            builder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope();
-            builder.Register(c =>
+            services.AddScoped<Browser.IRequestor, Browser.Requestor>();
+            services.AddScoped<Browser.IBroswer, Browser.Broswer>();
+            services.AddScoped<IDraftService, DraftService>();
+            services.AddScoped<IWebsiteService, WebsiteService>();
+            services.AddScoped<IContentService, ContentService>();
+            services.AddScoped<IIdentityService>(provider =>
             {
                 var notificationManager = new NotificationManager(configurationProvider);
                 return new IdentityService(
-                    c.Resolve<IIdentityRepository>(),
-                    c.Resolve<ICryptoManager>(),
-                    notificationManager.Handle
-                );
-            }).As<IIdentityService>().InstancePerLifetimeScope();
-            builder.RegisterType<IdentityHelper>().As<IIdentityHelper>().InstancePerLifetimeScope();
-            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
-            builder.RegisterType<CryptoManager>().As<ICryptoManager>();
-            builder.RegisterType<Data.Repositories.ContentRepository>().As<IContentRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.DraftRepository>().As<IDraftRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.DraftRelationshipRepository>().As<IDraftRelationshipRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.DraftSuggestionsRepository>().As<IDraftSuggestionsRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.IdentityRepository>().As<IIdentityRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.WebsiteRepository>().As<IWebsiteRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<Data.Repositories.ContentRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.DraftRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.DraftRelationshipRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.IdentityRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.DraftSuggestionsRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Repositories.WebsiteRepository>().As<Data.Repositories.IRepositoryBase>();
-            builder.RegisterType<Data.Configuration.DataInitializer>().As<Data.Configuration.IDataInitializer>();
-            builder.Register(c => new Data.Configuration.ConfigurationProvider { ConnectionString = Configuration.GetConnectionString("ElasticSearch") })
-                .As<IConfigurationProvider>().SingleInstance();
-            builder.Register(c => configurationProvider).As<Configuration.IConfigurationProvider>().SingleInstance();
-            builder.Register(c => new Seeder(
-                    c.Resolve<Data.Configuration.IDataInitializer>(),
-                    c.Resolve<IIdentityService>(),
-                    c.Resolve<IWebsiteService>(),
-                    c.Resolve<IIdentityRepository>(),
+                    provider.GetService<IIdentityRepository>(),
+                    provider.GetService<ICryptoManager>(),
+                    notificationManager.Handle);
+            });
+
+            services.AddScoped<IIdentityHelper, IdentityHelper>();
+            services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ICryptoManager, CryptoManager>();
+            services.AddScoped<IContentRepository, Data.Repositories.ContentRepository>();
+            services.AddScoped<IDraftRepository, Data.Repositories.DraftRepository>();
+            services.AddScoped<IDraftRelationshipRepository, Data.Repositories.DraftRelationshipRepository>();
+            services.AddScoped<IDraftSuggestionsRepository, Data.Repositories.DraftSuggestionsRepository>();
+            services.AddScoped<IIdentityRepository, Data.Repositories.IdentityRepository>();
+            services.AddScoped<IWebsiteRepository, Data.Repositories.WebsiteRepository>();
+            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.ContentRepository>();
+            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftRepository>();
+            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftRelationshipRepository>();
+            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.IdentityRepository>();
+            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftSuggestionsRepository>();
+            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.WebsiteRepository>();
+            services.AddScoped<Data.Configuration.IDataInitializer, Data.Configuration.DataInitializer>();
+            services.AddSingleton<Data.Configuration.IConfigurationProvider>(new Data.Configuration.ConfigurationProvider
+                {ConnectionString = Configuration.GetConnectionString("ElasticSearch")});
+
+            services.AddScoped<ISeeder>(provider => new Seeder(
+                    provider.GetService<Data.Configuration.IDataInitializer>(),
+                    provider.GetService<IIdentityService>(),
+                    provider.GetService<IWebsiteService>(),
+                    provider.GetService<IIdentityRepository>(),
                     Configuration
-                ))
-                .As<ISeeder>();
-            return builder.Build();
+                ));
+
+            services.AddControllers();
+            services.AddCors();
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            _ = app
+                .UseMiddleware<ExceptionMiddleware>()
+                .UseHttpsRedirection()
+                .UseRouting()
+                .UseCors(builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                })
+                .UseAuthentication()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                })
+                .UseStatusCodePages(async context =>
+                {
+                    context.HttpContext.Response.ContentType = "text/plain";
+                    await context.HttpContext.Response.WriteAsync("Status code page, status code: " + context.HttpContext.Response.StatusCode)
+                        .ConfigureAwait(false);
+                });
         }
     }
 }

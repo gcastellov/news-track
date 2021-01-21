@@ -15,15 +15,12 @@ namespace NewsTrack.Data
             _configurationProvider = configurationProvider;
         }
 
-        public ElasticClient GetClient<T>(string indexName, string typeName) where T: class
+        public ElasticClient GetClient<T>(string indexName) where T: class
         {
             var node = new Uri(_configurationProvider.ConnectionString);
             var settings = new ConnectionSettings(node)
                 .DefaultIndex(indexName)
-                .InferMappingFor<T>(i => i
-                    .IndexName(indexName)
-                    .TypeName(typeName)                    
-                );
+                .DefaultMappingFor<T>(i => i.IndexName(indexName));
 
             return new ElasticClient(settings);
         }

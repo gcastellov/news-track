@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost/NewsTrack.WebApi'
+  baseUrl: 'http://localhost:5162'
 };

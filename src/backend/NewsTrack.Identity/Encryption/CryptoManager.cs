@@ -1,17 +1,16 @@
-﻿using BCrypt;
-
-namespace NewsTrack.Identity.Encryption
+﻿namespace NewsTrack.Identity.Encryption
 {
     public class CryptoManager : ICryptoManager
     {
         public bool CheckPassword(string password, string cryptoPassword)
         {
-            return BCryptHelper.CheckPassword(password, cryptoPassword);
+            return BCrypt.Net.BCrypt.Verify(password, cryptoPassword);
         }
 
         public string HashPassword(string password)
         {
-            return BCryptHelper.HashPassword(password, BCryptHelper.GenerateSalt());
+            var salt = BCrypt.Net.BCrypt.GenerateSalt();
+            return BCrypt.Net.BCrypt.HashPassword(password, salt);
         }
     }
 }

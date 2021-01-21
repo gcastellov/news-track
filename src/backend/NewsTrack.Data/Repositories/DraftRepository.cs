@@ -12,7 +12,6 @@ namespace NewsTrack.Data.Repositories
     public class DraftRepository : RepositoryBase<Model.Draft, Draft>, IDraftRepository
     {
         public override string IndexName => "news-drafts";
-        public override string TypeName => "draft";
 
         private const string GroupByTag = "group_by_tag";
         private const string GroupByWebsite = "group_by_website";
@@ -26,7 +25,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var model = From(draft);
-            await client.IndexAsync(model);
+            await client.IndexDocumentAsync(model);
         }
 
         public async Task<IEnumerable<Draft>> GetLatest(int page, int count)
@@ -78,7 +77,7 @@ namespace NewsTrack.Data.Repositories
                 .From(page * count)
                 .Size(count);
 
-            var bQuery = GetSearchBoolQuery(website, pattern, tags);
+            var bQuery = GetSearchBoolQuery(website, pattern, tags.ToArray());
             searchDescriptor.Query(q => q.Bool(b => bQuery));
 
             var client = GetClient();
@@ -138,11 +137,11 @@ namespace NewsTrack.Data.Repositories
         public async Task<long> Count(string website, string pattern, IEnumerable<string> tags)
         {
             var countDescriptor = new CountDescriptor<Model.Draft>();
-            var bQuery = GetSearchBoolQuery(website, pattern, tags);
+            var bQuery = GetSearchBoolQuery(website, pattern, tags.ToArray());
             countDescriptor.Query(q => q.Bool(b => bQuery));
 
             var client = GetClient();
-            var query = await client.CountAsync<Model.Draft>(countDescriptor);
+            var query = await client.CountAsync(countDescriptor);
 
             CheckResponse(query);
             return query.Count;
@@ -163,8 +162,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var query = await client.GetAsync<Model.Draft>(id, 
-                m => m.SourceInclude(sf => sf.Tags)
-                );
+                m => m.SourceIncludes(sf => sf.Tags));
 
             CheckResponse(query);
             return query.Source.Tags;
@@ -203,9 +201,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             await client.UpdateAsync(DocumentPath<Model.Draft>.Id(id),
-                    u => u.Script(s => s.Inline("ctx._source.views += 1"))
-                    .Fields(f => f.Views)
-                    );
+                    u => u.Script(s => s.Source("ctx._source.views += 1")));
 
             var result = await client.GetAsync<Model.Draft>(id);
 
@@ -217,9 +213,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             await client.UpdateAsync(DocumentPath<Model.Draft>.Id(id),
-                u => u.Script(s => s.Inline("ctx._source.fucks += 1"))
-                    .Fields(f => f.Fucks)
-            );
+                u => u.Script(s => s.Source("ctx._source.fucks += 1")));
 
             var result = await client.GetAsync<Model.Draft>(id);
 
@@ -240,9 +234,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             await client.UpdateAsync(DocumentPath<Model.Draft>.Id(id),
-                u => u.Script(s => s.Inline($"ctx._source.related = {count}"))
-                    .Fields(f => f.Views)
-            );
+                u => u.Script(s => s.Source($"ctx._source.related = {count}")));
         }
 
         public async Task<IDictionary<string, long>> GetWebsiteStats(int take)
@@ -359,7 +351,7 @@ namespace NewsTrack.Data.Repositories
             return query;
         }
 
-        private BoolQuery GetSearchBoolQuery(string website, string pattern, IEnumerable<string> tags)
+        private BoolQuery GetSearchBoolQuery(string website, string pattern, ICollection<string> tags)
         {
             var bQuery = new BoolQuery();
             var queries = new List<QueryContainer>();

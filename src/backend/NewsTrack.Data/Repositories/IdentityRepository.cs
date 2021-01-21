@@ -11,7 +11,6 @@ namespace NewsTrack.Data.Repositories
     public class IdentityRepository : RepositoryBase<Model.Identity, Identity.Identity>, IIdentityRepository
     {
         public override string IndexName => "news-identities";
-        public override string TypeName => "identity";
 
         public IdentityRepository(IConfigurationProvider configurationProvider) 
             : base(configurationProvider)
@@ -94,16 +93,16 @@ namespace NewsTrack.Data.Repositories
             return query.Documents.Count > 0;
         }
 
-        public override void Initialize()
+        public override async Task Initialize()
         {
             var client = GetClient();
-            if (!client.IndexExists(IndexName).Exists)
+            var existResponse = await client.Indices.ExistsAsync(IndexName);
+            
+            if (!existResponse.Exists)
             {
-                client.CreateIndex(IndexName, c => c
-                    .Mappings(ms => ms
-                        .Map<Model.Identity>(m => m.AutoMap())
-                    )
-                );
+                await client.Indices.CreateAsync(
+                    IndexName, 
+                    c => c.Map<Model.Identity>(descriptor => descriptor.AutoMap()));
             }
         }
 

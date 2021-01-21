@@ -1,7 +1,9 @@
-﻿namespace NewsTrack.Data.Configuration
+﻿using System.Threading.Tasks;
+
+namespace NewsTrack.Data.Configuration
 {
     public interface IDataInitializer
     {
-        void Initialize();
+        Task Initialize();
     }
 }

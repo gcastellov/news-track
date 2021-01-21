@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using NewsTrack.Data.Configuration;
 using NewsTrack.Domain.Services;
@@ -29,8 +30,7 @@ namespace NewsTrack.WebApi.Components
             IIdentityService identityService, 
             IWebsiteService websiteService,
             IIdentityRepository identityRepository,
-            IConfigurationRoot configuration
-            )
+            IConfigurationRoot configuration)
         {
             _dataInitializer = dataInitializer;            
             _identityService = identityService;
@@ -39,24 +39,24 @@ namespace NewsTrack.WebApi.Components
             _configuration = configuration;
         }
 
-        public void Initialize()
+        public async Task Initialize()
         {
-            _dataInitializer.Initialize();
+            await _dataInitializer.Initialize();
 
             var adminSettings = _configuration.GetSection(AdminSection).GetChildren().ToArray();
             if (adminSettings.Any())
             {                
-                SetAdmin(adminSettings);
+                await SetAdmin(adminSettings);
             }
 
             var websitesSection = _configuration.GetSection(WebsitesSection).GetChildren().ToArray();
             if (websitesSection.Any())
             {
-                SetWebsites(websitesSection);
+                await SetWebsites(websitesSection);
             }
         }
 
-        private void SetAdmin(IConfigurationSection[] settings)
+        private async Task SetAdmin(IConfigurationSection[] settings)
         {
             var username = settings.FirstOrDefault(s => s.Key == Username)?.Value;
             var email = settings.FirstOrDefault(s => s.Key == Email)?.Value;
@@ -64,7 +64,7 @@ namespace NewsTrack.WebApi.Components
 
             if (!_identityRepository.ExistsByUsername(username).Result)
             {
-                var result = _identityService.Save(username, email, password, password, IdentityTypes.Admin).Result;
+                var result = await _identityService.Save(username, email, password, password, IdentityTypes.Admin);
                 if (result.Type != SaveIdentityResult.ResultType.Ok)
                 {
                     throw new Exception("Impossible to create the admin user. Check this out!");
@@ -72,10 +72,10 @@ namespace NewsTrack.WebApi.Components
             }
         }
 
-        private void SetWebsites(IConfigurationSection[] settings)
+        private Task SetWebsites(IConfigurationSection[] settings)
         {
             var uris = settings.Select(url => new Uri(url.Value, UriKind.Relative)).ToArray();
-            _websiteService.Save(uris);
+            return _websiteService.Save(uris);
         }
     }
 }

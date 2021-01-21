@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Nest;
 using NewsTrack.Data.Configuration;
 using NewsTrack.Data.Model;
@@ -12,25 +13,26 @@ namespace NewsTrack.Data.Repositories
         private readonly ClientManager _clientManager;
 
         public abstract string IndexName { get; }
-        public abstract string TypeName { get; }
 
         protected RepositoryBase(IConfigurationProvider configurationProvider)
         {
             _clientManager = ClientManager.Create(configurationProvider);
         }
 
-        public virtual void Initialize()
+        public virtual async Task Initialize()
         {
             var client = GetClient();
-            if (!client.IndexExists(IndexName).Exists)
+            var existResponse = await client.Indices.ExistsAsync(IndexName);
+
+            if (!existResponse.Exists)
             {
-                client.CreateIndex(IndexName);
+                await client.Indices.CreateAsync(IndexName);
             }
         }
 
         protected ElasticClient GetClient()
         {
-            return _clientManager.GetClient<T>(IndexName, TypeName);
+            return _clientManager.GetClient<T>(IndexName);
         }
 
         protected abstract TK To(T model);

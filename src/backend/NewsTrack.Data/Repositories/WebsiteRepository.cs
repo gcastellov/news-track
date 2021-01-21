@@ -11,7 +11,6 @@ namespace NewsTrack.Data.Repositories
     public class WebsiteRepository : RepositoryBase<Model.Website, Website>, IWebsiteRepository
     {
         public override string IndexName => "news-website";
-        public override string TypeName => "website";
 
         public WebsiteRepository(IConfigurationProvider configurationProvider) : base(configurationProvider)
         {
@@ -27,7 +26,7 @@ namespace NewsTrack.Data.Repositories
             var client = GetClient();
             foreach (var website in websites)
             {
-                await client.IndexAsync(website);
+                await client.IndexDocumentAsync(website);
             }
         }
 
@@ -55,16 +54,16 @@ namespace NewsTrack.Data.Repositories
             return query.Documents.Count > 0;
         }
 
-        public override void Initialize()
+        public override async Task Initialize()
         {
             var client = GetClient();
-            if (!client.IndexExists(IndexName).Exists)
+            var existResponse = await client.Indices.ExistsAsync(IndexName);
+            
+            if (!existResponse.Exists)
             {
-                client.CreateIndex(IndexName, c => c
-                    .Mappings(ms => ms
-                        .Map<Model.Website>(m => m.AutoMap())
-                    )
-                );
+                await client.Indices.CreateAsync(
+                    IndexName,
+                    c => c.Map<Model.Website>(descriptor => descriptor.AutoMap()));
             }
         }
 
