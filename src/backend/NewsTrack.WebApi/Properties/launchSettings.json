@@ -3,7 +3,7 @@
     "NewsTrack.WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/ping",
+      "launchUrl": "health",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

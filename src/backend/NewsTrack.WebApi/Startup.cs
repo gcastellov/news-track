@@ -121,6 +121,7 @@ namespace NewsTrack.WebApi
 
             services.AddControllers();
             services.AddCors();
+            services.AddHealthChecks();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -141,6 +142,7 @@ namespace NewsTrack.WebApi
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
+                    endpoints.MapHealthChecks("/health");
                 })
                 .UseStatusCodePages(async context =>
                 {
