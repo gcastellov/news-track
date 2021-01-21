@@ -34,8 +34,6 @@ namespace NewsTrack.WebApi.Controllers
         [Route("latest")]
         public async Task<IActionResult> GetLatest([FromQuery]uint page, [FromQuery]uint count)
         {
-            throw new ApplicationException("fucked up");
-
             return await GetNews(
                 _draftRepository.GetLatest,
                 page,

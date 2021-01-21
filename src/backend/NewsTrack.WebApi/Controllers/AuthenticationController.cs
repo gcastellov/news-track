@@ -38,8 +38,9 @@ namespace NewsTrack.WebApi.Controllers
             {
                 var responseDto = await Envelope(async () =>
                 {
-                    JwtSecurityToken token = null;
                     var result = await _identityService.Authenticate(dto.Username, dto.Password);
+                    var response = TokenResponseDto.Create(result, dto.Username);
+
                     if (result == AuthenticateResult.Ok)
                     {
                         var identity = await _identityRepository.GetByEmail(dto.Username);
@@ -53,25 +54,16 @@ namespace NewsTrack.WebApi.Controllers
                             new Claim(ClaimTypes.Role, IdentityRoles.ToRole(identity.IdType))
                         };
 
-                        var creds = new SigningCredentials(
-                            _configurationProvider.TokenConfiguration.SigningKey,
-                            SecurityAlgorithms.HmacSha256
-                        );
-
-                        token = new JwtSecurityToken(
+                        var token = new JwtSecurityToken(
                             _configurationProvider.TokenConfiguration.Issuer,
                             _configurationProvider.TokenConfiguration.Audience,
                             claims,
-                            expires: DateTime.Now.AddMinutes(30),
-                            signingCredentials: creds
-                        );
-                    }
+                            expires: DateTime.UtcNow.AddHours(1),
+                            signingCredentials: new SigningCredentials(
+                                _configurationProvider.TokenConfiguration.SigningKey,
+                                SecurityAlgorithms.HmacSha256));
 
-                    var response = TokenResponseDto.Create(result, dto.Username);
-                    if (token != null)
-                    {
-                        response.Token = new JwtSecurityTokenHandler()
-                            .WriteToken(token);
+                        response.Token = new JwtSecurityTokenHandler().WriteToken(token);
                     }
 
                     return response;

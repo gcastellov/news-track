@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -46,6 +47,9 @@ namespace NewsTrack.WebApi
             // Add authentication
             var configurationProvider = new Configuration.ConfigurationProvider();
             configurationProvider.Set(Configuration);
+
+            services.AddScoped<Configuration.IConfigurationProvider>(provider => configurationProvider);
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -59,6 +63,7 @@ namespace NewsTrack.WebApi
                 {
                     ValidateAudience = true,
                     ValidateLifetime = true,
+                    ValidateIssuer = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = configurationProvider.TokenConfiguration.Issuer,
                     ValidAudience = configurationProvider.TokenConfiguration.Audience,
@@ -124,8 +129,15 @@ namespace NewsTrack.WebApi
                 .UseMiddleware<ExceptionMiddleware>()
                 .UseHttpsRedirection()
                 .UseRouting()
-                .UseAuthorization()
+                .UseCors(builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                })
                 .UseAuthentication()
+                .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();
@@ -135,8 +147,7 @@ namespace NewsTrack.WebApi
                     context.HttpContext.Response.ContentType = "text/plain";
                     await context.HttpContext.Response.WriteAsync("Status code page, status code: " + context.HttpContext.Response.StatusCode)
                         .ConfigureAwait(false);
-                })
-                .UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                });
         }
     }
 }
