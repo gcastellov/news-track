@@ -12,7 +12,7 @@ namespace NewsTrack.Data.Repositories
     {
         public override string IndexName => "news-identities";
 
-        public IdentityRepository(IConfigurationProvider configurationProvider) 
+        public IdentityRepository(IDataConfigurationProvider configurationProvider) 
             : base(configurationProvider)
         {
         }

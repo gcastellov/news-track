@@ -14,7 +14,7 @@ namespace NewsTrack.Data.Repositories
 
         public abstract string IndexName { get; }
 
-        protected RepositoryBase(IConfigurationProvider configurationProvider)
+        protected RepositoryBase(IDataConfigurationProvider configurationProvider)
         {
             _clientManager = ClientManager.Create(configurationProvider);
         }

@@ -12,7 +12,7 @@ namespace NewsTrack.Data.Repositories
     {
         public override string IndexName => "news-website";
 
-        public WebsiteRepository(IConfigurationProvider configurationProvider) : base(configurationProvider)
+        public WebsiteRepository(IDataConfigurationProvider configurationProvider) : base(configurationProvider)
         {
         }
 
