@@ -108,8 +108,7 @@ namespace NewsTrack.WebApi
             services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftSuggestionsRepository>();
             services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.WebsiteRepository>();
             services.AddScoped<Data.Configuration.IDataInitializer, Data.Configuration.DataInitializer>();
-            services.AddSingleton<Data.Configuration.IConfigurationProvider>(new Data.Configuration.ConfigurationProvider
-                {ConnectionString = Configuration.GetConnectionString("ElasticSearch")});
+            services.AddSingleton<Data.Configuration.IDataConfigurationProvider>(configurationProvider);
 
             services.AddScoped<ISeeder>(provider => new Seeder(
                     provider.GetService<Data.Configuration.IDataInitializer>(),
@@ -121,7 +120,9 @@ namespace NewsTrack.WebApi
 
             services.AddControllers();
             services.AddCors();
-            services.AddHealthChecks();
+            services
+                .AddHealthChecks()
+                .AddElasticsearch(configurationProvider.ConnectionString.AbsoluteUri);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

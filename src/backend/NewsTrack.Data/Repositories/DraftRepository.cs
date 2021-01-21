@@ -16,7 +16,7 @@ namespace NewsTrack.Data.Repositories
         private const string GroupByTag = "group_by_tag";
         private const string GroupByWebsite = "group_by_website";
 
-        public DraftRepository(IConfigurationProvider configurationProvider)
+        public DraftRepository(IDataConfigurationProvider configurationProvider)
             : base(configurationProvider)
         {
         }

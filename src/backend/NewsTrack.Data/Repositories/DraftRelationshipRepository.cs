@@ -11,7 +11,7 @@ namespace NewsTrack.Data.Repositories
     {
         public override string IndexName => "news-draft-relationship";
 
-        public DraftRelationshipRepository(IConfigurationProvider configurationProvider) 
+        public DraftRelationshipRepository(IDataConfigurationProvider configurationProvider) 
             : base(configurationProvider)
         {
         }
