@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -48,7 +47,6 @@ export function authInterceptorFactory (router: Router) {
   ],
   imports: [
     HttpClientModule,
-    HttpModule,
     BrowserModule,
     FormsModule,
     DraftListModule,

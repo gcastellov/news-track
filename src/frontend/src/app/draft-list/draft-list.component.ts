@@ -130,7 +130,7 @@ export class DraftListComponent implements OnInit {
   }
 
   private setDefaultErrorMessage(error: any) {
-    this.errorMessage = "Impossible to load. " + error.statusText;
+    this.errorMessage = `Impossible to load. ${error.statusText}`;
   }
 
 }
