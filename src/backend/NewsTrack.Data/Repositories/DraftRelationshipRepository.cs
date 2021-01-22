@@ -16,6 +16,17 @@ namespace NewsTrack.Data.Repositories
         {
         }
 
+        public override async Task Initialize()
+        {
+            var client = GetClient();
+            if (!await ExistIndex(client))
+            {
+                await client.Indices.CreateAsync(
+                    IndexName,
+                    c => c.Map<Model.DraftRelationship>(descriptor => descriptor.AutoMap()));
+            }
+        }
+
         public async Task SetRelationship(DraftRelationship relationship)
         {
             var client = GetClient();
@@ -43,7 +54,7 @@ namespace NewsTrack.Data.Repositories
                 {
                     Id = m.Id,
                     Title = m.Title,
-                    Url = m.Url
+                    Url = new Uri(m.Url, UriKind.Absolute)
                 })
             };
         }
@@ -57,7 +68,7 @@ namespace NewsTrack.Data.Repositories
                 {
                     Id = m.Id,
                     Title = m.Title,
-                    Url = m.Url
+                    Url = m.Url.AbsoluteUri
                 })
             };
         }
