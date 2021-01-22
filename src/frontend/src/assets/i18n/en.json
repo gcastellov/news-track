@@ -36,6 +36,10 @@
         "check-it": "Check it",
         "views": "Views"
     },
+    "draft-list-component": {
+        "general-message": "Looks like there is nothing yet...",
+        "message": "Hurry up, be the first to post something!"
+    },
     "draft-component": {
         "action-fuck": "Oh là là"
     },

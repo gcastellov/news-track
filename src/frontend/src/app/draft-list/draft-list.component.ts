@@ -61,21 +61,21 @@ export class DraftListComponent implements OnInit {
   }
 
   getLatest() {
-    this._apiService.getLatestDrafts(this.page, this.take).subscribe(d => {
-      this.loadDrafts(d);
-    });
+    this._apiService.getLatestDrafts(this.page, this.take).subscribe(
+      d => this.loadDrafts(d),
+      e => this.setDefaultErrorMessage(e));
   }
 
   getMostViewed() {
-    this._apiService.getMostViewedDrafts(this.page, this.take).subscribe(d => {
-      this.loadDrafts(d);
-    });
+    this._apiService.getMostViewedDrafts(this.page, this.take).subscribe(
+      d => this.loadDrafts(d),
+      e => this.setDefaultErrorMessage(e));
   }
 
   getMostFucked() {
-    this._apiService.getMostFuckedDrafts(this.page, this.take).subscribe(d => {
-      this.loadDrafts(d);
-    });
+    this._apiService.getMostFuckedDrafts(this.page, this.take).subscribe(
+      d => this.loadDrafts(d),
+      e => this.setDefaultErrorMessage(e));
   }
 
   onPageChange(event: number) {
@@ -127,6 +127,10 @@ export class DraftListComponent implements OnInit {
     } else {
       this.errorMessage = response.errorMessage;
     }
+  }
+
+  private setDefaultErrorMessage(error: any) {
+    this.errorMessage = `Impossible to load. ${error.statusText}`;
   }
 
 }
