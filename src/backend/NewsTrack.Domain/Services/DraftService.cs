@@ -33,20 +33,14 @@ namespace NewsTrack.Domain.Services
             draft.User.CheckIfNull(nameof(draft.User));
             body.CheckIfNull(nameof(body));
 
-            await _draftRepository.Save(draft)
-                .ContinueWith(t =>
-                {
-                    if (t.IsCompleted)
-                    {
-                        var content = new Content
-                        {
-                            Id = draft.Id,
-                            Body = body
-                        };
+            var content = new Content
+            {
+                Id = draft.Id,
+                Body = body
+            };
 
-                        _contentRepository.Save(content);
-                    }
-                });
+            await _draftRepository.Save(draft);
+            await _contentRepository.Save(content);
         }
 
         public async Task SetRelationships(Guid id, IEnumerable<DraftRelationshipItem> items)

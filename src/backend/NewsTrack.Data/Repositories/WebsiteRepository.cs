@@ -71,7 +71,7 @@ namespace NewsTrack.Data.Repositories
             return new Website
             {
                 Id = model.Id,
-                Uri = model.Uri
+                Uri = new Uri(model.Uri, UriKind.Absolute)
             };
         }
 
@@ -80,7 +80,7 @@ namespace NewsTrack.Data.Repositories
             return new Model.Website
             {
                 Id = entity.Id,
-                Uri = entity.Uri
+                Uri = entity.Uri.AbsoluteUri
             };
         }
     }
