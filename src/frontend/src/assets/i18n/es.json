@@ -36,6 +36,10 @@
         "check-it": "Selecciona",
         "views": "Visitas"
     },
+    "draft-list-component": {
+        "general-message": "Parece que todavía no hay nada...",
+        "message": "Date prisa, se el primero en subir algo!"
+    },
     "draft-component": {
         "action-fuck": "Oh là là"
     },
