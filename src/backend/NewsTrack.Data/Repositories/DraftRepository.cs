@@ -21,6 +21,17 @@ namespace NewsTrack.Data.Repositories
         {
         }
 
+        public override async Task Initialize()
+        {
+            var client = GetClient();
+            if (!await ExistIndex(client))
+            {
+                await client.Indices.CreateAsync(
+                    IndexName,
+                    c => c.Map<Model.Draft>(descriptor => descriptor.AutoMap()));
+            }
+        }
+
         public async Task Save(Draft draft)
         {
             var client = GetClient();

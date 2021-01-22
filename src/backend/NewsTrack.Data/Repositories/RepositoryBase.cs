@@ -22,9 +22,7 @@ namespace NewsTrack.Data.Repositories
         public virtual async Task Initialize()
         {
             var client = GetClient();
-            var existResponse = await client.Indices.ExistsAsync(IndexName);
-
-            if (!existResponse.Exists)
+            if (!await ExistIndex(client))
             {
                 await client.Indices.CreateAsync(IndexName);
             }
@@ -35,13 +33,19 @@ namespace NewsTrack.Data.Repositories
             return _clientManager.GetClient<T>(IndexName);
         }
 
-        protected abstract TK To(T model);
-        protected abstract T From(TK entity);
+        protected async Task<bool> ExistIndex(ElasticClient client)
+        {
+            var existResponse = await client.Indices.ExistsAsync(IndexName);
+            return existResponse.Exists;
+        }
 
         protected void CheckResponse(IResponse response)
         {
             if (!response.IsValid)
                 throw new ApplicationException("Impossible to get requested data", response.OriginalException);
         }
+
+        protected abstract TK To(T model);
+        protected abstract T From(TK entity);
     }
 }

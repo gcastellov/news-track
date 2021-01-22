@@ -57,9 +57,8 @@ namespace NewsTrack.Data.Repositories
         public override async Task Initialize()
         {
             var client = GetClient();
-            var existResponse = await client.Indices.ExistsAsync(IndexName);
             
-            if (!existResponse.Exists)
+            if (!await ExistIndex(client))
             {
                 await client.Indices.CreateAsync(
                     IndexName,
