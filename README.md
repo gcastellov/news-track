@@ -25,7 +25,7 @@ Nowadays the membership is limited to admin purposes, meaning that only the admi
 
 To set your admin settings, update your backend appsettings.json file. Once the application wakes up it will create the user.
 
-```
+```json
   "Admin": {
     "Username": "someusername",
     "Email": "some@mailaddress.com",
@@ -64,7 +64,7 @@ As much content the system has, the better. The algorithm will search for relate
 #### Corporate content
 Built-in section with Terms, Privacy and About us. You only need to update the assets/appsettings.json file to customize your website.
 
-```
+```json
 {
     "defaultLanguage": "en",
     "brand": "NewsTrack",
@@ -82,21 +82,21 @@ Remove the social media URLs or leave them blank in case you don't want to make 
 ## Configuration
 Update the backend appsettings.json file for the following purposes:
 
-```
+```json
 "ConnectionStrings": {
     "ElasticSearch": "http://localhost:9200"
   }
 ```
 Set your ElastichSearch endpoint.
 
-```
+```json
 "Websites": [
     "www.somewebsite.com"
   ]
 ```
 Set your website black list in order to warn you that the content you are about to post belongs to certain owner.
 
-```
+```json
 "Smtp": {
     "From": "sender@domain.com",
     "Username": "sender",
@@ -107,7 +107,7 @@ Set your website black list in order to warn you that the content you are about 
 ```
 Set your SMTP settings in order to get email warnings in case your account has been blocked, account created or account confirmed. Leaving the settings as empty the engine will generate email files into a directory called **outbox**.
 
-```
+```json
   "Tokens": {
     "Issuer": "http://localhost/NewsTrack.WebApi",
     "Audience": "http://localhost:4200",
@@ -116,12 +116,12 @@ Set your SMTP settings in order to get email warnings in case your account has b
 ```
 Set your JWT settings.
 
-```
+```json
 "ApiUrl": "http://localhost/NewsTrack.WebApi"
 ```
 Set your public website domain (with or without path).
 
-```
+```json
 "SignInUrl": "http://localhost:4200/authentication"
 ```
 Set your frontend authentication URL where the user has to be redirected once he confirms his membership.
