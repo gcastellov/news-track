@@ -27,9 +27,9 @@ To set your admin settings, update your backend appsettings.json file. Once the 
 
 ```json
   "Admin": {
-    "Username": "someusername",
-    "Email": "some@mailaddress.com",
-    "Password": "somepassword"
+    "Username": "ADMIN_USERNAME",
+    "Email": "ADMIN_EMAIL_ADDRESS",
+    "Password": "ADMIN_PASSWORD"
   }
 ```
 
@@ -98,11 +98,11 @@ Set your website black list in order to warn you that the content you are about 
 
 ```json
 "Smtp": {
-    "From": "sender@domain.com",
-    "Username": "sender",
-    "Host": "smtp.domain.com",
-    "Password": "pwd",
-    "Port": "25"
+    "From": "SENDER",
+    "Username": "SMTP_USERNAME",
+    "Host": "SMTP_HOSTNAME",
+    "Password": "SMTP_PASSWORD",
+    "Port": "SMPT_PORT_NUMBER"
   }
 ```
 Set your SMTP settings in order to get email warnings in case your account has been blocked, account created or account confirmed. Leaving the settings as empty the engine will generate email files into a directory called **outbox**.
@@ -111,7 +111,7 @@ Set your SMTP settings in order to get email warnings in case your account has b
   "Tokens": {
     "Issuer": "http://localhost/NewsTrack.WebApi",
     "Audience": "http://localhost:4200",
-    "Key": "MY_SIGNING_KEY"
+    "Key": "SIGNING_KEY"
   }
 ```
 Set your JWT settings.
