@@ -1,11 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
 import { SharedModule } from '../shared/shared.module';
 
 import { DraftListComponent } from './draft-list.component';
@@ -26,6 +25,7 @@ import { WebsiteStatsDto } from '../services/Dtos/WebsiteStatsDto';
 import { TestBedHelper } from '../testing/testbed.helper';
 import { DataBuilder } from '../testing/data.builder';
 import { Envelope } from '../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('DraftListComponent', () => {
   let component: DraftListComponent;
@@ -43,7 +43,7 @@ describe('DraftListComponent', () => {
     getWebsites: (take) => new Observable<Envelope<WebsiteStatsDto[]>>(observer => observer.next(new Envelope(websites)))
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         DraftListComponent,
@@ -60,7 +60,7 @@ describe('DraftListComponent', () => {
       imports: [
         FormsModule,
         SharedModule,
-        NgbModule.forRoot(),
+        NgbModule,
         HttpClientTestingModule,
         TranslateModule.forRoot({
           loader: {

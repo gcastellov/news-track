@@ -1,4 +1,4 @@
-<div class="draft" *ngIf="!isExtended; else extended">
+<div class="draft" *ngIf="draft && !isExtended; else extended">
   <div class="row">
     <a class="h3" role="button" (click)="go(draft.id)">{{draft.title}}</a>
   </div>  
@@ -22,7 +22,7 @@
 </div>
 
 <ng-template #extended>
-  <div class="draft">
+  <div *ngIf="draft" class="draft">
     <div class="row">
         <a class="h3" href="{{draft.uri}}" target="_blank">{{draft.title}}</a>
       </div>

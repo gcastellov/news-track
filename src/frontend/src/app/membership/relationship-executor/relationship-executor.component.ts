@@ -8,7 +8,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 })
 export class RelationshipExecutorComponent {
 
-  isExecuted: boolean;
+  isExecuted: boolean = false;
 
   constructor(private _apiService: BackendApiService) { }
 

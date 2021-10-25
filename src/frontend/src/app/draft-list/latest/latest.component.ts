@@ -15,6 +15,7 @@ export class LatestComponent implements OnInit {
 
   constructor(private apiService: BackendApiService, private router: Router) {
     this.take = 5;
+    this.latest = [];
    }
 
   ngOnInit() {

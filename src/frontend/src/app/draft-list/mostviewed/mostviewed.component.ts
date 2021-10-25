@@ -15,7 +15,9 @@ export class MostviewedComponent implements OnInit {
   currentRoute: string;
 
   constructor(private _apiService: BackendApiService, private _router: Router) {
+    this.mostViewed = [];
     this.take = 5;
+    this.currentRoute = '';
    }
 
   ngOnInit() {

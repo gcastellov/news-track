@@ -28,8 +28,8 @@ export class AuthenticationComponent {
     this.failureReason = 0;
     if (this.authForm.valid) {
       const request = new AuthenticationDto();
-      request.username = this.authForm.get('username').value;
-      request.password = this.authForm.get('password').value;
+      request.username = this.authForm.get('username')?.value;
+      request.password = this.authForm.get('password')?.value;
       this._authenticationService.authenticate(request).subscribe(d => {
         if (d.isSuccess) {
           this._router.navigateByUrl('/membership');

@@ -24,8 +24,8 @@ export class NewUserComponent {
 
   createUser() {
     const request = new CreateIdentityRequestDto();
-    request.username = this.usrForm.get('username').value;
-    request.email = this.usrForm.get('email').value;
+    request.username = this.usrForm.get('username')?.value;
+    request.email = this.usrForm.get('email')?.value;
     this._apiService.createUser(request).subscribe(p => {
         if (p.isSuccessful) {
           this.failureReason = -1;

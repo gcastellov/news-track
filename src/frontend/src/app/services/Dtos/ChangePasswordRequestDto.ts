@@ -1,5 +1,5 @@
 export class ChangePassworRequestDto {
-    currentPassword: string;
-    password: string;
-    confirmPassword: string;
+    currentPassword: string = '';
+    password: string = '';
+    confirmPassword: string = '';
 }

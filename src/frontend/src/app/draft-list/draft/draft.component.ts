@@ -15,7 +15,7 @@ export class DraftComponent {
   expression: string;
 
   @Input()
-  draft: DraftDto;
+  draft: DraftDto | undefined;
 
   @Input()
   isExtended: boolean;
@@ -27,6 +27,7 @@ export class DraftComponent {
     private _settingsService: AppSettingsService
   ) {
     this.isExtended = false;
+    this.expression = '';
     this._settingsService.getExpressions().subscribe(e =>
       this.expression = this.getExpression(e)
     );
@@ -37,13 +38,21 @@ export class DraftComponent {
   }
 
   isFucked(): boolean {
-    const isFucked = this._storageService.getItem(this.draft.id);
-    return isFucked !== null;
+    if (this.draft) {
+      const isFucked = this._storageService.getItem(this.draft.id);
+      return isFucked !== null; 
+    }
+    return false;
   }
 
   fuck() {
-    this._storageService.setItem(this.draft.id, this.draft.id);
-    this._apiService.setFuck(this.draft.id).subscribe(f => this.draft.fucks = f.payload.amount);
+    if (this.draft) {
+      this._storageService.setItem(this.draft.id, this.draft.id);
+      this._apiService.setFuck(this.draft.id).subscribe(f => { 
+        if (this.draft)
+          this.draft.fucks = f.payload.amount;
+      });
+    }
   }
 
   getExpression(expresssions: string[]): string {

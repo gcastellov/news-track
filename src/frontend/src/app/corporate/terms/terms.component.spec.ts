@@ -1,15 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
 
 import { httpLoaderFactory } from '../../app.module';
 import { AppSettingsService } from '../../services/app-settings.service';
 import { TermsComponent } from './terms.component';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Observable } from 'rxjs';
 
 describe('TermsComponent', () => {
   let component: TermsComponent;
@@ -20,12 +20,12 @@ describe('TermsComponent', () => {
     getSettings: () => new Observable(observer => observer.next(settings))
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TermsComponent ],
       imports: [
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

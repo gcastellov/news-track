@@ -1,3 +1,3 @@
 export class IncrementalResponseDto {
-    amount: number;
+    amount: number = 0;
 }

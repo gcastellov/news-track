@@ -10,12 +10,13 @@ import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipReque
 export class BrowsingRelationshipDraftComponent extends DraftComponent {
 
   @Input()
-  isSelected: boolean;
+  isSelected: boolean = false;
 
   @Output()
   selectionChange: EventEmitter<DraftRelationshipDto> = new EventEmitter<DraftRelationshipDto>();
 
   onSelectionChange() {
-    this.selectionChange.emit(new DraftRelationshipDto(this.draft.id, this.draft.title, this.draft.uri));
+    if (this.draft)
+      this.selectionChange.emit(new DraftRelationshipDto(this.draft.id, this.draft.title, this.draft.uri));
   }
 }

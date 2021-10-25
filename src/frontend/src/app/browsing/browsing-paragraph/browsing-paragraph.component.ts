@@ -9,7 +9,10 @@ import { BrowsingElement } from '../browsing-draft/browsing-element';
 })
 export class BrowsingParagraphComponent extends BrowsingItemComponent {
 
-    onChange(entry: BrowsingElement): void {
+    onChange(entry: BrowsingElement): void {        
+        if (!this.model)
+            return;
+        
         if (!entry.isSelected) {
             const index = this.model.paragraphs.findIndex(p => p === entry.content);
             if (index >= 0) {

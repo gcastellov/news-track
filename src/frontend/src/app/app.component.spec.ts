@@ -1,4 +1,4 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
@@ -31,27 +31,7 @@ describe('AppComponent', () => {
 
   let fixture: ComponentFixture<AppComponent>;
 
-  class SettingsServiceMock extends AppSettingsService {
-      constructor() {
-        super(null);
-        this.settings = new AppSettingsDto();
-        this.expressions = [];
-      }
-  }
-
-  class StorageServiceMock extends StorageService {
-      getItem() {
-        return null;
-      }
-  }
-
-  class AuthServiceMock extends AuthenticationApiService {
-      constructor() {
-        super(null, new StorageServiceMock());
-      }
-  }
-
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
 
     TestBed.configureTestingModule({
       declarations: [
@@ -71,7 +51,7 @@ describe('AppComponent', () => {
         FormsModule,
         SharedModule,
         CorporateModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,
@@ -85,9 +65,8 @@ describe('AppComponent', () => {
         BackendApiService,
         AuthGuardService,
         AppSettingsService,
-        { provide: AuthenticationApiService, useClass: AuthServiceMock },
-        { provide: AppSettingsService, useClass: SettingsServiceMock },
-        { provide: StorageService, useClass: StorageServiceMock }
+        AuthenticationApiService,
+        StorageService
       ]
     }).compileComponents();
   }));
@@ -99,7 +78,7 @@ describe('AppComponent', () => {
   });
 
   it('should create the app',
-    async(() => {
+    waitForAsync(() => {
       const app = fixture.debugElement.componentInstance;
       expect(app).toBeTruthy();
   }));

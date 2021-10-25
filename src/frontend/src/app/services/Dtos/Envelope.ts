@@ -1,6 +1,6 @@
 export class Envelope<T> {
-    isSuccessful: boolean;
-    errorMessage: string;
+    isSuccessful: boolean = false;
+    errorMessage: string = '';
     at: string;
     payload: T;
 
@@ -10,7 +10,7 @@ export class Envelope<T> {
         this.at = new Date().toUTCString();
     }
 
-    static AsFailure<T>(payload?: T): Envelope<T> {
+    static AsFailure<T>(payload: T): Envelope<T> {
         const envelope = new Envelope(payload);
         envelope.isSuccessful = false;
         envelope.errorMessage = 'Seomething went wrong';

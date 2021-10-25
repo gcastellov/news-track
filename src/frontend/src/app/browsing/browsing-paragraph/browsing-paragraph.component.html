@@ -1,4 +1,4 @@
-<div class="row browsing-paragraph">
+<div class="row browsing-paragraph" *ngIf="element">
     <div class="col-md-1">
         <input type="checkbox" [(ngModel)]="element.isSelected" [value]="element.content" (change)="onChange(element)" />
     </div>

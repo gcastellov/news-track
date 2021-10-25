@@ -3,11 +3,11 @@ import { BackendApiService } from '../../services/backend-api.service';
 import { BrowsingElement } from './browsing-element';
 import { DataBuilder } from '../../testing/data.builder';
 import { IBrowseResult } from '../../services/Dtos/IBrowseResult';
-import { Observable } from 'rxjs/Observable';
 import { DraftResponseDto } from '../../services/Dtos/DraftResponseDto';
 import { DraftRelationshipResponseDto } from '../../services/Dtos/DraftRelationshipResponseDto';
 import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
 import { Envelope } from '../../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('BrowsingDraft', () => {
 
@@ -43,14 +43,12 @@ describe('BrowsingDraft', () => {
         ];
         component.draftRequest.url = component.browseResult.uri;
         component.draftRequest.title = component.browseResult.titles
-            .find((t) => t.isSelected)
-            .content;
+            .find((t) => t.isSelected)?.content ?? '';
         component.draftRequest.paragraphs = component.browseResult.paragraphs
             .filter((p) => p.isSelected)
             .map((p) => p.content);
         component.draftRequest.picture = component.browseResult.pictures
-            .find((p) => p.isSelected)
-            .content;
+            .find((p) => p.isSelected)?.content ?? '';
         component.tags = DataBuilder.getTags();
         component.relationship = [
             new DraftRelationshipDto('some-id', 'other title', 'http://www.some-other-domain.com/resource')
@@ -83,7 +81,7 @@ describe('BrowsingDraft', () => {
     it('should initialize data when is already in use', () => {
         component.initialize();
 
-        expect(component.browseResult.uri).toBeNull();
+        expect(component.browseResult.uri).toBe('');
         expect(component.browseResult.titles.length).toEqual(0);
         expect(component.browseResult.paragraphs.length).toEqual(0);
         expect(component.browseResult.pictures.length).toEqual(0);
@@ -91,9 +89,9 @@ describe('BrowsingDraft', () => {
         expect(component.tags.length).toEqual(0);
         expect(component.draftRequest.paragraphs.length).toEqual(0);
         expect(component.draftRequest.tags.length).toEqual(0);
-        expect(component.draftRequest.url).toBeNull();
-        expect(component.draftRequest.title).toBeNull();
-        expect(component.draftRequest.picture).toBeNull();
+        expect(component.draftRequest.url).toBe('');
+        expect(component.draftRequest.title).toBe('');
+        expect(component.draftRequest.picture).toBe('');
     });
 
     it('should verify that is completed', () => {
@@ -101,7 +99,7 @@ describe('BrowsingDraft', () => {
     });
 
     it('should verify that is not completed because there is no title', () => {
-        component.draftRequest.title = null;
+        component.draftRequest.title = '';
         expect(component.isCompleted()).toBeFalsy();
     });
 
@@ -111,11 +109,12 @@ describe('BrowsingDraft', () => {
     });
 
     it('should verify that is not completed because there is no picture', () => {
-        component.draftRequest.picture = null;
+        component.draftRequest.picture = '';
         expect(component.isCompleted()).toBeFalsy();
     });
 
     it('should save the draft along with relationships and initialize the model again', () => {
+        const draftRequest = component.draftRequest;
         const dto = new DraftResponseDto();
         dto.id = 'response-id';
 
@@ -131,6 +130,6 @@ describe('BrowsingDraft', () => {
         });
 
         expect(component.isCompleted()).toBeFalsy();
-        expect(setDataMock).toHaveBeenCalledWith(component.draftRequest);
+        expect(setDataMock).toHaveBeenCalledWith(draftRequest);
     });
 });

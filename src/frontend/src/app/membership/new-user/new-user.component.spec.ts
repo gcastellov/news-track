@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
@@ -9,10 +9,10 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { NewUserComponent } from './new-user.component';
 import { httpLoaderFactory } from '../../app.module';
 import { BackendApiService } from '../../services/backend-api.service';
-import { Observable } from 'rxjs/Observable';
 import { CreateIdentityResponseDto } from '../../services/Dtos/CreateIdentityResponseDto';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { Envelope } from '../../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('NewUserComponent', () => {
   let component: NewUserComponent;
@@ -22,13 +22,13 @@ describe('NewUserComponent', () => {
     createUser: (r) => new Observable<Envelope<CreateIdentityResponseDto>>(observer => observer.complete)
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NewUserComponent ],
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,
@@ -70,8 +70,8 @@ describe('NewUserComponent', () => {
     component.createUser();
 
     expect(createUserMock).toHaveBeenCalled();
-    expect(component.usrForm.get('username').value).toBe('');
-    expect(component.usrForm.get('email').value).toBe('');
+    expect(component.usrForm.get('username')?.value).toBe('');
+    expect(component.usrForm.get('email')?.value).toBe('');
   });
 
   it('should show proper message when creating user fails', () => {
@@ -90,7 +90,7 @@ describe('NewUserComponent', () => {
 
     expect(changePasswordMock).toHaveBeenCalled();
     expect(component.failureReason).toBe(dto.failure);
-    expect(component.usrForm.get('username').value).toBe(username);
-    expect(component.usrForm.get('email').value).toBe(email);
+    expect(component.usrForm.get('username')?.value).toBe(username);
+    expect(component.usrForm.get('email')?.value).toBe(email);
   });
 });

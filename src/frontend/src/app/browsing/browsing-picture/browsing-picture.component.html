@@ -1,4 +1,4 @@
-<div class='browsing-img-div'>
+<div class='browsing-img-div' *ngIf="element && model">
     <input type='radio' name='browsing-pictures' [(ngModel)]="model.picture" [value]="element.content"  />
     <img class='browsing-img' src='{{element.content}}' />
 </div>

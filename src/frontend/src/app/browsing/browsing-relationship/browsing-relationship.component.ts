@@ -24,6 +24,8 @@ export class BrowsingRelationshipComponent implements OnInit {
     this.page = 0;
     this.take = 5;
     this.numberOfPages = 0;
+    this.drafts = [];
+    this.count = 0;
   }
 
   ngOnInit() {

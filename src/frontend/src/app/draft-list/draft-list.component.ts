@@ -4,17 +4,10 @@ import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { BackendApiService } from '../services/backend-api.service';
 import { DraftDto } from '../services/Dtos/DraftDto';
 import { SearchResultDto } from '../services/Dtos/SearchResultDto';
-import { Observable } from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/merge';
+import { debounceTime, distinctUntilChanged, switchMap, map, catchError, tap, mergeAll } from "rxjs/operators";
 import { DraftListDto } from '../services/Dtos/DraftListDto';
 import { Envelope } from '../services/Dtos/Envelope';
+import { merge, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-draft-list',
@@ -34,9 +27,15 @@ export class DraftListComponent implements OnInit {
   searchFailed = false;
   hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
   currentRoute: string;
-  errorMessage: string = null;
+  errorMessage: string;
 
   constructor(public _apiService: BackendApiService, private _router: Router, private _activatedRoute: ActivatedRoute) {
+    this.drafts = [];
+    this.count = 0;
+    this.numberOfPages = 0;
+    this.hits = [];
+    this.currentRoute = '';
+    this.errorMessage = '';
     this.take = 5;
     this.page = 0;
     this._activatedRoute.url.subscribe(url => this.currentRoute = url[0].path);
@@ -88,38 +87,56 @@ export class DraftListComponent implements OnInit {
     this._router.navigate(['news', item.id]);
   }
 
-  onTagSelected(event) {
+  onTagSelected(event: any) {
     if (event) {
       this._router.navigate(['/search'], { queryParams: { tags: event } });
     }
   }
 
-  onWebsiteSelected(event) {
+  onWebsiteSelected(event: any) {
     if (event) {
       this._router.navigate(['/search'], { queryParams: { website: event } });
     }
   }
 
-  search = (text$: Observable<string>) =>
+  // search = (text$: Observable<string>) =>
+  //   text$
+  //   .debounceTime(300)
+  //   .distinctUntilChanged()
+  //   .do(() => this.searching = true)
+  //   .switchMap(term =>
+  //     this._apiService.search(term)
+  //       .do(() => this.searchFailed = false)
+  //       .map(r => r.payload)
+  //       .catch(() => {
+  //         this.searchFailed = true;
+  //         return of([]);
+  //       }))
+  //   .do(() => this.searching = false)
+  //   .merge(this.hideSearchingWhenUnsubscribed)
+
+  search = (text$: Observable<string>) => 
     text$
-    .debounceTime(300)
-    .distinctUntilChanged()
-    .do(() => this.searching = true)
-    .switchMap(term =>
-      this._apiService.search(term)
-        .do(() => this.searchFailed = false)
-        .map(r => r.payload)
-        .catch(() => {
-          this.searchFailed = true;
-          return of([]);
-        }))
-    .do(() => this.searching = false)
-    .merge(this.hideSearchingWhenUnsubscribed)
+    .pipe(
+      debounceTime<string>(300),
+      distinctUntilChanged<string>(),
+      switchMap(term => {
+        return this._apiService.search(term).pipe(
+          tap(r => this.searchFailed = false),
+          map(r => r.payload),
+          catchError(() => {
+            this.searchFailed = true;
+            return of([]);
+          })
+        )
+      }),
+      tap(r => this.searching = false)
+    )
 
   private loadDrafts(response: Envelope<DraftListDto>) {
     this.count = 0;
-    this.drafts = null;
-    this.errorMessage = null;
+    this.drafts = [];
+    this.errorMessage = '';
     if (response.isSuccessful) {
       this.count = response.payload.count;
       this.drafts = response.payload.news;

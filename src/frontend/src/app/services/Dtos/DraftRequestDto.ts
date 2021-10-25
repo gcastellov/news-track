@@ -6,6 +6,9 @@ export class DraftRequestDto {
     tags: string[];
 
     constructor() {
+        this.url = '';
+        this.picture = '';
+        this.title = '';
         this.paragraphs = [];
         this.tags = [];
     }

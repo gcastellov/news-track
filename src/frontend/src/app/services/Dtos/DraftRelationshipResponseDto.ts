@@ -1,3 +1,3 @@
 export class DraftRelationshipResponseDto {
-    id: string;
+    id: string = '';
 }

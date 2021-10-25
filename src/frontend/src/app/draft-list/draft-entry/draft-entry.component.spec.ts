@@ -1,11 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
 
 import { DraftEntryComponent } from './draft-entry.component';
 import { httpLoaderFactory } from '../../app.module';
@@ -17,6 +16,7 @@ import { AppSettingsService } from '../../services/app-settings.service';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
 import { Envelope } from '../../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('DraftEntryComponent', () => {
   let component: DraftEntryComponent;
@@ -45,7 +45,7 @@ describe('DraftEntryComponent', () => {
     getExpressions: () => new Observable<string[]>(observer => observer.next(expressions))
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     getDraftMock = spyOn(apiServiceMock, 'getDraft').and.callThrough();
     setVisitMock = spyOn(apiServiceMock, 'setVisit').and.callThrough();
     getDraftRelationshipMock = spyOn(apiServiceMock, 'getDraftRelationship').and.callThrough();
@@ -59,7 +59,7 @@ describe('DraftEntryComponent', () => {
       ],
       imports: [
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

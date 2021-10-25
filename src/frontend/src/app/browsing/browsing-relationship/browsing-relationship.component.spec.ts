@@ -1,11 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
 import { SharedModule } from '../../shared/shared.module';
 
 import { BrowsingRelationshipComponent } from './browsing-relationship.component';
@@ -25,6 +24,7 @@ import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
 import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
 import { Envelope } from '../../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('BrowsingRelationshipComponent', () => {
   let component: BrowsingRelationshipComponent;
@@ -47,7 +47,7 @@ describe('BrowsingRelationshipComponent', () => {
     getExpressions: () => new Observable<string[]>(observer => observer.next(['expression one', 'expression two']))
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         BrowsingComponent,
@@ -63,7 +63,7 @@ describe('BrowsingRelationshipComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         SharedModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

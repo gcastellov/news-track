@@ -9,7 +9,7 @@ import { DraftDto } from '../../services/Dtos/DraftDto';
 export class DraftFooterComponent implements OnInit {
 
   @Input()
-  draft: DraftDto;
+  draft: DraftDto | undefined;
 
   ngOnInit() {
   }

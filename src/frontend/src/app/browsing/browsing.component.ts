@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { BackendApiService } from '../services/backend-api.service';
 import { Router } from '@angular/router';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
 import { BrowsingDraft } from './browsing-draft/bowsing-draft';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-browsing',
@@ -22,6 +22,9 @@ export class BrowsingComponent implements OnInit {
   constructor(private _apiService: BackendApiService, private _router: Router, _draft: BrowsingDraft) {
     this.draft = _draft ? _draft : new BrowsingDraft(_apiService);
     this.tags = [];
+    this.url = '';
+    this.isForbidden = false;
+    this.model = '';
   }
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,9 +10,10 @@ import { FailureComponent } from './failure/failure.component';
   imports: [
     CommonModule,
     FormsModule,
-    TranslateModule
+    TranslateModule.forChild({})
   ],
   declarations: [PaginatorComponent, LoaderComponent, FailureComponent],
-  exports: [PaginatorComponent, LoaderComponent, FailureComponent]
+  exports: [PaginatorComponent, LoaderComponent, FailureComponent, TranslateModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

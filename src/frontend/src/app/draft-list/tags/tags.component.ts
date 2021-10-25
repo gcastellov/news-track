@@ -18,6 +18,7 @@ export class TagsComponent implements OnInit {
 
   constructor(private _apiService: BackendApiService) {
     this.tags = [];
+    this.averageScore = 0;
   }
 
   ngOnInit() {
@@ -63,7 +64,7 @@ export class TagsComponent implements OnInit {
     this.tags = this.shuffle(this.tags);
   }
 
-  shuffle(array) {
+  shuffle(array: any) {
     let currentIndex = array.length;
     let temporaryValue;
     let randomIndex;

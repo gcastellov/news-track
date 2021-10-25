@@ -1,5 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient } from '@angular/common/http';
@@ -14,6 +13,7 @@ import { AppSettingsService } from '../../services/app-settings.service';
 import { httpLoaderFactory } from '../../app.module';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Observable } from 'rxjs';
 
 describe('DraftComponent', () => {
   let component: DraftComponent;
@@ -30,7 +30,7 @@ describe('DraftComponent', () => {
     getExpressions: () => new Observable<string[]>(observer => observer.next(expressions))
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         DraftComponent,
@@ -38,7 +38,7 @@ describe('DraftComponent', () => {
       ],
       imports: [
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

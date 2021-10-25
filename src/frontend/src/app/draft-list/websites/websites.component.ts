@@ -16,6 +16,7 @@ export class WebsitesComponent implements OnInit {
   take: number;
 
   constructor(private _apiService: BackendApiService) {
+    this.websites = [];
     this.take = 5;
    }
 

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
@@ -10,9 +10,9 @@ import { ChangePasswordComponent } from './change-password.component';
 import { httpLoaderFactory } from '../../app.module';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { BackendApiService } from '../../services/backend-api.service';
-import { Observable } from 'rxjs/Observable';
 import { ChangePasswordResponseDto } from '../../services/Dtos/ChangePasswordResponseDto';
 import { Envelope } from '../../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
@@ -22,13 +22,13 @@ describe('ChangePasswordComponent', () => {
     changePassword: (r) => new Observable<Envelope<ChangePasswordResponseDto>>(observer => observer.complete)
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ChangePasswordComponent ],
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,
@@ -71,9 +71,9 @@ describe('ChangePasswordComponent', () => {
     component.changePassword();
 
     expect(changePasswordMock).toHaveBeenCalled();
-    expect(component.pwdForm.get('currentPassword').value).toBe('');
-    expect(component.pwdForm.get('password1').value).toBe('');
-    expect(component.pwdForm.get('password2').value).toBe('');
+    expect(component.pwdForm.get('currentPassword')?.value).toBe('');
+    expect(component.pwdForm.get('password1')?.value).toBe('');
+    expect(component.pwdForm.get('password2')?.value).toBe('');
   });
 
   it('should show proper message when changing password fails', () => {
@@ -93,8 +93,8 @@ describe('ChangePasswordComponent', () => {
 
     expect(changePasswordMock).toHaveBeenCalled();
     expect(component.failureReason).toBe(dto.failure);
-    expect(component.pwdForm.get('currentPassword').value).toBe(currentPwd);
-    expect(component.pwdForm.get('password1').value).toBe(newPwd);
-    expect(component.pwdForm.get('password2').value).toBe(newPwd);
+    expect(component.pwdForm.get('currentPassword')?.value).toBe(currentPwd);
+    expect(component.pwdForm.get('password1')?.value).toBe(newPwd);
+    expect(component.pwdForm.get('password2')?.value).toBe(newPwd);
   });
 });

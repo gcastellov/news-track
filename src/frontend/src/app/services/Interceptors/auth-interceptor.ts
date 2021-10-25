@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpErrorResponse, HttpHandler, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -17,10 +18,11 @@ export class AuthInterceptor implements HttpInterceptor {
             console.log('Exception from: ' + req.url);
             console.log(err);
         }
-        return Observable.throw(err);
+        return throwError(err);
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req).catch(x => this.handleError(req, x));
+        return next.handle(req)
+            .pipe(catchError(error => this.handleError(req, error)));
     }
 }

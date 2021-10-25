@@ -1,38 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import { AppSettingsDto } from './Dtos/AppSettingsDto';
 import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AppSettingsService {
 
   settings: AppSettingsDto;
-  expressions: string[];
+  expressions: string[] | undefined;
 
   constructor(private http: HttpClient) {
+    this.settings = new AppSettingsDto();
   }
 
   getSettings(): Observable<AppSettingsDto> {
-    if (this.settings) {
-      return new Observable<AppSettingsDto>(observer => observer.next(this.settings));
-    }
-
     return this.http.get<Response>('assets/appsettings.json')
-      .map(data => this.settings = this.extractData(data))
-      .catch(this.handleErrors);
+      .pipe(
+        tap(data => this.settings = this.extractData(data)),
+        catchError(error => this.handleErrors(error)));
   }
 
   getExpressions(): Observable<string[]> {
-    if (this.expressions) {
-      return new Observable<string[]>(observer => observer.next(this.expressions));
-    }
-
     return this.http.get<Response>('assets/expressions.json')
-      .map(data => this.expressions = this.extractData(data))
-      .catch(this.handleErrors);
+      .pipe(
+        tap(data => this.expressions = this.extractData(data)),
+        catchError(error => this.handleErrors(error)));
+  }
+
+  initialize() : Promise<[AppSettingsDto, string[]]> {
+    return Promise.all([this.getSettings().toPromise(), this.getExpressions().toPromise()])
   }
 
   private extractData(res: Response): any {
@@ -41,14 +38,6 @@ export class AppSettingsService {
 
   private handleErrors(error: any): Observable<any> {
     console.error('An error occurred', error);
-    return Observable.throw(error.message || error);
-  }
-
-  initialize() {
-    return Promise.all([this.getSettings().toPromise(), this.getExpressions().toPromise()])
-      .then(() => {
-        console.log('settings intialized');
-      })
-      .catch(err => console.log(err));
+    return throwError(error.message || error);
   }
 }

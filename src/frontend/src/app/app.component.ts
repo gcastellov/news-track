@@ -24,7 +24,6 @@ export class AppComponent {
     this.authentication = _authenticationService;
     this.year = new Date().getFullYear();
     this.settings = _appSettings.settings;
-    this._translate.setDefaultLang(this.settings.defaultLanguage);
   }
 
   toggleMenu() {

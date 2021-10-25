@@ -1,4 +1,4 @@
-<div class="row draft-footer">
+<div *ngIf="draft" class="row draft-footer">
     <div class="col-md-12 col-sm-12">
       <ul class="list-inline tag-list" *ngIf="draft.tags">
         <li *ngFor="let tag of draft.tags">

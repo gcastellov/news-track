@@ -10,7 +10,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 })
 export class MostfuckingComponent implements OnInit {
 
-  mostFucking: DraftDigestDto[];
+  mostFucking: DraftDigestDto[] = [];
   take: number;
 
   constructor(private apiService: BackendApiService, private router: Router) {

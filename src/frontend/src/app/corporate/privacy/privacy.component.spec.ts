@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient } from '@angular/common/http';
@@ -8,9 +8,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PrivacyComponent } from './privacy.component';
 import { httpLoaderFactory } from '../../app.module';
 import { AppSettingsService } from '../../services/app-settings.service';
-import { Observable } from '../../../../node_modules/rxjs/Observable';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
+import { Observable } from 'rxjs';
 
 describe('PrivacyComponent', () => {
   let component: PrivacyComponent;
@@ -21,12 +21,12 @@ describe('PrivacyComponent', () => {
     getSettings: () => new Observable(observer => observer.next(settings))
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PrivacyComponent ],
       imports: [
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

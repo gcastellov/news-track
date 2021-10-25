@@ -1,5 +1,5 @@
 export class TokenResponseDto {
-    token: string;
-    username: string;
-    failure: number;
+    token: string = '';
+    username: string = '';
+    failure: number = 0;
 }

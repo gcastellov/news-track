@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
 export class FailureComponent {
 
   @Input()
-  errorMessage: string;
+  errorMessage: string = '';
 }

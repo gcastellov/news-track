@@ -3,9 +3,9 @@ import { BrowsingObject } from './browsing-object';
 import { DraftRequestDto } from '../../services/Dtos/DraftRequestDto';
 import { DraftRelationshipDto } from '../../services/Dtos/DraftRelationshipRequestDto';
 import { BackendApiService } from '../../services/backend-api.service';
-import { Observable } from 'rxjs/Observable';
 import { IBrowseResult } from '../../services/Dtos/IBrowseResult';
 import { BrowsingElement } from './browsing-element';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class BrowsingDraft {
@@ -17,31 +17,22 @@ export class BrowsingDraft {
 
     constructor(private _apiService: BackendApiService) {
         this.tags = [];
+        this.url = '';
         this.relationship = [];
         this.browseResult = new BrowsingObject();
         this.draftRequest = new DraftRequestDto();
     }
 
     initialize() {
-        this.url = null;
         this.tags = [];
         this.relationship = [];
-        this.browseResult.paragraphs = [];
-        this.browseResult.pictures = [];
-        this.browseResult.titles = [];
-        this.browseResult.uri = null;
-        this.draftRequest.paragraphs = [];
-        this.draftRequest.picture = null;
-        this.draftRequest.tags = [];
-        this.draftRequest.title = null;
-        this.draftRequest.url = null;
+        this.browseResult = new BrowsingObject();
+        this.draftRequest = new DraftRequestDto();
     }
 
     isCompleted(): boolean {
-        return this.draftRequest &&
-            this.draftRequest.picture &&
-            this.draftRequest.title &&
-            this.draftRequest.paragraphs &&
+        return this.draftRequest.picture !== '' &&
+            this.draftRequest.title !== '' &&
             this.draftRequest.paragraphs.length > 0;
     }
 

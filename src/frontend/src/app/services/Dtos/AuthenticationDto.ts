@@ -1,4 +1,4 @@
 export class AuthenticationDto {
-    username: string;
-    password: string;
+    username: string = '';
+    password: string = '';
 }

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
@@ -9,11 +9,11 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { MemberComponent } from './member.component';
 import { httpLoaderFactory } from '../../app.module';
 import { BackendApiService } from '../../services/backend-api.service';
-import { Observable } from '../../../../node_modules/rxjs/Observable';
 import { IdentityDto } from '../../services/Dtos/IdentityDto';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
 import { Envelope } from '../../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('MemberComponent', () => {
   let component: MemberComponent;
@@ -24,13 +24,13 @@ describe('MemberComponent', () => {
     getIdentity: () => new Observable<Envelope<IdentityDto>>(observer => observer.next(new Envelope(identity)))
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MemberComponent ],
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs/Observable';
 import { IBrowseResult } from './Dtos/IBrowseResult';
 import { DraftRequestDto } from './Dtos/DraftRequestDto';
 import { DraftResponseDto } from './Dtos/DraftResponseDto';
@@ -24,6 +23,7 @@ import { DraftSuggestionIdsDto } from './Dtos/DraftSuggestionIdsDto';
 import { CreateIdentityResponseDto } from './Dtos/CreateIdentityResponseDto';
 import { CreateIdentityRequestDto } from './Dtos/CreateIdentityRequestDto';
 import { Envelope } from './Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class BackendApiService {
@@ -185,7 +185,14 @@ export class BackendApiService {
   processSuggestions(): Observable<boolean> {
     const url = `${environment.baseUrl}/api/content/suggestions`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.post(url, null, { headers: headers }).map((res: any) => res.statusCode === 202);
+    const observable = this._client.post<any>(url, null, { headers: headers });
+
+    return new Observable<boolean>(observer => {
+      observable.subscribe((res: any) => {
+        observer.next(res.statusCode === 202);
+        observer.complete();
+      });
+    });
   }
 
   createUser(req: CreateIdentityRequestDto): Observable<Envelope<CreateIdentityResponseDto>> {

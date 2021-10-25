@@ -1,6 +1,7 @@
 <div class="row form-group">
   <div class="col-md-8">
-      <input class="form-control" id="url" type="text" [(ngModel)]="url" (keyup.enter)="onFind()" (click)="$event.target.select()" />
+    <input class="form-control" id="url" type="text" [(ngModel)]="url" (keyup.enter)="onFind()" />
+      <!-- <input class="form-control" id="url" type="text" [(ngModel)]="url" (keyup.enter)="onFind()" (click)="$event.currentTarget.select()" /> -->
   </div>   
   <div class="col-md-4">
       <button type="submit" class="btn btn-secondary" [disabled]="!isFindEnabled()" (click)="onFind()">{{ 'browsing-component.action-find' | translate }}</button> 

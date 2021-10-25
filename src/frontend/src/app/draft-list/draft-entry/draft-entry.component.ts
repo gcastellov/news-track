@@ -13,15 +13,17 @@ import { DraftSuggestionsDto } from '../../services/Dtos/DraftSuggestionsDto';
 export class DraftEntryComponent implements OnInit {
 
   id: string;
-  draft: DraftDto;
+  draft: DraftDto | undefined;
   relationship: DraftDigestDto[];
-  suggestions: DraftSuggestionsDto;
+  suggestions: DraftSuggestionsDto | undefined;
   private take: number;
 
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
     private _apiService: BackendApiService) {
+      this.id = '';
+      this.relationship = [];
       this.take  = 5;
   }
 
@@ -43,7 +45,7 @@ export class DraftEntryComponent implements OnInit {
     this._router.navigate([`news/${this.id}/suggestions`]);
   }
 
-  searchByTag(tag) {
+  searchByTag(tag: any) {
     this._router.navigate(['/search'], { queryParams: { tags: tag } });
   }
 

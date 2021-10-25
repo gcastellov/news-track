@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -10,10 +10,8 @@ import { BackendApiService } from '../services/backend-api.service';
 import { AuthenticationApiService } from '../services/authentication-api.service';
 import { httpLoaderFactory } from '../app.module';
 import { TestBedHelper } from '../testing/testbed.helper';
-import { Observable } from 'rxjs/Observable';
 import { AuthenticationResult } from '../services/Dtos/AuthenticationResult';
-import { element, by } from 'protractor';
-import { Envelope } from '../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('AuthenticationComponent', () => {
   let component: AuthenticationComponent;
@@ -23,7 +21,7 @@ describe('AuthenticationComponent', () => {
     authenticate: (auth) => new Observable<AuthenticationResult>(observer => observer.complete)
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AuthenticationComponent ],
       imports: [
@@ -65,7 +63,7 @@ describe('AuthenticationComponent', () => {
     authDto.failureReason = 1;
 
     const authSpy = spyOn(authServiceMock, 'authenticate').and.returnValue(
-      new Observable<Envelope<AuthenticationResult>>(observer => observer.next(Envelope.AsFailure(authDto)))
+      new Observable<AuthenticationResult>(observer => observer.next(authDto))
     );
 
     component.authForm.setValue({username: username, password: 'my-password'});

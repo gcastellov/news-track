@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { JwtHelper } from 'angular2-jwt';
-import { Observable } from 'rxjs/Observable';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
 import { AuthenticationDto } from './Dtos/AuthenticationDto';
 import { TokenResponseDto } from './Dtos/TokenResponseDto';
 import { AuthenticationResult } from './Dtos/AuthenticationResult';
 import { StorageService } from './storage.service';
 import { Envelope } from './Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthenticationApiService {
 
     token: string;
     username: string;
-    private _jwtHelper: JwtHelper;
+    private _jwtHelper: JwtHelperService;
 
     constructor(private _client: HttpClient, private _storageService: StorageService) {
-        this._jwtHelper = new JwtHelper();
+        this.username = '';
+        this._jwtHelper = new JwtHelperService();
         this.token = this._storageService.getItem('token');
         if (this.token) {
             this.username = this._storageService.getItem('username');

@@ -1,4 +1,4 @@
 export class WebsiteDto {
-    isAccepted: boolean;
-    uri: string;
+    isAccepted: boolean = false;
+    uri: string = '';
 }

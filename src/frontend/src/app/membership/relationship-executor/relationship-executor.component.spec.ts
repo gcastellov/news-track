@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -9,7 +9,7 @@ import { RelationshipExecutorComponent } from './relationship-executor.component
 import { httpLoaderFactory } from '../../app.module';
 import { BackendApiService } from '../../services/backend-api.service';
 import { TestBedHelper } from '../../testing/testbed.helper';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 describe('RelationshipExecutorComponent', () => {
   let component: RelationshipExecutorComponent;
@@ -19,12 +19,12 @@ describe('RelationshipExecutorComponent', () => {
     processSuggestions: () => new Observable(observer => observer.complete)
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RelationshipExecutorComponent ],
       imports: [
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

@@ -1,3 +1,3 @@
 export class ChangePasswordResponseDto {
-    failure: number;
+    failure: number = 0;
 }

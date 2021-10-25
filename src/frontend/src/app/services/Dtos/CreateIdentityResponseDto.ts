@@ -1,3 +1,3 @@
 export class CreateIdentityResponseDto {
-    failure: number;
+    failure: number = 0;
 }

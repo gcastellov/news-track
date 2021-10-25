@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackendApiService } from '../../services/backend-api.service';
 import { DraftDto } from '../../services/Dtos/DraftDto';
-import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-search',
@@ -19,7 +18,7 @@ export class SearchComponent implements OnInit {
   website: string;
   numberOfPages: number;
   drafts: DraftDto[];
-  errorMessage: string = null;
+  errorMessage: string;
 
   constructor(private _apiService: BackendApiService, private _route: ActivatedRoute, private _router: Router) {
     this.take = 5;
@@ -27,6 +26,10 @@ export class SearchComponent implements OnInit {
     this.tags = [];
     this.pattern = '';
     this.website = '';
+    this.count = 0;
+    this.numberOfPages = 0;
+    this.drafts = [];
+    this.errorMessage = '';
   }
 
   ngOnInit() {
@@ -51,8 +54,8 @@ export class SearchComponent implements OnInit {
   search() {
     this._apiService.advancedSearch(this.website, this.pattern, this.tags, this.page, this.take).subscribe(d => {
       this.count = 0;
-      this.drafts = null;
-      this.errorMessage = null;
+      this.drafts = [];
+      this.errorMessage = '';
       if (d.isSuccessful) {
         this.count = d.payload.count;
         this.drafts = d.payload.news;
@@ -67,7 +70,7 @@ export class SearchComponent implements OnInit {
     this.onTagSelected(tag);
   }
 
-  onTagSelected(event) {
+  onTagSelected(event: any) {
     const index = this.tags.indexOf(event);
     let pTags: string[] = this.tags;
     if (index > -1) {
@@ -79,7 +82,7 @@ export class SearchComponent implements OnInit {
     this._router.navigate(['/search'], { queryParams: params });
   }
 
-  onWebsiteSelected(event) {
+  onWebsiteSelected(event: any) {
     if (event) {
       const params = this.createQueryParams(this.tags, event);
       this._router.navigate(['/search'], { queryParams: params });
@@ -90,14 +93,14 @@ export class SearchComponent implements OnInit {
     this.search();
   }
 
-  onPageChange(event) {
+  onPageChange(event: any) {
     this.page = event;
     this.search();
   }
 
   private createQueryParams(tags: string[], webstite: string): any {
     const strTags = this.plainTags(tags);
-    const params = { website: null, tags: strTags };
+    const params = { website: '', tags: strTags };
     if (webstite) {
       params.website = webstite;
     }

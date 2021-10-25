@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendApiService } from '../../services/backend-api.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { DraftDto } from '../../services/Dtos/DraftDto';
+import { Observable, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-suggestions',
@@ -16,14 +15,16 @@ export class SuggestionsComponent implements OnInit {
   skip: number;
   take: number;
   draftIds: Observable<string[]>;
-  ob: Observer<string[]>;
+  ob: Observer<string[]> | undefined;
   drafts: DraftDto[];
   count: number;
 
   constructor(private _apiService: BackendApiService, private _route: ActivatedRoute) {
+    this.id = '';
     this.take = 5;
     this.skip = 0;
     this.drafts = [];
+    this.count = 0;
     this.draftIds = new Observable<string[]>(observer => this.ob = observer);
     this.draftIds.subscribe(s => {
       s.forEach(id => {
@@ -49,8 +50,10 @@ export class SuggestionsComponent implements OnInit {
 
   private getSuggestions() {
     this._apiService.getAllDraftSuggestions(this.id, this.take, this.skip).subscribe(s => {
-      this.ob.next(s.payload.suggestedIds);
-      this.count = s.payload.count;
+      if (this.ob !== undefined) {
+        this.ob.next(s.payload.suggestedIds);
+        this.count = s.payload.count; 
+      }
     });
   }
 }

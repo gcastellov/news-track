@@ -1,11 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
 
 import { BrowsingComponent } from './browsing.component';
 import { httpLoaderFactory } from '../app.module';
@@ -23,6 +22,7 @@ import { DataBuilder } from '../testing/data.builder';
 import { IBrowseResult } from '../services/Dtos/IBrowseResult';
 import { WebsiteDto } from '../services/Dtos/WebsiteDto';
 import { Envelope } from '../services/Dtos/Envelope';
+import { Observable } from 'rxjs';
 
 describe('BrowsingComponent', () => {
   let component: BrowsingComponent;
@@ -34,7 +34,7 @@ describe('BrowsingComponent', () => {
     browse: (url) => new Observable<Envelope<IBrowseResult>>(observer => observer.complete)
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         BrowsingComponent,
@@ -49,7 +49,7 @@ describe('BrowsingComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         SharedModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

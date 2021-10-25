@@ -1,4 +1,4 @@
-<div class="row browsing-title">
+<div class="row browsing-title" *ngIf="element && model">
     <div class="col-md-1">
         <input type='radio' name='browsing-titles' [(ngModel)]="model.title" [value]="element.content"  />
     </div>

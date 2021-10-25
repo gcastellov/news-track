@@ -9,7 +9,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 })
 export class MemberComponent implements OnInit {
 
-  identity: IdentityDto;
+  identity: IdentityDto | undefined;
 
   constructor(private _apiService: BackendApiService) { }
 

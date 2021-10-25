@@ -9,11 +9,11 @@ import { DraftRequestDto } from '../../services/Dtos/DraftRequestDto';
 export class BrowsingItemComponent {
 
     @Input()
-    element: BrowsingElement;
+    element: BrowsingElement | undefined;
 
     @Input()
-    index: number;
+    index: number = 0;
 
     @Input()
-    model: DraftRequestDto;
+    model: DraftRequestDto | undefined;
 }

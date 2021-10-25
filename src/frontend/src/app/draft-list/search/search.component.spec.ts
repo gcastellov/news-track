@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -6,7 +6,6 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
 
 import { SearchComponent } from './search.component';
 import { BackendApiService } from '../../services/backend-api.service';
@@ -23,6 +22,7 @@ import { AppSettingsService } from '../../services/app-settings.service';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { Envelope } from '../../services/Dtos/Envelope';
 import { FailureComponent } from '../../shared/failure/failure.component';
+import { Observable } from 'rxjs';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -46,7 +46,7 @@ describe('SearchComponent', () => {
     getExpressions: () => new Observable<string[]>(observer => observer.next(expressions))
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         SearchComponent,
@@ -61,7 +61,7 @@ describe('SearchComponent', () => {
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
               provide: TranslateLoader,

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +21,7 @@ import { AuthGuardService } from '../services/Guards/auth-guard.service';
     CommonModule,
     FormsModule,
     TranslateModule,
-    NgbModule.forRoot(),
+    NgbModule,
     RouterModule.forChild([
       { path: '', component: BrowsingComponent, canActivate: [AuthGuardService] },
       { path: 'relationship', component: BrowsingRelationshipComponent, canActivate: [AuthGuardService] }
@@ -38,6 +38,7 @@ import { AuthGuardService } from '../services/Guards/auth-guard.service';
     BrowsingRelationshipDraftComponent
     ],
   exports: [BrowsingComponent],
-  providers: [BrowsingDraft]
+  providers: [BrowsingDraft],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BrowsingModule { }
