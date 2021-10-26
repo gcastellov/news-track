@@ -7,14 +7,21 @@ import { catchError, tap } from 'rxjs/operators';
 @Injectable()
 export class AppSettingsService {
 
-  settings: AppSettingsDto;
+  settings: AppSettingsDto | undefined;
   expressions: string[] | undefined;
 
   constructor(private http: HttpClient) {
-    this.settings = new AppSettingsDto();
   }
 
   getSettings(): Observable<AppSettingsDto> {
+
+    if (this.settings) {
+      return new Observable<AppSettingsDto>(observer => {
+        observer.next(this.settings);
+        observer.complete();
+      });
+    }
+
     return this.http.get<Response>('assets/appsettings.json')
       .pipe(
         tap(data => this.settings = this.extractData(data)),
@@ -22,6 +29,14 @@ export class AppSettingsService {
   }
 
   getExpressions(): Observable<string[]> {
+
+    if (this.expressions) {
+      return new Observable<string[]>(observer => {
+        observer.next(this.expressions);
+        observer.complete();
+      });
+    }
+
     return this.http.get<Response>('assets/expressions.json')
       .pipe(
         tap(data => this.expressions = this.extractData(data)),
