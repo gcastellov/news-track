@@ -3,7 +3,9 @@
     <h3 class="panel-title">{{ 'tags-component.title-tags' | translate }}</h3>
   </div>
   <div class="panel-body">
-    <div *ngFor="let tag of tags" [ngClass]="{ 'h1': tag.importance === 5, 'h2': tag.importance === 4, 'h3': tag.importance === 3, 'h4': tag.importance === 2, 'h5': tag.importance === 1, 'h6': tag.importance === 0 }">
-      <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
-    </div>
+    <ul class="list-unstyled list-inline">
+      <li *ngFor="let tag of tags" [ngClass]="{ 'h1': tag.importance === 5, 'h2': tag.importance === 4, 'h3': tag.importance === 3, 'h4': tag.importance === 2, 'h5': tag.importance === 1, 'h6': tag.importance === 0 }" class="tag">
+        <span role="button" class="label label-default" (click)="onSelected(tag)">{{tag.name}}</span>
+      </li>
+    </ul>
 </div>
