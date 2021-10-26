@@ -12,16 +12,16 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AuthenticationApiService {
 
-    token: string;
-    username: string;
+    token: string | undefined;
+    username: string | undefined;
     private _jwtHelper: JwtHelperService;
 
     constructor(private _client: HttpClient, private _storageService: StorageService) {
         this.username = '';
         this._jwtHelper = new JwtHelperService();
-        this.token = this._storageService.getItem('token');
+        this.token = this._storageService.getItem('token') ?? undefined;
         if (this.token) {
-            this.username = this._storageService.getItem('username');
+            this.username = this._storageService.getItem('username') ?? undefined;
         }
     }
 

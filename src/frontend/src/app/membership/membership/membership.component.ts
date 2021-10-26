@@ -13,7 +13,7 @@ export class MembershipComponent {
   isAdmin: boolean;
 
   constructor(authSerive: AuthenticationApiService, adminGuard: AdminGuardService) {
-      this.username = authSerive.username;
+      this.username = authSerive.username ?? '';
       this.isAdmin = adminGuard.canActivate();
   }
 }
