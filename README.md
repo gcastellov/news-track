@@ -1,10 +1,9 @@
-[![Build Status](https://travis-ci.com/gcastellov/news-track.svg?branch=master)](https://travis-ci.com/gcastellov/news-track) [![CircleCI](https://circleci.com/gh/gcastellov/news-track/tree/master.svg?style=svg)](https://circleci.com/gh/gcastellov/news-track/tree/master)
 
 # News Track
 News Track is a news tracking or news aggregator website where users can share the content they find on Internet and give to it certain visibility.
 
 
-The project is made by using .NET Core API as backend and ElasticSearch as NoSQL database while its frontend is made with Angular 5 and Bootstrap 3.
+The project is made by using .NET 5 as backend and ElasticSearch as NoSQL database while its frontend is made with Angular 12 and Bootstrap 3.
 
 ## Features
 - Membership control panel
