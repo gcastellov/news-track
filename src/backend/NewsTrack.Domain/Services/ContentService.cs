@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NewsTrack.Domain.Entities;
+using NewsTrack.Domain.Exceptions;
 using NewsTrack.Domain.Repositories;
 
 namespace NewsTrack.Domain.Services
@@ -37,11 +38,20 @@ namespace NewsTrack.Domain.Services
                 var contentId = Guid.Parse(highlights.Key);
                 var tags = await _draftRepository.GetTags(contentId);
                 var draftSuggestions = GetTagSuggestion(contentId, highlights.Value, tags);
+                
                 if (draftSuggestions.Tags.Any())
                 {
                     var entrySuggestions = await _draftRepository.Get(draftSuggestions.Tags);
-                    var entryRelationship = await _draftRelationshipRepository.Get(contentId);
-                    draftSuggestions.SetDraftSuggestions(entrySuggestions, entryRelationship);
+                    
+                    try
+                    {
+                        var entryRelationship = await _draftRelationshipRepository.Get(contentId);
+                        draftSuggestions.SetDraftSuggestions(entrySuggestions, entryRelationship);
+                    }
+                    catch (NotFoundException)
+                    {
+                        draftSuggestions.SetDraftSuggestions(entrySuggestions, null);
+                    }
                 }
 
                 await _draftSuggestionsRepository.Save(draftSuggestions);
