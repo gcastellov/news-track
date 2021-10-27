@@ -16,28 +16,25 @@ import { merge, Observable, of } from 'rxjs';
 })
 export class DraftListComponent implements OnInit {
 
-  drafts: DraftDto[];
+  drafts: DraftDto[] | undefined;
   count: number;
   page: number;
   take: number;
   numberOfPages: number;
-  hits: SearchResultDto[];
   model: any;
   searching = false;
   searchFailed = false;
   hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
   currentRoute: string;
-  errorMessage: string;
+  errorMessage: string | null;
 
   constructor(public _apiService: BackendApiService, private _router: Router, private _activatedRoute: ActivatedRoute) {
-    this.drafts = [];
     this.count = 0;
     this.numberOfPages = 0;
-    this.hits = [];
     this.currentRoute = '';
-    this.errorMessage = '';
     this.take = 5;
     this.page = 0;
+    this.errorMessage = null;
     this._activatedRoute.url.subscribe(url => this.currentRoute = url[0].path);
   }
 
