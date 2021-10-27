@@ -37,7 +37,7 @@ namespace NewsTrack.Data.Repositories
         {
             var client = GetClient();
             var model = await client.GetAsync<Model.Identity>(id);
-            CheckResponse(model);
+            CheckResponse(model, id);
             return To(model.Source);
         }
 

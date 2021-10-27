@@ -34,7 +34,7 @@ namespace NewsTrack.Data.Repositories
             var client = GetClient();
             var model = await client.GetAsync(DocumentPath<Model.DraftSuggestions>.Id(id));
 
-            CheckResponse(model);
+            CheckResponse(model, id);
             return To(model.Source);
         }
 

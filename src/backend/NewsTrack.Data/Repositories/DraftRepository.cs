@@ -175,7 +175,7 @@ namespace NewsTrack.Data.Repositories
             var query = await client.GetAsync<Model.Draft>(id, 
                 m => m.SourceIncludes(sf => sf.Tags));
 
-            CheckResponse(query);
+            CheckResponse(query, id);
             return query.Source.Tags;
         }
 
@@ -205,7 +205,11 @@ namespace NewsTrack.Data.Repositories
             );
 
             CheckResponse(query);
-            return query.Documents.Select(To);
+            return query.Documents.Select(d => new Draft
+            {
+                Id = d.Id,
+                Title = d.Title,
+            });
         }
 
         public async Task<long> AddViews(Guid id)
@@ -216,7 +220,7 @@ namespace NewsTrack.Data.Repositories
 
             var result = await client.GetAsync<Model.Draft>(id);
 
-            CheckResponse(result);
+            CheckResponse(result, id);
             return result.Source.Views;
         }
 
@@ -228,7 +232,7 @@ namespace NewsTrack.Data.Repositories
 
             var result = await client.GetAsync<Model.Draft>(id);
 
-            CheckResponse(result);
+            CheckResponse(result, id);
             return result.Source.Fucks;
         }
 
@@ -237,7 +241,7 @@ namespace NewsTrack.Data.Repositories
             var client = GetClient();
             var query = await client.GetAsync<Model.Draft>(id);
 
-            CheckResponse(query);
+            CheckResponse(query, id);
             return To(query.Source);
         }
 
@@ -298,7 +302,7 @@ namespace NewsTrack.Data.Repositories
 
         protected override Draft To(Model.Draft model)
         {
-            var entity = new Draft
+            return new Draft
             {
                 Id = model.Id,
                 Title = model.Title,
@@ -310,20 +314,15 @@ namespace NewsTrack.Data.Repositories
                 Uri = new Uri(model.Uri, UriKind.Absolute),
                 Views = model.Views,
                 Fucks = model.Fucks,
-                Website = model.Website
+                Website = model.Website,
+                User = model.User == null 
+                    ? null
+                    : new User
+                    {
+                        Id = model.User.Id,
+                        Username = model.User.Username
+                    }
             };
-
-            //TODO: replace by object initialize
-            if (model.User != null)
-            {
-                entity.User = new User
-                {
-                    Id = model.User.Id,
-                    Username = model.User.Username
-                };
-            }
-
-            return entity;
         }
 
         protected override Model.Draft From(Draft entity)
