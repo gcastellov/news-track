@@ -24,7 +24,6 @@ export class DraftListComponent implements OnInit {
   model: any;
   searching = false;
   searchFailed = false;
-  hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
   currentRoute: string;
   errorMessage: string | null;
 
@@ -95,22 +94,6 @@ export class DraftListComponent implements OnInit {
       this._router.navigate(['/search'], { queryParams: { website: event } });
     }
   }
-
-  // search = (text$: Observable<string>) =>
-  //   text$
-  //   .debounceTime(300)
-  //   .distinctUntilChanged()
-  //   .do(() => this.searching = true)
-  //   .switchMap(term =>
-  //     this._apiService.search(term)
-  //       .do(() => this.searchFailed = false)
-  //       .map(r => r.payload)
-  //       .catch(() => {
-  //         this.searchFailed = true;
-  //         return of([]);
-  //       }))
-  //   .do(() => this.searching = false)
-  //   .merge(this.hideSearchingWhenUnsubscribed)
 
   search = (text$: Observable<string>) => 
     text$

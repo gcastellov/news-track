@@ -4,12 +4,10 @@ import { Router } from '@angular/router';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule, TranslateLoader, TranslateService, TranslatePipe, TranslateDirective  } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from './shared/shared.module';
 import { CorporateModule } from './corporate/corporate.module';
-// import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
 import { AppComponent } from './app.component';
 import { AuthenticationApiService } from './services/authentication-api.service';
 import { BackendApiService } from './services/backend-api.service';
@@ -40,7 +38,6 @@ export function authInterceptorFactory (router: Router) {
     FormsModule,
     SharedModule,
     CorporateModule,
-    // InfiniteScrollModule,
     NgbModule,
     TranslateModule.forRoot({
       loader: {

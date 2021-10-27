@@ -4,7 +4,7 @@
   </div>
   <div class="panel-body">
     <ul class="list-inline">
-      <li *ngFor="let website of websites">
+      <li class="website-item" *ngFor="let website of websites">
         <span class="badge badge-secondary">{{website.count}}</span>
         <a role="button" (click)="onSelected(website.name)">{{website.name}}</a>        
       </li>
