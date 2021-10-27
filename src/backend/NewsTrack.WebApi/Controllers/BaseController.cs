@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NewsTrack.Domain.Exceptions;
 using NewsTrack.WebApi.Dtos;
 
 namespace NewsTrack.WebApi.Controllers
@@ -22,16 +23,13 @@ namespace NewsTrack.WebApi.Controllers
                 envelope.Payload = await action();
                 envelope.IsSuccessful = true;
             }
-            catch (Exception e)
+            catch(NotFoundException e)
             {
-                if (e is ApplicationException)
-                {
-                    envelope.ErrorMessage = e.Message;
-                }
-                else
-                {
-                    throw;
-                }
+                envelope.ErrorMessage = e.Message;
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return envelope;

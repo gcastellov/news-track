@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Nest;
 using NewsTrack.Data.Configuration;
 using NewsTrack.Data.Model;
+using NewsTrack.Domain.Exceptions;
 
 namespace NewsTrack.Data.Repositories
 {
@@ -39,8 +40,11 @@ namespace NewsTrack.Data.Repositories
             return existResponse.Exists;
         }
 
-        protected void CheckResponse(IResponse response)
+        protected void CheckResponse(IResponse response, Guid? id = null)
         {
+            if (response.ApiCall.HttpStatusCode == 404)
+                throw new NotFoundException(id);
+
             if (!response.IsValid)
                 throw new ApplicationException("Impossible to get requested data", response.OriginalException);
         }
