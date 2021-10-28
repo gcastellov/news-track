@@ -20,7 +20,7 @@
         </div>        
       </div>
     </div>
-    <div *ngIf="drafts != null && drafts.length == 0">
+    <div *ngIf="drafts && drafts.length === 0">
       <br />
       <div class="alert alert-info" role="alert">
         <h4 class="alert-heading">{{ 'draft-list-component.general-message' | translate }}</h4>

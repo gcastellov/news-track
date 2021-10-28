@@ -109,9 +109,21 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "news-track"
+  "defaultProject": "news-track",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

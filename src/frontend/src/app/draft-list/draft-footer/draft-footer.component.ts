@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DraftDto } from '../../services/Dtos/DraftDto';
 
 @Component({
@@ -6,12 +6,9 @@ import { DraftDto } from '../../services/Dtos/DraftDto';
   templateUrl: './draft-footer.component.html',
   styleUrls: ['./draft-footer.component.less']
 })
-export class DraftFooterComponent implements OnInit {
+export class DraftFooterComponent {
 
   @Input()
   draft: DraftDto | undefined;
-
-  ngOnInit() {
-  }
 
 }
