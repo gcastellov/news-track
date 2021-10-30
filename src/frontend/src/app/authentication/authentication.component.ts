@@ -32,7 +32,7 @@ export class AuthenticationComponent {
       request.password = this.authForm.get('password')?.value;
       this._authenticationService.authenticate(request).subscribe(d => {
         if (d.isSuccess) {
-          this._router.navigateByUrl('/membership');
+          this._router.navigateByUrl('/membership/member');
         } else {
           this.failureReason = d.failureReason;
         }
