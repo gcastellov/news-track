@@ -30,8 +30,19 @@
                     <li *ngIf="!authentication.isAuthenticated()">
                         <a [routerLink]="['/authentication']">{{ 'app-component.title-sing-in' | translate }}</a>
                     </li>
-                    <li *ngIf="authentication.isAuthenticated() && authentication.username">
+                    <li class="hidden-md hidden-lg" *ngIf="authentication.isAuthenticated() && authentication.username">
                         <a class="member" [routerLink]="['/membership']">{{authentication.username}}</a>
+                    </li>
+                    <li class="hidden-md hidden-lg" *ngIf="authentication.isAuthenticated()">
+                        <a class="glyphicon glyphicon-off logout" (click)="logout()"></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav user hidden-xs hidden-sm" *ngIf="authentication.isAuthenticated() && authentication.username">
+                    <li>
+                        <a class="member" [routerLink]="['/membership']">{{authentication.username}}</a>
+                    </li>
+                    <li>
+                        <a class="glyphicon glyphicon-off logout" (click)="logout()"></a>
                     </li>
                 </ul>
             </div>

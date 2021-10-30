@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationApiService } from './services/authentication-api.service';
 import { AppSettingsService } from './services/app-settings.service';
 import { AppSettingsDto } from './services/Dtos/AppSettingsDto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +20,10 @@ export class AppComponent implements OnInit {
   constructor(
     private _translate: TranslateService,
     private _appSettings: AppSettingsService,
-    _authenticationService: AuthenticationApiService
+    private _router: Router,
+    authenticationService: AuthenticationApiService
   ) {
-    this.authentication = _authenticationService;
+    this.authentication = authenticationService;
     this.year = new Date().getFullYear();
   }
 
@@ -41,5 +43,10 @@ export class AppComponent implements OnInit {
 
   changeLangugage(lang: string) {
     this._translate.use(lang);
+  }
+
+  logout() {
+    this.authentication.logout();
+    this._router.navigateByUrl('/authentication');
   }
 }

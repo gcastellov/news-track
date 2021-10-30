@@ -9,6 +9,9 @@ import { StorageService } from './storage.service';
 import { Envelope } from './Dtos/Envelope';
 import { Observable } from 'rxjs';
 
+const TokenKey = 'token';
+const UsernameKey = 'username';
+
 @Injectable()
 export class AuthenticationApiService {
 
@@ -19,9 +22,9 @@ export class AuthenticationApiService {
     constructor(private _client: HttpClient, private _storageService: StorageService) {
         this.username = '';
         this._jwtHelper = new JwtHelperService();
-        this.token = this._storageService.getItem('token') ?? undefined;
+        this.token = this._storageService.getItem(TokenKey) ?? undefined;
         if (this.token) {
-            this.username = this._storageService.getItem('username') ?? undefined;
+            this.username = this._storageService.getItem(UsernameKey) ?? undefined;
         }
     }
 
@@ -53,8 +56,8 @@ export class AuthenticationApiService {
     setCredential(token: string, username: string) {
         this.token = token;
         this.username = username;
-        this._storageService.setItem('token', token);
-        this._storageService.setItem('username', username);
+        this._storageService.setItem(TokenKey, token);
+        this._storageService.setItem(UsernameKey, username);
     }
 
     isAuthenticated(): boolean {
@@ -73,5 +76,12 @@ export class AuthenticationApiService {
         const identity = this._jwtHelper.decodeToken(this.token);
         const identityRole = identity['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
         return identityRole === role;
+    }
+
+    logout() {
+        this.token = undefined;
+        this.username = undefined;
+        this._storageService.removeItem(TokenKey);
+        this._storageService.removeItem(UsernameKey);
     }
 }
