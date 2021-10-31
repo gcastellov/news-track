@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NewsTrack.WebApi.Components;
 
-namespace NewsTrack.WebApi
+namespace NewsTrack.WebApi.HostedServices
 {
     internal class SeederHostedService : IHostedService
     {

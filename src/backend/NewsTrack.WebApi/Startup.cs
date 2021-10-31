@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using AutoMapper;
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +18,7 @@ using NewsTrack.Identity.Services;
 using NewsTrack.WebApi.Components;
 using NewsTrack.WebApi.Configuration;
 using NewsTrack.WebApi.Dtos.Profiles;
+using NewsTrack.WebApi.HostedServices;
 
 namespace NewsTrack.WebApi
 {
@@ -77,6 +80,7 @@ namespace NewsTrack.WebApi
             });
 
             services.AddHostedService<SeederHostedService>();
+            services.AddHostedService<SuggestionsHostedService>();
 
             services.AddScoped<Browser.IRequestor, Browser.Requestor>();
             services.AddScoped<Browser.IBroswer, Browser.Broswer>();
@@ -123,6 +127,9 @@ namespace NewsTrack.WebApi
             services
                 .AddHealthChecks()
                 .AddElasticsearch(configurationProvider.ConnectionString.AbsoluteUri);
+
+            services.AddHangfire(options => options.UseMemoryStorage());
+            services.AddHangfireServer();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
