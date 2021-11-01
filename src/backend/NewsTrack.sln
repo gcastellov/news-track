@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.Browser", "NewsTrack.Browser\NewsTrack.Browser.csproj", "{ED49CDE2-87F3-4D44-9D92-0A28E05619D6}"
 EndProject
@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.Common.UnitTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.Identity.UnitTests", "NewsTrack.Identity.UnitTests\NewsTrack.Identity.UnitTests.csproj", "{B3DAEE69-1F72-4182-B016-57237A4F54B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsTrack.WebApi.UnitTests", "NewsTrack.WebApi.UnitTests\NewsTrack.WebApi.UnitTests.csproj", "{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.WebApi.UnitTests", "NewsTrack.WebApi.UnitTests\NewsTrack.WebApi.UnitTests.csproj", "{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

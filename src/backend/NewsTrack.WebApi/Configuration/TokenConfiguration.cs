@@ -19,10 +19,10 @@ namespace NewsTrack.WebApi.Configuration
 
         internal TokenConfiguration Set(IConfigurationRoot configuration)
         {
-            var section = configuration.GetSection(SectionName).GetChildren().ToArray();
-            Issuer = section.FirstOrDefault(s => s.Key == TokenIssuer)?.Value;
-            Audience = section.FirstOrDefault(s => s.Key == TokenAudience)?.Value;
-            Key = section.FirstOrDefault(s => s.Key == TokenKey)?.Value;
+            var section = configuration.GetSection(SectionName);
+            Issuer = section.GetValue<string>(TokenIssuer);
+            Audience = section.GetValue<string>(TokenAudience);
+            Key = section.GetValue<string>(TokenKey);
             SigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key));
             return this;
         }

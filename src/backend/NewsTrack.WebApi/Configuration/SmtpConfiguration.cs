@@ -24,15 +24,14 @@ namespace NewsTrack.WebApi.Configuration
 
         internal SmtpConfiguration Set(IConfigurationRoot configuration)
         {
-            var config = configuration.GetSection(SectionName);
-            if (config != null)
+            var section = configuration.GetSection(SectionName);
+            if (section != null)
             {
-                var section = config.GetChildren().ToArray();
-                Host = section.FirstOrDefault(s => s.Key == Hostname)?.Value;
-                Username = section.FirstOrDefault(s => s.Key == User)?.Value;
-                From = section.FirstOrDefault(s => s.Key == Sender)?.Value;
-                Password = section.FirstOrDefault(s => s.Key == Pwd)?.Value;
-                int.TryParse(section.FirstOrDefault(s => s.Key == PortNumber)?.Value, out _port);
+                Host = section.GetValue<string>(Hostname);
+                Username = section.GetValue<string>(User);
+                From = section.GetValue<string>(Sender);
+                Password = section.GetValue<string>(Pwd);
+                int.TryParse(section.GetValue<string>(PortNumber), out _port);
             }
 
             IsSet = Host.HasValue() && Username.HasValue() && From.HasValue() && Password.HasValue() && Port > 0;
