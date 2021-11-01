@@ -8,5 +8,6 @@ namespace NewsTrack.WebApi.Configuration
         SmtpConfiguration SmtpConfiguration { get; }
         Uri ApiUrl { get; }
         Uri SignInUrl { get; }
+        string SuggestionsSchedule { get; }
     }
 }

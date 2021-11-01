@@ -9,12 +9,14 @@ namespace NewsTrack.WebApi.Configuration
         private const string ApiUrlKey = "ApiUrl";
         private const string SignInUrlKey = "SignInUrl";
         private const string ElasticSearchKey = "ElasticSearch";
+        private const string SuggestionsScheduleKey = "SuggestionsSchedule";
 
         public TokenConfiguration TokenConfiguration { get; private set; }
         public SmtpConfiguration SmtpConfiguration { get; private set; }
         public Uri ApiUrl { get; private set; }
         public Uri SignInUrl { get; private set; }
         public Uri ConnectionString { get; private set; }
+        public string SuggestionsSchedule { get; private set; }
 
         internal void Set(IConfigurationRoot configuration)
         {
@@ -26,6 +28,7 @@ namespace NewsTrack.WebApi.Configuration
                 SignInUrl = signInUrl;
             if (Uri.TryCreate(configuration.GetConnectionString(ElasticSearchKey), UriKind.Absolute, out var elasticUrl))
                 ConnectionString = elasticUrl;
+            SuggestionsSchedule = configuration[SuggestionsScheduleKey];
         }
     }
 }
