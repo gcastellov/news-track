@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 
@@ -14,16 +15,7 @@ namespace NewsTrack.WebApi
 
             try
             {
-                var host = new WebHostBuilder()
-                    .UseKestrel()
-                    .UseStartup<Startup>()
-                    .ConfigureLogging(logging =>
-                    {
-                        logging.ClearProviders();
-                        logging.SetMinimumLevel(LogLevel.Trace);
-                    })
-                    .UseNLog()
-                    .Build();
+                var host = CreateHostBuilder(args).Build();
 
                 logger.Info("Running application...");
 
@@ -39,5 +31,18 @@ namespace NewsTrack.WebApi
                 NLog.LogManager.Shutdown();
             }
         }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog();
     }
 }

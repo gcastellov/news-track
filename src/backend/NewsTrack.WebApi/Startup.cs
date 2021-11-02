@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -50,7 +51,7 @@ namespace NewsTrack.WebApi
             var configurationProvider = new Configuration.ConfigurationProvider();
             configurationProvider.Set(Configuration);
 
-            services.AddScoped<Configuration.IConfigurationProvider>(provider => configurationProvider);
+            services.AddSingleton<Configuration.IConfigurationProvider>(provider => configurationProvider);
 
             services.AddAuthentication(opt =>
             {
@@ -94,9 +95,11 @@ namespace NewsTrack.WebApi
                     provider.GetService<ICryptoManager>(),
                     notificationManager.Handle);
             });
+            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddSingleton<IIdentityHelper, IdentityHelper>();
 
-            services.AddScoped<IIdentityHelper, IdentityHelper>();
-            services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICryptoManager, CryptoManager>();
             services.AddScoped<IContentRepository, Data.Repositories.ContentRepository>();
             services.AddScoped<IDraftRepository, Data.Repositories.DraftRepository>();

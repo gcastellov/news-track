@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NewsTrack.WebApi.Components;
@@ -9,12 +10,12 @@ namespace NewsTrack.WebApi.HostedServices
 {
     internal class SeederHostedService : IHostedService
     {
-        private readonly ISeeder _seeder;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<SeederHostedService> _logger;
 
-        public SeederHostedService(ISeeder seeder, ILogger<SeederHostedService> logger)
+        public SeederHostedService(IServiceProvider serviceProvider, ILogger<SeederHostedService> logger)
         {
-            _seeder = seeder;
+            _serviceProvider = serviceProvider;
             _logger = logger;
         }
 
@@ -22,7 +23,9 @@ namespace NewsTrack.WebApi.HostedServices
         {
             try
             {
-                await _seeder.Initialize();
+                using var scope = _serviceProvider.CreateScope();
+                var seeder = scope.ServiceProvider.GetRequiredService<ISeeder>();
+                await seeder.Initialize();
             }
             catch (Exception e)
             {
