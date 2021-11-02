@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NewsTrack.Domain.Entities;
 using NewsTrack.Domain.Repositories;
 using NewsTrack.Domain.Services;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.Domain.UnitTests
 {
-    [TestClass]
+    
     public class DraftServiceTest
     {
         private Mock<IDraftRepository> _draftRepositoryMock;
@@ -17,8 +17,7 @@ namespace NewsTrack.Domain.UnitTests
         private Mock<IDraftRelationshipRepository> _draftRelationshipRepositoryMock;
         private DraftService _draftService;
 
-        [TestInitialize]
-        public void Setup()
+        public DraftServiceTest()
         {
             _draftRepositoryMock = new Mock<IDraftRepository>();
             _contentRepositoryMock = new Mock<IContentRepository>();
@@ -26,11 +25,10 @@ namespace NewsTrack.Domain.UnitTests
             _draftService = new DraftService(
                 _draftRepositoryMock.Object,
                 _contentRepositoryMock.Object,
-                _draftRelationshipRepositoryMock.Object
-                );
+                _draftRelationshipRepositoryMock.Object);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task WhenSaving_ThenStoreDraftAndContent()
         {
             const string body = "this is the content of the draft";
@@ -53,8 +51,8 @@ namespace NewsTrack.Domain.UnitTests
             _contentRepositoryMock.Setup(m => m.Save(It.IsAny<Content>()))
                 .Callback((Content c) =>
                 {
-                    Assert.AreEqual(c.Id, draft.Id);
-                    Assert.AreEqual(c.Body, body);
+                    c.Id.Should().Be(draft.Id);
+                    c.Body.Should().Be(body);
                 })
                 .Returns(Task.CompletedTask);
 
@@ -64,7 +62,7 @@ namespace NewsTrack.Domain.UnitTests
             _contentRepositoryMock.Verify(m => m.Save(It.IsAny<Content>()), Times.Once);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task WhenSettingRelationship_ThenStoreRelationship()
         {
             var id = Guid.NewGuid();
@@ -87,8 +85,8 @@ namespace NewsTrack.Domain.UnitTests
             _draftRelationshipRepositoryMock.Setup(m => m.SetRelationship(It.IsAny<DraftRelationship>()))
                 .Callback((DraftRelationship r) =>
                 {
-                    Assert.AreEqual(r.Id, id);
-                    CollectionAssert.AreEquivalent(r.Relationship.ToArray(), items);
+                    r.Id.Should().Be(id);
+                    r.Relationship.Should().BeEquivalentTo(items);
                 })
                 .Returns(Task.CompletedTask);
 

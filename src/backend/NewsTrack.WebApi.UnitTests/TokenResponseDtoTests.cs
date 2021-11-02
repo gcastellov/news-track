@@ -1,34 +1,34 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nest;
-using NewsTrack.Identity.Results;
+﻿using NewsTrack.Identity.Results;
 using NewsTrack.WebApi.Dtos;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.WebApi.UnitTests
 {
-    [TestClass]
+    
     public class TokenResponseDtoTests
     {
         private static readonly string Username = "my-user";
 
-        [TestMethod]
+        [Fact]
         public void GivenGoodAuthenticationResult_WhenMapping_ThenGetSuccess()
         {
             var authResult = AuthenticateResult.Ok;
 
             var dto = TokenResponseDto.Create(authResult, Username);
 
-            Assert.IsNull(dto.Failure);
+            dto.Failure.Should().BeNull();
         }
 
-        [DataRow(AuthenticateResult.Lockout)]
-        [DataRow(AuthenticateResult.Failed)]
-        [TestMethod]
+        [Theory]
+        [InlineData(AuthenticateResult.Lockout)]
+        [InlineData(AuthenticateResult.Failed)]
         public void GivenWrongAuthenticationResult_WhenMapping_ThenGetFailure(AuthenticateResult authResult)
         {
             var dto = TokenResponseDto.Create(authResult, Username);
 
-            Assert.IsNotNull(dto.Failure);
-            Assert.AreEqual((int)dto.Failure, (int)authResult);
+            dto.Failure.Should().NotBeNull();
+            ((int)dto.Failure).Should().Be((int)authResult);
         }
     }
 }

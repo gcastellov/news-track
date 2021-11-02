@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NewsTrack.Common.Validations;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.Common.UnitTests
 {
-    [TestClass]
     public class GuardTests
     {
         public class Dummy
@@ -18,60 +18,60 @@ namespace NewsTrack.Common.UnitTests
         }
 
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), nameof(Dummy.MyStringProperty))]
+        [Fact]
         public void WhenStringIsNull_ThenThrowsArgumentNullException()
         {
             var dummy = new Dummy();
-            dummy.MyStringProperty.CheckIfNull(nameof(dummy.MyStringProperty));
+            Action action = () => dummy.MyStringProperty.CheckIfNull(nameof(dummy.MyStringProperty));
+            action.Should().Throw<ArgumentNullException>().And.Message.Should().Contain(nameof(Dummy.MyStringProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenStringIsNotNull_ThenDoesNotThrowAnyException()
         {
             var dummy = new Dummy{ MyStringProperty = "this is it" };
             dummy.MyStringProperty.CheckIfNull(nameof(dummy.MyStringProperty));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), nameof(Dummy.MyObjectProperty))]
+        [Fact]
         public void WhenObjectIsNull_ThenThrowsArgumentNullException()
         {
             var dummy = new Dummy();
-            dummy.MyObjectProperty.CheckIfNull(nameof(dummy.MyObjectProperty));
+            Action action = () => dummy.MyObjectProperty.CheckIfNull(nameof(dummy.MyObjectProperty));
+            action.Should().Throw<ArgumentNullException>().And.Message.Should().Contain(nameof(Dummy.MyObjectProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenObjectIsNotNull_ThenDoesNotThrowAnyException()
         {
             var dummy = new Dummy { MyObjectProperty = new {}};
             dummy.MyObjectProperty.CheckIfNull(nameof(dummy.MyObjectProperty));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), nameof(Dummy.MyEnumProperty))]
+        [Fact]
         public void WhenEnumIsNull_ThenThrowsArgumentNullException()
         {
             var dummy = new Dummy();
-            dummy.MyEnumProperty.CheckIfNull(nameof(dummy.MyEnumProperty));
+            Action action = () => dummy.MyEnumProperty.CheckIfNull(nameof(dummy.MyEnumProperty));
+            action.Should().Throw<ArgumentNullException>().And.Message.Should().Contain(nameof(Dummy.MyEnumProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenEnumIsNull_ThenDoesNotThrowAnyException()
         {
             var dummy = new Dummy { MyEnumProperty = new [] { "some" }};
             dummy.MyEnumProperty.CheckIfNull(nameof(dummy.MyEnumProperty));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), nameof(Dummy.MyDictionaryProperty))]
+        [Fact]
         public void WhenDictionaryIsNull_ThenThrowsArgumentNullException()
         {
             var dummy = new Dummy();
-            dummy.MyDictionaryProperty.CheckIfNull(nameof(dummy.MyEnumProperty));
+            Action action = () => dummy.MyDictionaryProperty.CheckIfNull(nameof(dummy.MyEnumProperty));
+            action.Should().Throw<ArgumentNullException>().And.Message.Should().Contain(nameof(Dummy.MyEnumProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenDictionaryIsNull_ThenDoesNotThrowAnyException()
         {
             var dummy = new Dummy { MyDictionaryProperty = new Dictionary<string, string>{ { "one", "value1"} } };

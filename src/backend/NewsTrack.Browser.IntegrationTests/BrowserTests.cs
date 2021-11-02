@@ -1,23 +1,23 @@
-﻿using System.Linq;
+﻿using FluentAssertions;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace NewsTrack.Browser.IntegrationTests
 {
-    [TestClass]
     public class BrowserTests
     {
-        [TestMethod]
+        [Fact]
         public async Task WhenRequestingValidUrl_ThenGetResponseDto()
         {
             var requestor = new Requestor();
             var browser = new Broswer(requestor);
             var response = await browser.Get("https://help.github.com/articles/github-terms-of-service/");
 
-            Assert.IsNotNull(response);
-            Assert.IsTrue(response.Titles.Any());
-            Assert.IsTrue(response.Paragraphs.Any());
-            Assert.IsFalse(response.Pictures.Any());
+            response.Should().NotBeNull();
+            response.Titles.Should().NotBeEmpty(); ;
+            response.Paragraphs.Should().NotBeEmpty();
+            response.Pictures.Should().BeEmpty();
         }
     }
 }

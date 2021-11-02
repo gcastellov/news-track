@@ -1,31 +1,32 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NewsTrack.Identity.Results;
+﻿using NewsTrack.Identity.Results;
 using NewsTrack.WebApi.Dtos;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.WebApi.UnitTests
 {
-    [TestClass]
+    
     public class ChangePasswordResponseDtoTests
     {
-        [TestMethod]
+        [Fact]
         public void GivenGoodChangePasswordResult_WhenMapping_ThenGetSuccess()
         {
             var changePwdResult = ChangePasswordResult.Ok;
 
             var dto = ChangePasswordResponseDto.Create(changePwdResult);
 
-            Assert.IsNull(dto.Failure);
+            dto.Failure.Should().BeNull();
         }
 
-        [DataRow(ChangePasswordResult.InvalidCurrentPassword)]
-        [DataRow(ChangePasswordResult.PasswordsDontMatch)]
-        [TestMethod]
+        [Theory]
+        [InlineData(ChangePasswordResult.InvalidCurrentPassword)]
+        [InlineData(ChangePasswordResult.PasswordsDontMatch)]
         public void GivenWrongChangePasswordResult_WhenMapping_ThenGetFailure(ChangePasswordResult changePwdResult)
         {
             var dto = ChangePasswordResponseDto.Create(changePwdResult);
 
-            Assert.IsNotNull(dto.Failure);
-            Assert.AreEqual((int)dto.Failure, (int)changePwdResult);
+            dto.Failure.Should().NotBeNull();
+            ((int)dto.Failure).Should().Be((int)changePwdResult);
         }
     }
 }

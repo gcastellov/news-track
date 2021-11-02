@@ -1,10 +1,10 @@
 ﻿using System.Dynamic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NewsTrack.Common.Validations;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.Common.UnitTests
 {
-    [TestClass]
     public class ObjectExtensionsTests
     {
         class TypedObject
@@ -17,33 +17,33 @@ namespace NewsTrack.Common.UnitTests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void GivenTypedObject_WhenCheckingForExistingProperty_ThenGetsTrue()
         {
             var value = new TypedObject();
-            Assert.IsTrue(value.HasProperty("Name"));
+            value.HasProperty("Name").Should().BeTrue();
         }
 
-        [TestMethod]
+        [Fact]
         public void GivenTypedObject_WhenCheckingForNonExistingProperty_ThenGetsFalse()
         {
             var value = new TypedObject();
-            Assert.IsFalse(value.HasProperty("LastName"));
+            value.HasProperty("LastName").Should().BeFalse();
         }
 
-        [TestMethod]
+        [Fact]
         public void GivenDynamicObject_WhenCheckingForExistingProperty_ThenGetsTrue()
         {
             dynamic value = new ExpandoObject();
             value.Name = "some value";
-            Assert.IsTrue(((object)value).HasProperty("Name"));
+            ((object)value).HasProperty("Name").Should().BeTrue();
         }
 
-        [TestMethod]
+        [Fact]
         public void GivenDynamicObject_WhenCheckingForNonExistingProperty_ThenGetsFalse()
         {
             dynamic value = new ExpandoObject();
-            Assert.IsFalse(((object)value).HasProperty("Name"));
+            ((object)value).HasProperty("Name").Should().BeFalse();
         }
     }
 }

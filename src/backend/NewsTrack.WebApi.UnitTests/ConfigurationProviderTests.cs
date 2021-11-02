@@ -1,10 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System.IO;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.WebApi.UnitTests
 {
-    [TestClass]
+    
     public class ConfigurationProviderTests
     {
         private readonly Configuration.ConfigurationProvider _provider;
@@ -14,7 +15,7 @@ namespace NewsTrack.WebApi.UnitTests
             _provider = new Configuration.ConfigurationProvider();
         }
 
-        [TestMethod]
+        [Fact]
         public void GivenConfiguration_WhenParsing_ThenSetsProperSetting()
         {
             var appConfig = new ConfigurationBuilder()
@@ -24,12 +25,12 @@ namespace NewsTrack.WebApi.UnitTests
 
             _provider.Set(appConfig);
 
-            Assert.IsNotNull(_provider.SmtpConfiguration);
-            Assert.IsNotNull(_provider.TokenConfiguration);
-            Assert.IsNotNull(_provider.SuggestionsSchedule);
-            Assert.AreNotEqual(_provider.ConnectionString, default);
-            Assert.AreNotEqual(_provider.ApiUrl, default);
-            Assert.AreNotEqual(_provider.SignInUrl, default);
+            _provider.SmtpConfiguration.Should().NotBeNull();
+            _provider.TokenConfiguration.Should().NotBeNull();
+            _provider.SuggestionsSchedule.Should().NotBeNull();
+            _provider.ConnectionString.Should().NotBe(default);
+            _provider.ApiUrl.Should().NotBe(default);
+            _provider.SignInUrl.Should().NotBe(default);
         }
     }
 }

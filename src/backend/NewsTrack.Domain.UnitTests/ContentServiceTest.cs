@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NewsTrack.Domain.Entities;
 using NewsTrack.Domain.Repositories;
 using NewsTrack.Domain.Services;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.Domain.UnitTests
 {
-    [TestClass]
+    
     public class ContentServiceTest
     {
         private Mock<IDraftRepository> _draftRepositoryMock;
@@ -19,8 +19,7 @@ namespace NewsTrack.Domain.UnitTests
         private Mock<IDraftRelationshipRepository> _draftRelationshipRepositoryMock;
         private ContentService _contentService;
 
-        [TestInitialize]
-        public void Setup()
+        public ContentServiceTest()
         {
             _draftRepositoryMock = new Mock<IDraftRepository>();
             _contentRepositoryMock = new Mock<IContentRepository>();
@@ -30,11 +29,10 @@ namespace NewsTrack.Domain.UnitTests
                 _draftRepositoryMock.Object, 
                 _contentRepositoryMock.Object,
                 _draftSuggestionRepositoryMock.Object,
-                _draftRelationshipRepositoryMock.Object
-                );
+                _draftRelationshipRepositoryMock.Object);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task WhenSettingSuggestions_ThenExtractTagsFromOtherContent()
         {
             var allTags = new[] {"Tag1", "Tag2", "Tag3", "Tag4"};
@@ -68,7 +66,7 @@ namespace NewsTrack.Domain.UnitTests
             _draftSuggestionRepositoryMock.Verify(m => m.Save(It.IsAny<DraftSuggestions>()), Times.Exactly(2));            
         }
 
-        [TestMethod]        
+        [Fact]        
         public void WhenHighlihtsFound_ThenExtractTagSuggestion()
         {
             var highlights = new[]
@@ -81,11 +79,11 @@ namespace NewsTrack.Domain.UnitTests
 
             var result = ContentService.ExtractTagSuggestion(highlights);
 
-            Assert.IsNotNull(result);
-            CollectionAssert.AreEquivalent(result.ToArray(), new [] { "Francis", "Jason", "Jonas", "Eve", "Eric" });
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(new [] { "Francis", "Jason", "Jonas", "Eve", "Eric" });
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenHighlihtsFound_ThenGetTagSuggestion()
         {
             var contentId = Guid.NewGuid();
@@ -101,9 +99,9 @@ namespace NewsTrack.Domain.UnitTests
 
             var result = ContentService.GetTagSuggestion(contentId, highlights, currentTags);
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(result.Id, contentId);
-            CollectionAssert.AreEquivalent(result.Tags.ToArray(), new [] { "Jason", "Eric" });
+            result.Should().NotBeNull();
+            result.Id.Should().Be(contentId);
+            result.Tags.Should().BeEquivalentTo(new[] { "Jason", "Eric" });
         }
     }
 }

@@ -1,13 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NewsTrack.Domain.Entities;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.Domain.UnitTests
 {
-    [TestClass]
+    
     public class DraftTest
     {
-        [TestMethod]
+        [Fact]
         public void WhenSeveralKindOfUris_ThenReturnWebsite()
         {
             var uris = new[]
@@ -23,7 +24,7 @@ namespace NewsTrack.Domain.UnitTests
             foreach (var uri in uris)
             {
                 var draft = new Draft { Uri = new Uri(uri) };
-                Assert.AreEqual(draft.Website, "www.website.com");
+                draft.Website.Should().Be("www.website.com");
             }
         }
     }

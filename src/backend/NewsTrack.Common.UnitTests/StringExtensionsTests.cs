@@ -1,37 +1,37 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NewsTrack.Common.Validations;
+﻿using NewsTrack.Common.Validations;
+using Xunit;
+using FluentAssertions;
 
 namespace NewsTrack.Common.UnitTests
 {
-    [TestClass]
     public class StringExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void WhenStringIsNotNull_ThenIsTruthy()
         {
             string value = "some-value";
-            Assert.IsTrue(value.HasValue());
+            value.HasValue().Should().BeTrue();
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenStringIsNull_ThenIsFalsy()
         {
             string value = null;
-            Assert.IsFalse(value.HasValue());
+            value.HasValue().Should().BeFalse();
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenStringIsEmpty_ThenIsFalsy()
         {
             string value = string.Empty;
-            Assert.IsFalse(value.HasValue());
+            value.HasValue().Should().BeFalse();
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenStringIsWhiteSpace_ThenIsFalsy()
         {
             string value = "     ";
-            Assert.IsFalse(value.HasValue());
+            value.HasValue().Should().BeFalse();
         }
     }
 }
