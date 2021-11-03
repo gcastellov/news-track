@@ -37,7 +37,12 @@ namespace NewsTrack.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] DraftRequestDto request)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
             {
                 return await Execute(async () =>
                 {
@@ -61,8 +66,10 @@ namespace NewsTrack.WebApi.Controllers
                     return _mapper.Map<DraftResponseDto>(draft);
                 });
             }
-
-            return BadRequest();
+            catch (ArgumentNullException)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost("{id}/relationship")]

@@ -27,6 +27,12 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.InternalServerError);
         }
 
+        public static void ShouldBeBadRequest(this HttpResponseMessage response)
+        {
+            response.Should().NotBeNull();
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
+
         public static async Task<Envelope<T>> ShouldBeOfType<T>(this HttpResponseMessage response)
             where T: class
         {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using NewsTrack.Browser;
 using NewsTrack.Data.Repositories;
 using NewsTrack.Domain.Repositories;
 using NewsTrack.Identity.Repositories;
@@ -17,6 +18,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
         internal Mock<IDraftSuggestionsRepository> DraftSuggestionsRepositoryMock { get; }
         internal Mock<IIdentityRepository> IdentityRepositoryMock { get; }
         internal Mock<IWebsiteRepository> WebsiteRepositoryMock { get; }
+        internal Mock<IBroswer> BrowserMock { get; }
 
         public TestWebAppFactory()
         {
@@ -26,6 +28,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             DraftSuggestionsRepositoryMock = new Mock<IDraftSuggestionsRepository>();
             IdentityRepositoryMock = new Mock<IIdentityRepository>();
             WebsiteRepositoryMock = new Mock<IWebsiteRepository>();
+            BrowserMock = new Mock<IBroswer>();
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -38,12 +41,16 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
                     services.Remove(repository);
                 }
 
+                var browser = services.Single(s => s.ServiceType == typeof(IBroswer));
+                services.Remove(browser);
+
                 services.AddScoped(sp => ContentRepositoryMock.Object);
                 services.AddScoped(sp => DraftRelationshipRepositoryMock.Object);
                 services.AddScoped(sp => DraftRepositoryMock.Object);
                 services.AddScoped(sp => DraftSuggestionsRepositoryMock.Object);
                 services.AddScoped(sp => IdentityRepositoryMock.Object);
                 services.AddScoped(sp => WebsiteRepositoryMock.Object);
+                services.AddScoped(sp => BrowserMock.Object);
             });
         }
     }

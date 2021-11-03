@@ -4,7 +4,6 @@ using System;
 using System.Web;
 using NewsTrack.WebApi.Dtos;
 using System.Threading.Tasks;
-using FluentAssertions;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -51,6 +50,20 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             var envelope = JsonDocument.Parse(content);
             var idResponse = envelope.RootElement.GetProperty("payload");
             Token = idResponse.GetProperty("token").GetString();
+        }
+
+        protected async Task<HttpResponseMessage> AuthenticatedPost<T>(string endpoint, T payload)
+        {
+            await Authenticate();
+            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Token}");
+            return await Client.PostAsJsonAsync(endpoint, payload);
+        }
+
+        protected async Task<HttpResponseMessage> AuthenticatedGet(string endpoint)
+        {
+            await Authenticate();
+            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Token}");
+            return await Client.GetAsync(endpoint);
         }
 
         protected Uri GetUriWithQueryString(string path, params Tuple<string, object>[] parameters)
