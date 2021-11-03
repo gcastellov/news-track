@@ -8,7 +8,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
 {
     internal static class ResponseExtensions
     {
-        private static JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+        internal static JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
         {
             AllowTrailingCommas = true,
             PropertyNameCaseInsensitive = true,
