@@ -6,6 +6,7 @@ using NewsTrack.WebApi.Dtos;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
 using System.Text.Json;
+using NewsTrack.Domain.Entities;
 
 namespace NewsTrack.WebApi.IntegrationTests.Fixture
 {
@@ -98,5 +99,35 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             var uri = uriBuilder.ToString();
             return new Uri(uri);
         }
+
+        protected static Draft CreateDraftEntity()
+            => new Draft
+            {
+                Id = Guid.NewGuid(),
+                CreatedAt = DateTime.UtcNow,
+                Fucks = 3,
+                Related = 2,
+                Uri = new Uri("http://www.some.com/path/resource"),
+                Picture = new Uri("http://www.some.com/path/img.png"),
+                Title = "The title",
+                Views = 554,
+                Paragraphs = new[]
+                    {
+                        "First paragraph",
+                        "Second paragraph",
+                        "Third paragraph"
+                    },
+                Tags = new[]
+                    {
+                        "tag1",
+                        "tag2"
+                    },
+                User = new User
+                {
+                    Id = Guid.NewGuid(),
+                    Username = "someuser",
+                },
+                Website = "www.some.com",
+            };
     }
 }

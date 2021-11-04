@@ -42,7 +42,7 @@ namespace NewsTrack.WebApi.Controllers
             {
                 return await Execute(async () =>
                 {
-                    var labels = (tags ?? new string[0]).ToArray();
+                    var labels = (tags ?? Enumerable.Empty<string>()).ToArray();
                     var news = await _draftRepository.Get(website, query, labels, (int)page, (int)count);
                     var newsDtos = _mapper.Map<IEnumerable<NewsDto>>(news);
 
