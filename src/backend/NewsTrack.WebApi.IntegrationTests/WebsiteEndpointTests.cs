@@ -50,9 +50,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             Factory.WebsiteRepositoryMock.Setup(m => m.Exists(It.IsAny<Uri>())).Returns(Task.FromResult(false));
 
             // Act
-            await Authenticate();
-            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Token}");
-            var response = await Client.GetAsync(uri.PathAndQuery);
+            var response = await AuthenticatedGet(uri.PathAndQuery);
 
             // Assert
             response.ShouldBeSuccessful();

@@ -14,9 +14,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
         private const string AuthenticationEndpoint = "/api/authentication/generate";
 
         protected TestWebAppFactory<Startup> Factory { get; }
-        protected HttpClient Client { get; }
-
-        protected string Token { get; private set; }
+        protected HttpClient Client { get; }        
 
         protected BaseTest(TestWebAppFactory<Startup> testWebAppFactory)
         {
@@ -49,20 +47,39 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             string content = await response.Content.ReadAsStringAsync();
             var envelope = JsonDocument.Parse(content);
             var idResponse = envelope.RootElement.GetProperty("payload");
-            Token = idResponse.GetProperty("token").GetString();
+            Factory.Token = idResponse.GetProperty("token").GetString();
         }
 
         protected async Task<HttpResponseMessage> AuthenticatedPost<T>(string endpoint, T payload)
         {
-            await Authenticate();
-            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Token}");
+            if (Factory.Token == null)
+            {
+                await Authenticate();
+            }
+
+            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Factory.Token}");
             return await Client.PostAsJsonAsync(endpoint, payload);
+        }
+
+        protected async Task<HttpResponseMessage> AuthenticatedPost(string endpoint)
+        {
+            if (Factory.Token == null)
+            {
+                await Authenticate();
+            }
+
+            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Factory.Token}");
+            return await Client.PostAsync(endpoint, new StringContent(""));
         }
 
         protected async Task<HttpResponseMessage> AuthenticatedGet(string endpoint)
         {
-            await Authenticate();
-            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Token}");
+            if (Factory.Token == null)
+            {
+                await Authenticate();
+            }
+
+            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Factory.Token}");
             return await Client.GetAsync(endpoint);
         }
 
@@ -74,7 +91,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             
             foreach(var param in parameters)
             {
-                query[param.Item1] = param.Item2.ToString();
+                query[param.Item1] = param.Item2?.ToString();
             }
 
             uriBuilder.Query = query.ToString();

@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewsTrack.Browser;
+using NewsTrack.Common.Validations;
 using NewsTrack.WebApi.Dtos;
 
 namespace NewsTrack.WebApi.Controllers
@@ -24,16 +25,25 @@ namespace NewsTrack.WebApi.Controllers
         [HttpGet("browse")]
         public async Task<IActionResult> Get(Uri url)
         {
-            if (ModelState.IsValid)
+            try
             {
+                url.CheckIfNull(nameof(url));
+
+                if (!url.IsAbsoluteUri)
+                {
+                    return BadRequest();
+                }
+
                 return await Execute(async () =>
                 {
                     var response = await _broswer.Get(url.AbsoluteUri);
                     return _mapper.Map<BrowseResponseDto>(response);
                 });
             }
-
-            return BadRequest();
+            catch (ArgumentNullException)
+            {
+                return BadRequest();
+            }
         }
     }
 }

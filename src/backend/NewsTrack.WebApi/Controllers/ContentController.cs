@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewsTrack.Domain.Services;
@@ -20,10 +18,10 @@ namespace NewsTrack.WebApi.Controllers
         
         [HttpPost]
         [Route("suggestions")]
-        public HttpResponseMessage SetSuggestions()
+        public IActionResult SetSuggestions()
         {
             Task.Run(() => _contentService.SetSuggestions());
-            return new HttpResponseMessage(HttpStatusCode.Accepted);            
+            return Accepted();
         }
     }
 }

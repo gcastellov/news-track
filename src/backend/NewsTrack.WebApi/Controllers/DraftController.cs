@@ -75,6 +75,8 @@ namespace NewsTrack.WebApi.Controllers
         [HttpPost("{id}/relationship")]
         public async Task<IActionResult> SetRelationship(Guid id, [FromBody] IEnumerable<NewsDigestBaseDto> relationship)
         {
+            // TODO: Refactor this method
+
             if (ModelState.IsValid)
             {
                 return await Execute(async () =>

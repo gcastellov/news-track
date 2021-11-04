@@ -19,6 +19,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
         internal Mock<IIdentityRepository> IdentityRepositoryMock { get; }
         internal Mock<IWebsiteRepository> WebsiteRepositoryMock { get; }
         internal Mock<IBroswer> BrowserMock { get; }
+        internal string Token { get; set; }
 
         public TestWebAppFactory()
         {
