@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Json;
 using System.Text.Json;
 using NewsTrack.Domain.Entities;
+using FluentAssertions;
 
 namespace NewsTrack.WebApi.IntegrationTests.Fixture
 {
@@ -98,6 +99,20 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             uriBuilder.Query = query.ToString();
             var uri = uriBuilder.ToString();
             return new Uri(uri);
+        }
+
+        protected static void AssertDto(Draft draftResult, NewsDto dto)
+        {
+            dto.Id.Should().Be(draftResult.Id);
+            dto.CreatedAt.Should().Be(draftResult.CreatedAt);
+            dto.Picture.Should().Be(draftResult.Picture);
+            dto.Related.Should().Be(draftResult.Related);
+            dto.Tags.Should().BeEquivalentTo(draftResult.Tags);
+            dto.Paragraphs.Should().BeEquivalentTo(draftResult.Paragraphs);
+            dto.CreatedBy.Should().Be(draftResult.User.Username);
+            dto.Fucks.Should().Be(draftResult.Fucks);
+            dto.Views.Should().Be(draftResult.Views);
+            dto.Uri.Should().Be(draftResult.Uri);
         }
 
         protected static Draft CreateDraftEntity()
