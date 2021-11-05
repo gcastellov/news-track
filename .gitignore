@@ -97,3 +97,4 @@ Thumbs.db
 **/appsettings.Production.json
 **/environment.prod.ts
 **/*.log
+**/coverage.opencover.xml
