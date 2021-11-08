@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore ./src/backend/NewsTrack.sln
     - name: Test
-      run: dotnet test ./src/backend/NewsTrack.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+      run: dotnet test ./src/backend/NewsTrack.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./src/backend/coverage
     - name: Copy Coverage
       run: cp ./src/backend/coverage/**/coverage.cobertura.xml ./src/backend/coverage/coverage.cobertura.xml
     - name: Code Coverage Summary Report
