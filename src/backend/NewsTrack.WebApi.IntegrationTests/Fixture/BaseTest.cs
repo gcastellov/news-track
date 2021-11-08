@@ -104,6 +104,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
         protected static void AssertDto(Draft draftResult, NewsDto dto)
         {
             dto.Id.Should().Be(draftResult.Id);
+            dto.Title.Should().Be(draftResult.Title);
             dto.CreatedAt.Should().Be(draftResult.CreatedAt);
             dto.Picture.Should().Be(draftResult.Picture);
             dto.Related.Should().Be(draftResult.Related);
@@ -113,6 +114,15 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             dto.Fucks.Should().Be(draftResult.Fucks);
             dto.Views.Should().Be(draftResult.Views);
             dto.Uri.Should().Be(draftResult.Uri);
+        }
+
+        protected static void AssertDigestDto(Draft draftResult, NewsDigestDto dto)
+        {
+            dto.Id.Should().Be(draftResult.Id);
+            dto.Title.Should().Be(draftResult.Title);
+            dto.Fucks.Should().Be(draftResult.Fucks);
+            dto.Views.Should().Be(draftResult.Views);
+            dto.Url.Should().Be(draftResult.Uri);
         }
 
         protected static Draft CreateDraftEntity()

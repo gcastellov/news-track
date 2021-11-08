@@ -87,8 +87,13 @@ namespace NewsTrack.WebApi.Controllers
 
         [HttpGet]
         [Route("entry/{id}/suggestions")]
-        public async Task<IActionResult> GetSuggestions(Guid id, [FromQuery]int take)
+        public async Task<IActionResult> GetSuggestions(Guid id, [FromQuery]uint take)
         {
+            if (take == 0)
+            {
+                return BadRequest();
+            }
+
             return await Execute(async () =>
             {
                 var result = await _draftSuggestionsRepository.Get(id);
@@ -96,7 +101,7 @@ namespace NewsTrack.WebApi.Controllers
                 {
                     result.Drafts = result.Drafts
                         .OrderByDescending(d => d.CreatedAt)
-                        .Take(take);
+                        .Take((int)take);
 
                     var results = result.Drafts.ToArray();
                     foreach (var draft in results)
@@ -115,7 +120,7 @@ namespace NewsTrack.WebApi.Controllers
 
         [HttpGet]
         [Route("entry/{id}/suggestions/all")]
-        public async Task<IActionResult> GetAllSuggestions(Guid id, [FromQuery] int take, [FromQuery] int skip)
+        public async Task<IActionResult> GetAllSuggestions(Guid id, [FromQuery] uint take, [FromQuery] uint skip)
         {
             return await Execute(async () =>
             {
@@ -131,8 +136,8 @@ namespace NewsTrack.WebApi.Controllers
                     dto.Count = result.Drafts.Count();
                     dto.SuggestedIds = result.Drafts
                         .OrderByDescending(d => d.CreatedAt)
-                        .Skip(skip)
-                        .Take(take)
+                        .Skip((int)skip)
+                        .Take((int)take)
                         .Select(d => d.Id)
                         .ToArray();
                 }
@@ -143,44 +148,64 @@ namespace NewsTrack.WebApi.Controllers
 
         [HttpGet]
         [Route("top/latest")]
-        public async Task<IActionResult> GetLatest(int take)
+        public async Task<IActionResult> GetLatest(uint take)
         {
+            if (take == 0)
+            {
+                return BadRequest();
+            }
+
             return await Execute(async () =>
             {
-                var news = await _draftRepository.GetLatest(take);
+                var news = await _draftRepository.GetLatest((int)take);
                 return _mapper.Map<IEnumerable<NewsDigestDto>>(news);
             });
         }
 
         [HttpGet]
         [Route("top/viewed")]
-        public async Task<IActionResult> GetMostViewed(int take)
+        public async Task<IActionResult> GetMostViewed(uint take)
         {
+            if (take == 0)
+            {
+                return BadRequest();
+            }
+
             return await Execute(async () =>
             {
-                var news = await _draftRepository.GetMostViewed(take);
+                var news = await _draftRepository.GetMostViewed((int)take);
                 return _mapper.Map<IEnumerable<NewsDigestDto>>(news);
             });
         }
 
         [HttpGet]
         [Route("top/fucking")]
-        public async Task<IActionResult> GetMostFucking(int take)
+        public async Task<IActionResult> GetMostFucking(uint take)
         {
+            if (take == 0)
+            {
+                return BadRequest();
+            }
+
             return await Execute(async () =>
             {
-                var news = await _draftRepository.GetMostFucking(take);
+                var news = await _draftRepository.GetMostFucking((int)take);
                 return _mapper.Map<IEnumerable<NewsDigestDto>>(news);
             });
         }
 
         [HttpGet]
         [Route("top/websites")]
-        public async Task<IActionResult> GetWebsites(int take)
+        public async Task<IActionResult> GetWebsites(uint take)
         {
+            if (take == 0)
+            {
+                return BadRequest();
+            }
+
             return await Execute(async () =>
             {
-                return (await _draftRepository.GetWebsiteStats(take)).Select(w => new WebsiteStatsDto
+                return (await _draftRepository.GetWebsiteStats((int)take)).Select(w => new WebsiteStatsDto
                 {
                     Name = w.Key,
                     Count = w.Value
