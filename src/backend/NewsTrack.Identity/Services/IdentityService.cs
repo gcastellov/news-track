@@ -116,13 +116,13 @@ namespace NewsTrack.Identity.Services
             string password2)
         {
             var identity = await _identityRepository.Get(id);
-            if (!_cryptoManager.CheckPassword(currentPassword, identity.Password))
-            {
-                return ChangePasswordResult.InvalidCurrentPassword;
-            }
             if (password1 != password2)
             {
                 return ChangePasswordResult.PasswordsDontMatch;
+            }
+            if (!_cryptoManager.CheckPassword(currentPassword, identity.Password))
+            {
+                return ChangePasswordResult.InvalidCurrentPassword;
             }
 
             identity.Password = _cryptoManager.HashPassword(password1);
@@ -186,7 +186,7 @@ namespace NewsTrack.Identity.Services
             }
         }
 
-        private NotificationEventArgs To(NotificationEventArgs.NotificationType type, Identity identity)
+        private static NotificationEventArgs To(NotificationEventArgs.NotificationType type, Identity identity)
         {
             var args =  new NotificationEventArgs
             {

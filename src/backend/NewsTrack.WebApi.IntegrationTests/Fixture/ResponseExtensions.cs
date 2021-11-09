@@ -3,6 +3,7 @@ using NewsTrack.WebApi.Dtos;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Linq;
 
 namespace NewsTrack.WebApi.IntegrationTests.Fixture
 {
@@ -37,6 +38,13 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
         {
             response.Should().NotBeNull();
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.Accepted);
+        }
+
+        public static void ShouldBeRedirectedTo(this HttpResponseMessage response, string url)
+        {
+            response.Should().NotBeNull();
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+            response.RequestMessage.RequestUri.Should().Be(url);
         }
 
         public static async Task<Envelope<T>> ShouldBeOfType<T>(this HttpResponseMessage response)

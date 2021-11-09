@@ -22,7 +22,7 @@ namespace NewsTrack.Browser
         {
             var uri = new Uri(url);
             var content = await _requestor.Get(uri);
-            return await Set(uri, content);
+            return Set(uri, content);
         }
 
         public async Task<string> GetContent(string url)
@@ -43,26 +43,23 @@ namespace NewsTrack.Browser
             return null;
         }
 
-        public async Task<ResponseDto> Set(Uri uri, string content)
+        private static ResponseDto Set(Uri uri, string content)
         {
             var response = new ResponseDto(uri);
             if (content != null)
             {
-                await Task.Run(() =>
-                {
-                    var document = new HtmlDocument();
-                    document.LoadHtml(content);
-                    response.Titles = GetTitles(document);
-                    response.Paragraphs = GetParagraphs(document);
-                    var rawPictures = GetRawPictures(document);
-                    response.Pictures = GetPictures(uri, rawPictures.ToArray());
-                });
+                var document = new HtmlDocument();
+                document.LoadHtml(content);
+                response.Titles = GetTitles(document);
+                response.Paragraphs = GetParagraphs(document);
+                var rawPictures = GetRawPictures(document);
+                response.Pictures = GetPictures(uri, rawPictures.ToArray());
             }
 
             return response;
         }
 
-        private IEnumerable<Uri> GetPictures(Uri baseUri, string[] rawPictures)
+        private static IEnumerable<Uri> GetPictures(Uri baseUri, string[] rawPictures)
         {
             var pictures = new List<Uri>();
             if (rawPictures != null && rawPictures.Any())
@@ -84,25 +81,25 @@ namespace NewsTrack.Browser
             return pictures;
         }
 
-        private IEnumerable<string> GetTitles(HtmlDocument document)
+        private static IEnumerable<string> GetTitles(HtmlDocument document)
         {
             var codes = new[] {"h1", "h2", "h3", "h4", "h5", "h6"};
             return GetElements(document, codes);
         }
 
-        private IEnumerable<string> GetParagraphs(HtmlDocument document)
+        private static IEnumerable<string> GetParagraphs(HtmlDocument document)
         {
             var codes = new[] { "p", "span" };
             return GetElements(document, codes, 300);
         }
 
-        private IEnumerable<string> GetRawPictures(HtmlDocument document)
+        private static IEnumerable<string> GetRawPictures(HtmlDocument document)
         {
             var codes = new[] {"img"};
             return GetElements(document, codes, "src", "alt");
         }
 
-        private IEnumerable<string> GetElements(HtmlDocument document, IEnumerable<string> codes, int? minLenght = null)
+        private static IEnumerable<string> GetElements(HtmlDocument document, IEnumerable<string> codes, int? minLenght = null)
         {
             var elements = new HashSet<string>();
 
@@ -127,7 +124,7 @@ namespace NewsTrack.Browser
             return elements;
         }
 
-        private IEnumerable<string> GetElements(
+        private static IEnumerable<string> GetElements(
             HtmlDocument document, 
             IEnumerable<string> codes, 
             string attribute, 

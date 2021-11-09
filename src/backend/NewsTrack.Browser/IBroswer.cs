@@ -8,6 +8,5 @@ namespace NewsTrack.Browser
     {
         Task<ResponseDto> Get(string url);
         Task<string> GetContent(string url);
-        Task<ResponseDto> Set(Uri uri, string content);
     }
 }

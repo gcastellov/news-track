@@ -28,20 +28,12 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
         {
             var payload = new AuthenticationDto
             {
-                Username = "some@mailaddress.com",
-                Password = "somepassword"
+                Username = Factory.Identity.Email,
+                Password = "somepassword",
             };
 
             Factory.IdentityRepositoryMock.Setup(m => m.GetByEmail(payload.Username))
-                .Returns(Task.FromResult(new Identity.Identity
-                {
-                    Email = payload.Username,
-                    CreatedAt = DateTime.UtcNow,
-                    IsEnabled = true,
-                    Username = "someusername",
-                    Password = "$2a$11$OR.oPIrkeMJrZ8/inLuSmO6SFCn5ZM.aLQCkHq3Sm/s.FfDVkGoKu",
-                    IdType = Identity.IdentityTypes.Admin
-                }));
+                .Returns(Task.FromResult(Factory.Identity));
 
             var response = await Client.PostAsJsonAsync(AuthenticationEndpoint, payload);
             response.ShouldBeSuccessful();
