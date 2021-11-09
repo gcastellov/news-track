@@ -20,6 +20,19 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./src/backend/NewsTrack.sln
     - name: Build
-      run: dotnet build --no-restore ./src/backend/NewsTrack.sln
+      run: dotnet build --configuration Release --no-restore ./src/backend/NewsTrack.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal ./src/backend/NewsTrack.sln
+      run: dotnet test ./src/backend/NewsTrack.sln --configuration Release --no-build --verbosity normal
+    - name: Coverage
+      run: dotnet test ./src/backend/NewsTrack.WebApi.IntegrationTests/NewsTrack.WebApi.IntegrationTests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./src/backend/coverage
+    - name: Copy Coverage
+      run: cp ./src/backend/coverage/**/coverage.cobertura.xml ./src/backend/coverage/coverage.cobertura.xml
+    - name: Code Coverage Summary Report
+      uses: irongut/CodeCoverageSummary@v1.1.0
+      with:
+        filename: ./src/backend/coverage/coverage.cobertura.xml
+        badge: true
+        fail_below_min: false
+        format: 'markdown'
+        output: 'both'
+        thresholds: '70 80'
