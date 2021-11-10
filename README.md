@@ -1,5 +1,6 @@
 [![.NET](https://github.com/gcastellov/news-track/actions/workflows/dotnet.yml/badge.svg)](https://github.com/gcastellov/news-track/actions/workflows/dotnet.yml)
 [![AngularCI](https://github.com/gcastellov/news-track/actions/workflows/main.yml/badge.svg)](https://github.com/gcastellov/news-track/actions/workflows/main.yml)
+[![codecov](https://codecov.io/gh/gcastellov/news-track/branch/master/graph/badge.svg?token=LE8R33PYZZ)](https://codecov.io/gh/gcastellov/news-track)
 
 # News Track
 News Track is a news tracking or news aggregator website where users can share the content they find on Internet and give to it certain visibility.
