@@ -5,6 +5,10 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+    
+defaults:
+  run:
+    working-directory: ./src/backend    
 
 jobs:
   build:
@@ -18,21 +22,12 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore ./src/backend/NewsTrack.sln
+      run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore ./src/backend/NewsTrack.sln
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test ./src/backend/NewsTrack.sln --configuration Release --no-build --verbosity normal
-    - name: Coverage
-      run: dotnet test ./src/backend/NewsTrack.WebApi.IntegrationTests/NewsTrack.WebApi.IntegrationTests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./src/backend/coverage
-    - name: Copy Coverage
-      run: cp ./src/backend/coverage/**/coverage.cobertura.xml ./src/backend/coverage/coverage.cobertura.xml
-    - name: Code Coverage Summary Report
-      uses: irongut/CodeCoverageSummary@v1.1.0
-      with:
-        filename: ./src/backend/coverage/coverage.cobertura.xml
-        badge: true
-        fail_below_min: false
-        format: 'markdown'
-        output: 'both'
-        thresholds: '70 80'
+      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    - name: Publish coverage
+      uses: codecov/codecov-action@v1
+      
+
