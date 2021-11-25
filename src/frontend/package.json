@@ -6,6 +6,7 @@
     "clean": "rimraf ./dist",
     "start": "ng serve",
     "build": "ng build",
+    "build-docker": "ng build --configuration=docker",
     "test": "ng test",
     "test-silent": "ng test --watch=false",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadlessCustom",

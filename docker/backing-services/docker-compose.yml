@@ -1,9 +1,8 @@
-version: '3.3'
+version: '2.2'
 services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     container_name: es01
-    hostname: es01
     environment:
       - node.name=es01
       - cluster.name=es-docker-cluster
@@ -25,7 +24,6 @@ services:
   es02:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     container_name: es02
-    hostname: es02
     environment:
       - node.name=es02
       - cluster.name=es-docker-cluster
@@ -44,7 +42,6 @@ services:
   es03:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     container_name: es03
-    hostname: es03
     environment:
       - node.name=es03
       - cluster.name=es-docker-cluster
@@ -59,30 +56,18 @@ services:
     volumes:
       - data03:/usr/share/elasticsearch/data
     networks:
-      - elastic  
+      - elastic
     
-  news-track-back:
-    depends_on: [es02, es03]
-    build: ../src/backend
-    container_name: back
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.0
+    container_name: kibana
     environment:
-      ASPNETCORE_ENVIRONMENT: Docker
+      SERVER_NAME: kibana.localhost
+      ELASTICSEARCH_HOSTS: http://es01:9200
     ports:
-      - 8890:80
-    volumes:
-      - ./backend-logs:/app/logs
-      - ./backend-outbox:/app/outbox
+      - 5601:5601
     networks:
       - elastic
-      
-  news-track-front:
-    depends_on: [news-track-back]
-    build: ../src/frontend
-    container_name: front
-    ports:
-      - 8080:80
-    networks:
-      - elastic      
 
 volumes:
   data01:
