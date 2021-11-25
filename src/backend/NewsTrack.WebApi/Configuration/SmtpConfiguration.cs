@@ -13,7 +13,7 @@ namespace NewsTrack.WebApi.Configuration
         public string Username { get; private set; }
         public string Password { get; private set; }
         public int Port => _port;
-        public bool IsSet { get; private set; }
+        public bool IsSet => Host.HasValue() && Username.HasValue() && From.HasValue() && Password.HasValue() && Port > 0;
 
         private const string Hostname = "Host";
         private const string User = "Username";
@@ -34,7 +34,6 @@ namespace NewsTrack.WebApi.Configuration
                 int.TryParse(section.GetValue<string>(PortNumber), out _port);
             }
 
-            IsSet = Host.HasValue() && Username.HasValue() && From.HasValue() && Password.HasValue() && Port > 0;
             return this;
         }
 

@@ -2,6 +2,7 @@
 using AutoMapper;
 using Hangfire;
 using Hangfire.MemoryStorage;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +39,10 @@ namespace NewsTrack.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //Add AutoMapper
+            // Add Mediatr
+            services.AddMediatR(typeof(Startup));
+
+            // Add AutoMapper
             services.AddAutoMapper(map => map.AddProfiles(new Profile[]
             {
                 new BrowserProfile(),
@@ -87,14 +91,8 @@ namespace NewsTrack.WebApi
             services.AddScoped<IDraftService, DraftService>();
             services.AddScoped<IWebsiteService, WebsiteService>();
             services.AddScoped<IContentService, ContentService>();
-            services.AddScoped<IIdentityService>(provider =>
-            {
-                var notificationManager = new NotificationManager(configurationProvider);
-                return new IdentityService(
-                    provider.GetService<IIdentityRepository>(),
-                    provider.GetService<ICryptoManager>(),
-                    notificationManager.Handle);
-            });
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<INotificator, Notificator>();
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();

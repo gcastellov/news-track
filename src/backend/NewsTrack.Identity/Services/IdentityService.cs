@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Dynamic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using NewsTrack.Common.Events;
+using MediatR;
 using NewsTrack.Common.Validations;
 using NewsTrack.Identity.Encryption;
+using NewsTrack.Identity.Events;
 using NewsTrack.Identity.Repositories;
 using NewsTrack.Identity.Results;
 using static NewsTrack.Identity.Results.SaveIdentityResult.ResultType;
-using static NewsTrack.Common.Events.NotificationEventArgs.NotificationType;
 
 namespace NewsTrack.Identity.Services
 {
@@ -20,26 +19,28 @@ namespace NewsTrack.Identity.Services
 
         private readonly IIdentityRepository _identityRepository;
         private readonly ICryptoManager _cryptoManager;
+        private readonly IMediator _mediator;
 
-        private event EventHandler<NotificationEventArgs> SendNotificationEvent;
-
-        public IdentityService(IIdentityRepository identityRepository, ICryptoManager cryptoManager, EventHandler<NotificationEventArgs> handler)
+        public IdentityService(
+            IIdentityRepository identityRepository,
+            ICryptoManager cryptoManager,
+            IMediator mediator)
         {
             _identityRepository = identityRepository;
             _cryptoManager = cryptoManager;
-            SendNotificationEvent = handler;
+            _mediator = mediator;
         }
 
         public async Task<SaveIdentityResult> Save(string username, string email, IdentityTypes type)
         {
             string password = Guid.NewGuid().ToString("N").Substring(0, 8);
             var result = await Create(username, email, password, password, type);
+            
             if (result.Type == Ok)
             {
-                var args = To(AccountCreated, result.Identity);
-                args.Model.Password = password;
-                OnSendNotification(args);
+                await _mediator.Publish(AccountCreated.From(result.Identity, password));
             }
+
             return result;
         }
 
@@ -48,8 +49,9 @@ namespace NewsTrack.Identity.Services
             var result = await Create(username, email, password1, password2, type);
             if (result.Type == Ok)
             {
-                OnSendNotification(AccountCreated, result.Identity);
+                await _mediator.Publish(AccountCreated.From(result.Identity));
             }
+
             return result;
         }
 
@@ -77,7 +79,7 @@ namespace NewsTrack.Identity.Services
                 {                    
                     identity.LockoutEnd = DateTime.UtcNow.AddMinutes(5);
                     status = AuthenticateResult.Lockout;
-                    OnSendNotification(AccountLockout, identity);
+                    await _mediator.Publish(AccountLocked.From(identity));
                 }
 
                 await _identityRepository.Update(identity);
@@ -100,7 +102,7 @@ namespace NewsTrack.Identity.Services
             var identity = await _identityRepository.GetByEmail(email);
             if (identity?.IsEnabled == false && identity.SecurityStamp == securityStamp)
             {
-                OnSendNotification(AccountConfirmed, identity);
+                await _mediator.Publish(AccountConfirmed.From(identity));
                 identity.IsEnabled = true;
                 await _identityRepository.Update(identity);
                 return true;
@@ -170,39 +172,6 @@ namespace NewsTrack.Identity.Services
 
             await _identityRepository.Save(identity);
             return SaveIdentityResult.Create(identity, Ok);
-        }
-
-        private void OnSendNotification(NotificationEventArgs.NotificationType type, Identity identity)
-        {
-            var args = To(type, identity);
-            OnSendNotification(args);
-        }
-
-        private void OnSendNotification(NotificationEventArgs args)
-        {
-            if (SendNotificationEvent != null && args != null)
-            {
-                SendNotificationEvent.Invoke(this, args);
-            }
-        }
-
-        private static NotificationEventArgs To(NotificationEventArgs.NotificationType type, Identity identity)
-        {
-            var args =  new NotificationEventArgs
-            {
-                Type = type,
-                To = identity.Email,
-                Username = identity.Username
-            };
-
-            if (type == AccountCreated)
-            {
-                args.Model = new ExpandoObject();
-                args.Model.Email = identity.Email;
-                args.Model.SecurityStamp = identity.SecurityStamp;
-            }
-
-            return args;
         }
     }
 }

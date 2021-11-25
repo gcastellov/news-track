@@ -8,14 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="news-track\**" />
+    <Compile Remove="wwwroot\**" />
     <Content Remove="news-track\**" />
+    <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="news-track\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="news-track\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="logs\" />
-    <Folder Include="wwwroot\" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,11 +23,14 @@
     <PackageReference Include="Hangfire" Version="1.7.26" />
     <PackageReference Include="Hangfire.Core" Version="1.7.26" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="5.0.11" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
     <PackageReference Include="NLog" Version="4.7.6" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.10.0" />
+    <PackageReference Include="Polly" Version="7.2.2" />
   </ItemGroup>
 
   <ItemGroup>

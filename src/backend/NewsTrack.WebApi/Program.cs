@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,23 +9,20 @@ namespace NewsTrack.WebApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             logger.Info("Initializing application...");
 
             try
             {
-                var host = CreateHostBuilder(args).Build();
-
-                logger.Info("Running application...");
-
-                host.Run();
+                await CreateHostBuilder(args)
+                    .Build()
+                    .RunAsync();
             }
             catch (Exception e)
             {
-                logger.Error(e, "The application has crashed. Check this out.");
-                throw;
+                logger.Fatal(e, "The application has crashed. Check this out.");
             }
             finally
             {
