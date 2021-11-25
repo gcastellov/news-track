@@ -7,6 +7,7 @@ using NewsTrack.Identity.Results;
 using NewsTrack.Identity.Services;
 using Xunit;
 using FluentAssertions;
+using MediatR;
 
 namespace NewsTrack.Identity.UnitTests
 {
@@ -15,6 +16,7 @@ namespace NewsTrack.Identity.UnitTests
         private IIdentityService _identityService;
         private Mock<IIdentityRepository> _identityRepositoryMock;
         private Mock<ICryptoManager> _cryptoManagerMock;
+        private Mock<IMediator> _mediatorMock;
 
         const string Email = "some@email.com";
         const string Pwd = "somepwd";
@@ -23,10 +25,11 @@ namespace NewsTrack.Identity.UnitTests
         {
             _identityRepositoryMock = new Mock<IIdentityRepository>();
             _cryptoManagerMock = new Mock<ICryptoManager>();
+            _mediatorMock = new Mock<IMediator>();
             _identityService = new IdentityService(
                 _identityRepositoryMock.Object,
                 _cryptoManagerMock.Object,
-                null);
+                _mediatorMock.Object);
         }
 
         [Fact]
