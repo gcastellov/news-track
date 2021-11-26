@@ -130,7 +130,7 @@ Set your frontend authentication URL where the user has to be redirected once he
 
 ## Docker
 
-Use docker compose file which wakes up a replicaset of ElasticSearch nodes and a Kibana instance.
+There are a couple of compose files. The one located under */docker/backing-services* creates only the ELK replicaset, while the one in */docker* creates the images and containers for the frontend and backend along with the ES cluster by using the set up *Docker* environment.
 
 ```
 docker-compose up
