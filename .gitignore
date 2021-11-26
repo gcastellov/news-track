@@ -98,3 +98,4 @@ Thumbs.db
 **/environment.prod.ts
 **/*.log
 **/coverage.opencover.xml
+**/*.eml
