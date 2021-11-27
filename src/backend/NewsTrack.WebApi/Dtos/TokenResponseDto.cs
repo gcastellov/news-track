@@ -14,6 +14,10 @@ namespace NewsTrack.WebApi.Dtos
         public string Username { get; protected set; }
         public FailureReason? Failure { get; protected set; }
 
+        public TokenResponseDto()
+        {
+        }
+
         private TokenResponseDto(AuthenticateResult result, string username)
         {
             Username = username;

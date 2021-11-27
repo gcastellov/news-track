@@ -146,19 +146,19 @@ namespace NewsTrack.Identity.Services
 
             if (!Regex.IsMatch(email, EmailPattern, RegexOptions.IgnoreCase))
             {
-                return SaveIdentityResult.Create(InvalidEmail);
+                return SaveIdentityResult.As(InvalidEmail);
             }
             if (password1 != password2)
             {
-                return SaveIdentityResult.Create(PasswordsDontMatch);
+                return SaveIdentityResult.As(PasswordsDontMatch);
             }
             if (await _identityRepository.ExistsByUsername(username))
             {
-                return SaveIdentityResult.Create(InvalidUsername);
+                return SaveIdentityResult.As(InvalidUsername);
             }
             if (await _identityRepository.ExistsByEmail(email))
             {
-                return SaveIdentityResult.Create(InvalidEmail);
+                return SaveIdentityResult.As(ExistingAccount);
             }
 
             var identity = new Identity

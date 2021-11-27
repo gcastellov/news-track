@@ -13,7 +13,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
 {
     public class BaseTest : IClassFixture<TestWebAppFactory<Startup>>
     {
-        private const string AuthenticationEndpoint = "/api/authentication/generate";
+        protected const string AuthenticationEndpoint = "/api/authentication/generate";
 
         protected TestWebAppFactory<Startup> Factory { get; }
         protected HttpClient Client { get; }        
@@ -29,7 +29,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             var payload = new AuthenticationDto
             {
                 Username = Factory.Identity.Email,
-                Password = "somepassword",
+                Password = Factory.IdentityClearPassword,
             };
 
             Factory.IdentityRepositoryMock.Setup(m => m.GetByEmail(payload.Username))
@@ -129,16 +129,16 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
                 Title = "The title",
                 Views = 554,
                 Paragraphs = new[]
-                    {
-                        "First paragraph",
-                        "Second paragraph",
-                        "Third paragraph"
-                    },
+                {
+                    "First paragraph",
+                    "Second paragraph",
+                    "Third paragraph"
+                },
                 Tags = new[]
-                    {
-                        "tag1",
-                        "tag2"
-                    },
+                {
+                    "tag1",
+                    "tag2"
+                },
                 User = new User
                 {
                     Id = Guid.NewGuid(),

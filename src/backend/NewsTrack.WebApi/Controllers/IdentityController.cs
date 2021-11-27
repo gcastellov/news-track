@@ -80,11 +80,40 @@ namespace NewsTrack.WebApi.Controllers
                 var result = await _identityService.Save(
                     dto.Username,
                     dto.Email,
-                    IdentityTypes.Contributor
-                );
+                    IdentityTypes.Contributor);
 
                 return CreateIdentityResponseDto.Create(result.Type);
             });
+        }
+
+        [HttpPost]
+        [Route("signup")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Signup([FromBody] CreateIdentityDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var response = await Envelope(async () =>
+            {
+                var result = await _identityService.Save(
+                    dto.Username,
+                    dto.Email,
+                    IdentityTypes.Regular);
+
+                return CreateIdentityResponseDto.Create(result.Type);
+            });
+
+            if (response.Payload.Failure != null)
+            {
+                response.IsSuccessful = false;
+                response.ErrorMessage = response.Payload.Failure.ToString();
+                response.Payload = null;
+            }
+
+            return Ok(response);
         }
 
         [HttpGet]

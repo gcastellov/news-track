@@ -8,7 +8,8 @@
             InvalidEmailPattern,
             PasswordsDontMatch,
             InvalidUsername,
-            InvalidEmail
+            InvalidEmail,
+            ExistingAccount
         }
 
         public Identity Identity { get; }
@@ -20,7 +21,7 @@
             Type = type;
         }
 
-        public static SaveIdentityResult Create(ResultType type)
+        public static SaveIdentityResult As(ResultType type)
         {
             return new SaveIdentityResult(null, type);
         }
