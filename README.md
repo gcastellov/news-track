@@ -19,22 +19,6 @@ The project is made by using .NET 5 as backend and ElasticSearch as NoSQL databa
 - Suggested news and tags
 - Corporate content (terms, privacy and about us)
 
-#### Membership control panel
-Nowadays the membership is limited to admin purposes, meaning that only the admin and contributors can post news, create new users, change current password, and dispatch the suggestion process. In a near feature more kind of users will be added.
-
-![Membership user panel](doc/membership_panel.png)
-![Membership management](doc/membership_panel2.png)
-
-To set your admin settings, update your backend appsettings.json file. Once the application wakes up it will create the user.
-
-```json
-  "Admin": {
-    "Username": "ADMIN_USERNAME",
-    "Email": "ADMIN_EMAIL_ADDRESS",
-    "Password": "ADMIN_PASSWORD"
-  }
-```
-
 #### Content browser
 By using this feature the user is able to browse a given URL and choose an image, a title and some paragraphs that represent the news. At same time the user can relate this content to other content that is already on the system and tag it with the most representative words.
 It's important to tag and relate to other existing content properly because the suggestion process algorithm uses this information in order to accomplish more accurate suggestions.
@@ -62,6 +46,22 @@ This feature lists related content.
 
 #### Suggested news and tags
 As much content the system has, the better. The algorithm will search for related news and tags to match other content and get suggestions.
+
+#### Membership control panel
+Nowadays the membership is limited to admin purposes, meaning that only the admin and contributors can post news, create new users, change current password, and dispatch the suggestion process. In a near feature more kind of users will be added.
+
+![Membership user panel](doc/membership_panel.png)
+![Membership management](doc/membership_panel2.png)
+
+To set your admin settings, update your backend appsettings.json file. Once the application wakes up it will create the user.
+
+```json
+  "Admin": {
+    "Username": "ADMIN_USERNAME",
+    "Email": "ADMIN_EMAIL_ADDRESS",
+    "Password": "ADMIN_PASSWORD"
+  }
+```
 
 #### Corporate content
 Built-in section with Terms, Privacy and About us. You only need to update the assets/appsettings.json file to customize your website.
