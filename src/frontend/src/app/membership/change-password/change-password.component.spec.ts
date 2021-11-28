@@ -10,8 +10,7 @@ import { ChangePasswordComponent } from './change-password.component';
 import { httpLoaderFactory } from '../../app.module';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { BackendApiService } from '../../services/backend-api.service';
-import { ChangePasswordResponseDto } from '../../services/Dtos/ChangePasswordResponseDto';
-import { Envelope } from '../../services/Dtos/Envelope';
+import { Envelope, UntypedEnvelope } from '../../services/Dtos/Envelope';
 import { Observable } from 'rxjs';
 
 describe('ChangePasswordComponent', () => {
@@ -19,7 +18,7 @@ describe('ChangePasswordComponent', () => {
   let fixture: ComponentFixture<ChangePasswordComponent>;
 
   const apiServiceMock = <BackendApiService>{
-    changePassword: (r) => new Observable<Envelope<ChangePasswordResponseDto>>(observer => observer.complete)
+    changePassword: (r) => new Observable<UntypedEnvelope>(observer => observer.complete)
   };
 
   beforeEach(waitForAsync(() => {
@@ -63,10 +62,8 @@ describe('ChangePasswordComponent', () => {
     component.pwdForm.controls['password1'].setValue(newPwd);
     component.pwdForm.controls['password2'].setValue(newPwd);
 
-    const responseDto = new ChangePasswordResponseDto();
-
     const changePasswordMock = spyOn(apiServiceMock, 'changePassword').and
-      .callFake(() => new Observable<Envelope<ChangePasswordResponseDto>>(o => o.next(new Envelope(responseDto))));
+      .callFake(() => new Observable<UntypedEnvelope>(o => o.next(new UntypedEnvelope())));
 
     component.changePassword();
 
@@ -79,23 +76,18 @@ describe('ChangePasswordComponent', () => {
   it('should show proper message when changing password fails', () => {
     const currentPwd = 'MyCurrentPassword';
     const newPwd = 'MyNewPwd';
+    const errorCode = 1;
     component.pwdForm.controls['currentPassword'].setValue(currentPwd);
     component.pwdForm.controls['password1'].setValue(newPwd);
     component.pwdForm.controls['password2'].setValue(newPwd);
 
-    const dto = new ChangePasswordResponseDto();
-    dto.failure = 1;
-    
-    var response = new Envelope<ChangePasswordResponseDto>(dto)
-    response.isSuccessful = false;
-
     const changePasswordMock = spyOn(apiServiceMock, 'changePassword').and
-      .callFake(() => new Observable<Envelope<ChangePasswordResponseDto>>(o => o.next(response)));
+      .callFake(() => new Observable<UntypedEnvelope>(o => o.next(UntypedEnvelope.AsFailure(errorCode))));
 
     component.changePassword();
 
     expect(changePasswordMock).toHaveBeenCalled();
-    expect(component.failureReason).toBe(dto.failure);
+    expect(component.failureReason).toBe(errorCode);
     expect(component.pwdForm.get('currentPassword')?.value).toBe(currentPwd);
     expect(component.pwdForm.get('password1')?.value).toBe(newPwd);
     expect(component.pwdForm.get('password2')?.value).toBe(newPwd);

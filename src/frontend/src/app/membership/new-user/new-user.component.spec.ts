@@ -9,7 +9,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { NewUserComponent } from './new-user.component';
 import { httpLoaderFactory } from '../../app.module';
 import { BackendApiService } from '../../services/backend-api.service';
-import { CreateIdentityResponseDto } from '../../services/Dtos/CreateIdentityResponseDto';
 import { TestBedHelper } from '../../testing/testbed.helper';
 import { Envelope, UntypedEnvelope } from '../../services/Dtos/Envelope';
 import { Observable } from 'rxjs';
@@ -62,10 +61,10 @@ describe('NewUserComponent', () => {
     component.usrForm.controls['username'].setValue(username);
     component.usrForm.controls['email'].setValue(email);
 
-    const responseDto = new CreateIdentityResponseDto();
+    const responseDto = new UntypedEnvelope();
 
     const createUserMock = spyOn(apiServiceMock, 'createUser').and
-      .callFake(() => new Observable<Envelope<CreateIdentityResponseDto>>(o => o.next(new Envelope(responseDto))));
+      .callFake(() => new Observable<UntypedEnvelope>(o => o.next(new Envelope(responseDto))));
 
     component.createUser();
 

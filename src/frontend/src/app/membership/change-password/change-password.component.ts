@@ -43,8 +43,8 @@ export class ChangePasswordComponent {
           this.pwdForm.controls['currentPassword'].setValue('');
           this.pwdForm.controls['password1'].setValue('');
           this.pwdForm.controls['password2'].setValue('');
-        } else {
-          this.failureReason = p.payload.failure;
+        } else if (p.error) {
+          this.failureReason = p.error.code;
         }
     });
   }

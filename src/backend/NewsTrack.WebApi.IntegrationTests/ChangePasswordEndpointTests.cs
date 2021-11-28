@@ -3,6 +3,7 @@ using Xunit;
 using FluentAssertions;
 using NewsTrack.WebApi.IntegrationTests.Fixture;
 using NewsTrack.WebApi.Dtos;
+using NewsTrack.Identity.Results;
 
 namespace NewsTrack.WebApi.IntegrationTests
 {
@@ -34,9 +35,8 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Assert
             response.ShouldBeSuccessful();
 
-            var envelope = await response.ShouldBeOfType<ChangePasswordResponseDto>();
+            var envelope = await response.ShouldBeVoid();
             envelope.ShouldBeSuccessful();
-            envelope.Payload.Failure.Should().BeNull();
         }
 
         [Fact]
@@ -58,10 +58,9 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Assert
             response.ShouldBeSuccessful();
 
-            var envelope = await response.ShouldBeOfType<ChangePasswordResponseDto>();
-            envelope.ShouldBeSuccessful();
-            envelope.Payload.Failure.Should().NotBeNull();
-            envelope.Payload.Failure.Should().Be(ChangePasswordResponseDto.FailureReason.InvalidCurrentPassword);
+            var envelope = await response.ShouldBeVoid();
+            envelope.ShouldBeUnsuccessful();
+            envelope.Error.Code.Should().Be((uint)ChangePasswordResult.InvalidCurrentPassword);
         }
 
         [Fact]
@@ -83,10 +82,9 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Assert
             response.ShouldBeSuccessful();
 
-            var envelope = await response.ShouldBeOfType<ChangePasswordResponseDto>();
-            envelope.ShouldBeSuccessful();
-            envelope.Payload.Failure.Should().NotBeNull();
-            envelope.Payload.Failure.Should().Be(ChangePasswordResponseDto.FailureReason.PasswordsDontMatch);
+            var envelope = await response.ShouldBeVoid();
+            envelope.ShouldBeUnsuccessful();
+            envelope.Error.Code.Should().Be((uint)ChangePasswordResult.PasswordsDontMatch);
         }
     }
 }

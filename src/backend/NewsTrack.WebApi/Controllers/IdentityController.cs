@@ -53,17 +53,19 @@ namespace NewsTrack.WebApi.Controllers
                 return BadRequest();
             }
 
-            return await Execute(async () =>
-            {
-                var id = _identityHelper.Id;
-                var result = await _identityService.ChangePassword(
-                    id,
-                    dto.CurrentPassword,
-                    dto.Password,
-                    dto.ConfirmPassword);
+            var id = _identityHelper.Id;
+            var result = await _identityService.ChangePassword(
+                id,
+                dto.CurrentPassword,
+                dto.Password,
+                dto.ConfirmPassword);
 
-                return ChangePasswordResponseDto.Create(result);
-            });
+            if (result == ChangePasswordResult.Ok)
+            {
+                return Ok(Dtos.Envelope.AsSuccess());
+            }
+
+            return Ok(Dtos.Envelope.AsFailure((uint)result));            
         }
 
         [HttpPost]

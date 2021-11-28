@@ -17,10 +17,8 @@ import { WebsiteStatsDto } from './Dtos/WebsiteStatsDto';
 import { IncrementalResponseDto } from './Dtos/IncrementalResponseDto';
 import { WebsiteDto } from './Dtos/WebsiteDto';
 import { IdentityDto } from './Dtos/IdentityDto';
-import { ChangePasswordResponseDto } from './Dtos/ChangePasswordResponseDto';
 import { ChangePassworRequestDto } from './Dtos/ChangePasswordRequestDto';
 import { DraftSuggestionIdsDto } from './Dtos/DraftSuggestionIdsDto';
-import { CreateIdentityResponseDto } from './Dtos/CreateIdentityResponseDto';
 import { CreateIdentityRequestDto } from './Dtos/CreateIdentityRequestDto';
 import { Envelope, UntypedEnvelope } from './Dtos/Envelope';
 import { Observable } from 'rxjs';
@@ -176,10 +174,10 @@ export class BackendApiService {
     return this._client.get<Envelope<IdentityDto>>(url, {headers: headers});
   }
 
-  changePassword(req: ChangePassworRequestDto): Observable<Envelope<ChangePasswordResponseDto>> {
+  changePassword(req: ChangePassworRequestDto): Observable<UntypedEnvelope> {
     const url = `${environment.baseUrl}/api/identity/password/change`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.post<Envelope<ChangePasswordResponseDto>>(url, req, { headers: headers });
+    return this._client.post<UntypedEnvelope>(url, req, { headers: headers });
   }
 
   processSuggestions(): Observable<boolean> {
