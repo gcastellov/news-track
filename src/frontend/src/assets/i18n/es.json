@@ -16,7 +16,10 @@
         "failure-reason-one": "Algo fue mal",
         "failure-reason-two": "Usuario o contraseña incorrecta",
         "failure-reason-tree": "El usuario se ha bloqueado por razones de seguridad",
-        "sing-in": "Acceder"
+        "sign-in": "Acceder",
+        "sign-up": "Aún no tienes una cuenta? Únete!",
+        "confirmation-one": "Tu cuenta has sido activada con éxito!",
+        "confirmation-two": "Acuérdate que la contraseña fue adjuntada al email de confirmación"
     },
     "browsing-component": {
         "title-images": "Imágenes",
@@ -204,14 +207,25 @@
     "new-user-component": {
         "username": "Nombre de usuario",
         "email": "Email",
-        "action-create": "Crear",
+        "action-create": "Únete",
         "failure-reason-one": "Patrón de email incorrecto",
         "failure-reason-two": "Las contraseñas no coinciden",
-        "failure-reason-three": "Nombre de usuario incorrecto",
-        "failure-reason-four": "Email incorrecto",
+        "failure-reason-three": "Ya existe una cuenta con este nombre de usuario",
+        "failure-reason-four": "Ya existe una cuenta con esta dirección de correo",
         "success-reason": "El usuario ha sido creado correctamente"
     },
     "failure-component": {
         "general-message": "Ooooops... Algo fue mal!"
-    }
+    },
+    "sign-component": {
+        "username": "Nombre de usuario",
+        "email": "Email",
+        "action-create": "Crear",
+        "failure-reason-one": "Patrón de email incorrecto",
+        "failure-reason-two": "Las contraseñas no coinciden",
+        "failure-reason-three": "Ya existe una cuenta con este nombre de usuario",
+        "failure-reason-four": "Ya existe una cuenta con esta dirección de correo",
+        "success-one": "El usuario ha sido creado correctamente!",
+        "success-two": "Se ha enviado un email a tu dirección de correo con la finalidad de verificar tu identidad. Sigue el link facilitado para activar tu cuenta"
+    }    
 }

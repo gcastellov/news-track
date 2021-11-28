@@ -16,7 +16,10 @@
         "failure-reason-one": "Something went wrong",
         "failure-reason-two": "Invalid user or password",
         "failure-reason-tree": "The account has been blocked for security reasons",
-        "sing-in": "Sign in"
+        "sign-in": "Sign in",
+        "sign-up": "Don't have an account yet? Sign up!",
+        "confirmation-one": "You account has been successfully activated!",
+        "confirmation-two": "Remember that your provisional password was attached to the confirmation email"
     },
     "browsing-component": {
         "title-images": "Pictures",
@@ -207,11 +210,22 @@
         "action-create": "Create",
         "failure-reason-one": "Invalid email pattern",
         "failure-reason-two": "Passwords don't match",
-        "failure-reason-three": "Invalid username",
-        "failure-reason-four": "Invalid email",
+        "failure-reason-three": "An account already exists using this username",
+        "failure-reason-four": "An account already exists using this email",
         "success-reason": "The user has been created successfully"
     },
     "failure-component": {
         "general-message": "Ooooops... Something went wrong!"
-    }
+    },
+    "signup-component": {
+        "username": "Username",
+        "email": "Email",
+        "action-create": "Sign up",
+        "failure-reason-one": "Invalid email pattern",
+        "failure-reason-two": "Passwords don't match",
+        "failure-reason-three": "An account already exists using this username",
+        "failure-reason-four": "An account already exists using this email",
+        "success-one": "The account has been successfully created!",
+        "success-two": "An email has been sent to you mail address in order to verify your identity. Follow the provided link to activate your account."
+    }    
 }

@@ -12,6 +12,7 @@ import { DraftEntryComponent } from './draft-list/draft-entry/draft-entry.compon
 import { DraftListComponent } from './draft-list/draft-list.component';
 import { SearchComponent } from './draft-list/search/search.component';
 import { SuggestionsComponent } from './draft-list/suggestions/suggestions.component';
+import { SignupComponent } from './authentication/signup/signup.component';
 
 const routes: Routes = [
   { path: 'latest', component: DraftListComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'news/:id', component: DraftEntryComponent },
   { path: 'news/:id/suggestions', component: SuggestionsComponent },
   { path: 'authentication', component: AuthenticationComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'about', component: AboutComponent },
   { path: 'terms', component: TermsComponent },
   { path: 'privacy', component: PrivacyComponent },

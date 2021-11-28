@@ -60,8 +60,8 @@ export class SearchComponent implements OnInit {
         this.count = d.payload.count;
         this.drafts = d.payload.news;
         this.numberOfPages = this.count / this.take;
-      } else {
-        this.errorMessage = d.errorMessage;
+      } else if (d.error) {
+        this.errorMessage = d.error.message;
       }
     });
   }

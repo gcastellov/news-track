@@ -38,7 +38,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             response.ShouldBeSuccessful();
             var envelope = await response.ShouldBeOfType<TokenResponseDto>();
             envelope.IsSuccessful.Should().BeFalse();
-            envelope.ErrorMessage.Should().BeNullOrEmpty();
+            envelope.Error.Should().BeNull();
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             response.ShouldBeSuccessful();
             var envelope = await response.ShouldBeOfType<TokenResponseDto>();
             envelope.IsSuccessful.Should().BeFalse();
-            envelope.ErrorMessage.Should().BeNullOrEmpty();
+            envelope.Error.Should().BeNull();
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             response.ShouldBeSuccessful();
             var envelope = await response.ShouldBeOfType<TokenResponseDto>();
             envelope.IsSuccessful.Should().BeFalse();
-            envelope.ErrorMessage.Should().BeNullOrEmpty();
+            envelope.Error.Should().BeNull();
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             response.ShouldBeSuccessful();
             var envelope = await response.ShouldBeOfType<TokenResponseDto>();
             envelope.IsSuccessful.Should().BeFalse();
-            envelope.ErrorMessage.Should().BeNullOrEmpty();
+            envelope.Error.Should().BeNull();
             identity.LockoutEnd.Should().BeAfter(System.DateTime.UtcNow);
         }
     }

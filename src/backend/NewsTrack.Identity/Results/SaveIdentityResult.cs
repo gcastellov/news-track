@@ -4,12 +4,11 @@
     {
         public enum ResultType
         {
-            Ok,
-            InvalidEmailPattern,
-            PasswordsDontMatch,
-            InvalidUsername,
-            InvalidEmail,
-            ExistingAccount
+            Ok = 0,
+            InvalidEmailPattern = 1,
+            PasswordsDontMatch = 2,
+            ExistingUsername = 3,
+            ExistingEmail = 4
         }
 
         public Identity Identity { get; }

@@ -201,4 +201,10 @@ export class BackendApiService {
     return this._client.post<Envelope<CreateIdentityResponseDto>>(url, req, { headers: headers });
   }
 
+  signUp(req: CreateIdentityRequestDto): Observable<Envelope<CreateIdentityResponseDto>> {
+    const url = `${environment.baseUrl}/api/identity/signup`;
+    const headers = this._authService.getTokenHeaders();
+    return this._client.post<Envelope<CreateIdentityResponseDto>>(url, req, { headers: headers });
+  }
+
 }

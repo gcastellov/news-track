@@ -146,7 +146,7 @@ namespace NewsTrack.Identity.Services
 
             if (!Regex.IsMatch(email, EmailPattern, RegexOptions.IgnoreCase))
             {
-                return SaveIdentityResult.As(InvalidEmail);
+                return SaveIdentityResult.As(InvalidEmailPattern);
             }
             if (password1 != password2)
             {
@@ -154,11 +154,11 @@ namespace NewsTrack.Identity.Services
             }
             if (await _identityRepository.ExistsByUsername(username))
             {
-                return SaveIdentityResult.As(InvalidUsername);
+                return SaveIdentityResult.As(ExistingUsername);
             }
             if (await _identityRepository.ExistsByEmail(email))
             {
-                return SaveIdentityResult.As(ExistingAccount);
+                return SaveIdentityResult.As(ExistingEmail);
             }
 
             var identity = new Identity

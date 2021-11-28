@@ -6,6 +6,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace NewsTrack.WebApi.Components.EventHandlers
 {
@@ -29,8 +30,9 @@ namespace NewsTrack.WebApi.Components.EventHandlers
         private string GetBody(AccountCreated notification)
         {
             var uBuilder = new UriBuilder(_configuration.ApiUrl);
+            string callback = HttpUtility.UrlEncode($"{_configuration.SignInUrl}?confirmed=true&email={notification.Identity.Email}");
             uBuilder.Path += $"/api/identity/confirm/{notification.Identity.Email}/{notification.Identity.SecurityStamp}";
-            uBuilder.Query = "go=" + _configuration.SignInUrl;
+            uBuilder.Query = $"go={callback}";
 
             var sBuilder = new StringBuilder();
             sBuilder.Append("Your account has been created. Please confirm it by clicking the next link:");
@@ -40,7 +42,7 @@ namespace NewsTrack.WebApi.Components.EventHandlers
             if (notification.ClearPassword.HasValue())
             {
                 sBuilder.Append("<br/><br/>");
-                sBuilder.Append("A password has been provided, however, you can change it at any time:");
+                sBuilder.Append("A password has been provided, however, you can change it from your control panel at any time:");
                 sBuilder.Append("<br/><br/>");
                 sBuilder.Append("<b>");
                 sBuilder.Append(notification.ClearPassword);

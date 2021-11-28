@@ -33,9 +33,8 @@ namespace NewsTrack.WebApi.IntegrationTests
 
             // Assert
             response.ShouldBeSuccessful();
-            var envelope = await response.ShouldBeOfType<CreateIdentityResponseDto>();
+            var envelope = await response.ShouldBeVoid();
             envelope.ShouldBeSuccessful();
-            envelope.Payload.Failure.Should().BeNull();
         }
 
         [Theory]

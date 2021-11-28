@@ -16,23 +16,30 @@ namespace NewsTrack.WebApi.Controllers
 
         protected async Task<Envelope<T>> Envelope<T>(Func<Task<T>> action) where T : class
         {
-            var envelope = new Envelope<T>();
-
             try
             {
-                envelope.Payload = await action();
-                envelope.IsSuccessful = true;
+                return new Envelope<T>
+                {
+                    Payload = await action(),
+                    IsSuccessful = true
+                };
             }
-            catch(NotFoundException e)
+            catch(NotFoundException)
             {
-                envelope.ErrorMessage = e.Message;
+                return new Envelope<T>
+                {
+                    IsSuccessful = false,
+                    Error = new Error
+                    {
+                        Message = "Entity not found",
+                        Code = (uint)Error.Codes.NotFound
+                    }
+                };
             }
             catch (Exception)
             {
                 throw;
             }
-
-            return envelope;
         }
     }
 }

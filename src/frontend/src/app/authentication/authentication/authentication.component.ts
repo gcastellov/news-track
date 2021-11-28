@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
 import { AuthenticationApiService } from '../../services/authentication-api.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationDto } from '../../services/Dtos/AuthenticationDto';
 
 @Component({
@@ -9,18 +9,33 @@ import { AuthenticationDto } from '../../services/Dtos/AuthenticationDto';
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.less']
 })
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnInit {
   authForm: FormGroup;
   failureReason: number;
+  hasConfirmed: boolean;
 
   constructor(
     private _authenticationService: AuthenticationApiService,
     private _router: Router,
+    private _activatedRoute: ActivatedRoute,
     _fBuilder: FormBuilder) {
     this.failureReason = 0;
+    this.hasConfirmed = false;
     this.authForm = _fBuilder.group({
       username: ['', Validators.email],
       password: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(): void {
+    this._activatedRoute.queryParams.subscribe(params => {
+      if (params.confirmed) {
+        this.hasConfirmed = true;
+        this.authForm.setValue({
+          username: params.email,
+          password: ''
+        });
+      }
     });
   }
 

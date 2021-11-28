@@ -121,8 +121,8 @@ export class DraftListComponent implements OnInit {
       this.count = response.payload.count;
       this.drafts = response.payload.news;
       this.numberOfPages = this.count / this.take;
-    } else {
-      this.errorMessage = response.errorMessage;
+    } else if (response.error) {
+      this.errorMessage = response.error.message;
     }
   }
 

@@ -30,7 +30,7 @@ namespace NewsTrack.WebApi.IntegrationTests
 
             // Assert
             response.ShouldBeSuccessful();
-            var envelope = await response.ShouldBeOfType<CreateIdentityResponseDto>();
+            var envelope = await response.ShouldBeVoid();
             envelope.ShouldBeSuccessful();
         }
 
@@ -52,7 +52,7 @@ namespace NewsTrack.WebApi.IntegrationTests
 
             // Assert
             response.ShouldBeSuccessful();
-            var envelope = await response.ShouldBeOfType<CreateIdentityResponseDto>();
+            var envelope = await response.ShouldBeVoid();
             envelope.ShouldBeUnsuccessful();
         }
     }

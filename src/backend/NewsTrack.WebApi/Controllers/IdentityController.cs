@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewsTrack.Identity;
 using NewsTrack.Identity.Repositories;
+using NewsTrack.Identity.Results;
 using NewsTrack.Identity.Services;
 using NewsTrack.WebApi.Components;
 using NewsTrack.WebApi.Configuration;
@@ -70,20 +71,7 @@ namespace NewsTrack.WebApi.Controllers
         [Authorize(Policy = IdentityPolicies.RequireAdministratorRole)]
         public async Task<IActionResult> Create([FromBody] CreateIdentityDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            return await Execute(async () =>
-            {
-                var result = await _identityService.Save(
-                    dto.Username,
-                    dto.Email,
-                    IdentityTypes.Contributor);
-
-                return CreateIdentityResponseDto.Create(result.Type);
-            });
+            return await CreateNewAccount(dto, IdentityTypes.Contributor);
         }
 
         [HttpPost]
@@ -91,29 +79,7 @@ namespace NewsTrack.WebApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Signup([FromBody] CreateIdentityDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            var response = await Envelope(async () =>
-            {
-                var result = await _identityService.Save(
-                    dto.Username,
-                    dto.Email,
-                    IdentityTypes.Regular);
-
-                return CreateIdentityResponseDto.Create(result.Type);
-            });
-
-            if (response.Payload.Failure != null)
-            {
-                response.IsSuccessful = false;
-                response.ErrorMessage = response.Payload.Failure.ToString();
-                response.Payload = null;
-            }
-
-            return Ok(response);
+            return await CreateNewAccount(dto, IdentityTypes.Regular);
         }
 
         [HttpGet]
@@ -127,6 +93,26 @@ namespace NewsTrack.WebApi.Controllers
             }
 
             return Redirect(go);
+        }
+
+        private async Task<IActionResult> CreateNewAccount(CreateIdentityDto dto, IdentityTypes type)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var result = await _identityService.Save(
+                dto.Username,
+                dto.Email,
+                type);
+
+            if (result.Type == SaveIdentityResult.ResultType.Ok)
+            {
+                return Ok(Dtos.Envelope.AsSuccess());
+            }
+
+            return Ok(Dtos.Envelope.AsFailure((uint)result.Type));
         }
     }
 }

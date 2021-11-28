@@ -1,6 +1,8 @@
+import { ErrorDto } from "./ErrorDto";
+
 export class Envelope<T> {
     isSuccessful: boolean = false;
-    errorMessage: string = '';
+    error: ErrorDto | undefined;
     at: string;
     payload: T;
 
@@ -8,12 +10,15 @@ export class Envelope<T> {
         this.payload = payload;
         this.isSuccessful = true;
         this.at = new Date().toUTCString();
+        this.error = undefined;
     }
 
     static AsFailure<T>(payload: T): Envelope<T> {
         const envelope = new Envelope(payload);
         envelope.isSuccessful = false;
-        envelope.errorMessage = 'Seomething went wrong';
+        envelope.error = new ErrorDto();
+        envelope.error.message = 'Seomething went wrong'; 
+        envelope.error.code = 0;
         return envelope;
     }
 }

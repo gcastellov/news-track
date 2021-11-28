@@ -3,7 +3,6 @@ using NewsTrack.WebApi.Dtos;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
-using System.Linq;
 
 namespace NewsTrack.WebApi.IntegrationTests.Fixture
 {
@@ -51,25 +50,36 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             where T: class
         {
             var content = await response.Content.ReadAsStreamAsync();           
-            var payload = await JsonSerializer.DeserializeAsync<Envelope<T>>(content, SerializerOptions);
-            return payload;
+            return await JsonSerializer.DeserializeAsync<Envelope<T>>(content, SerializerOptions);
+        }
+
+        public static async Task<Envelope> ShouldBeVoid(this HttpResponseMessage response)
+        {
+            var content = await response.Content.ReadAsStreamAsync();
+            return await JsonSerializer.DeserializeAsync<Envelope>(content, SerializerOptions);
         }
 
         public static void ShouldBeSuccessful<T>(this Envelope<T> envelope)
             where T : class
         {
             envelope.IsSuccessful.Should().BeTrue();
+            envelope.Payload.Should().NotBeNull();
             envelope.At.Should().BeBefore(System.DateTime.UtcNow);
-            envelope.ErrorMessage.Should().BeNull();
+            envelope.Error.Should().BeNull();
         }
 
-        public static void ShouldBeUnsuccessful<T>(this Envelope<T> envelope)
-            where T : class
+        public static void ShouldBeUnsuccessful(this Envelope envelope)
         {
             envelope.IsSuccessful.Should().BeFalse();
             envelope.At.Should().BeBefore(System.DateTime.UtcNow);
-            envelope.ErrorMessage.Should().NotBeNullOrEmpty();
-            envelope.Payload.Should().BeNull();
+            envelope.Error.Should().NotBeNull();
+        }
+
+        public static void ShouldBeSuccessful(this Envelope envelope)
+        {
+            envelope.IsSuccessful.Should().BeTrue();
+            envelope.At.Should().BeBefore(System.DateTime.UtcNow);
+            envelope.Error.Should().BeNull();
         }
     }
 }
