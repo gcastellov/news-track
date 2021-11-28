@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
-import { AuthenticationApiService } from '../services/authentication-api.service';
+import { AuthenticationApiService } from '../../services/authentication-api.service';
 import { Router } from '@angular/router';
-import { AuthenticationDto } from '../services/Dtos/AuthenticationDto';
+import { AuthenticationDto } from '../../services/Dtos/AuthenticationDto';
 
 @Component({
   selector: 'app-authentication',

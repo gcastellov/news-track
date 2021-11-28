@@ -4,7 +4,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { CorporateModule } from './corporate/corporate.module';
 import { DraftListModule } from './draft-list/draft-list.module';
 import { SharedModule } from './shared/shared.module';
-import { AuthenticationComponent } from './authentication/authentication.component';
+import { AuthenticationComponent } from './authentication/authentication/authentication.component';
 import { AboutComponent } from './corporate/about/about.component';
 import { PrivacyComponent } from './corporate/privacy/privacy.component';
 import { TermsComponent } from './corporate/terms/terms.component';

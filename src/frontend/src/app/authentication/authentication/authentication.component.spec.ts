@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AuthenticationComponent } from './authentication.component';
-import { BackendApiService } from '../services/backend-api.service';
-import { AuthenticationApiService } from '../services/authentication-api.service';
-import { httpLoaderFactory } from '../app.module';
-import { TestBedHelper } from '../testing/testbed.helper';
-import { AuthenticationResult } from '../services/Dtos/AuthenticationResult';
+import { BackendApiService } from '../../services/backend-api.service';
+import { AuthenticationApiService } from '../../services/authentication-api.service';
+import { httpLoaderFactory } from '../../app.module';
+import { TestBedHelper } from '../../testing/testbed.helper';
+import { AuthenticationResult } from '../../services/Dtos/AuthenticationResult';
 import { Observable } from 'rxjs';
 
 describe('AuthenticationComponent', () => {
