@@ -85,9 +85,12 @@ describe('ChangePasswordComponent', () => {
 
     const dto = new ChangePasswordResponseDto();
     dto.failure = 1;
+    
+    var response = new Envelope<ChangePasswordResponseDto>(dto)
+    response.isSuccessful = false;
 
     const changePasswordMock = spyOn(apiServiceMock, 'changePassword').and
-      .callFake(() => new Observable<Envelope<ChangePasswordResponseDto>>(o => o.next(Envelope.AsFailure(dto))));
+      .callFake(() => new Observable<Envelope<ChangePasswordResponseDto>>(o => o.next(response)));
 
     component.changePassword();
 

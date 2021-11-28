@@ -22,7 +22,7 @@ import { ChangePassworRequestDto } from './Dtos/ChangePasswordRequestDto';
 import { DraftSuggestionIdsDto } from './Dtos/DraftSuggestionIdsDto';
 import { CreateIdentityResponseDto } from './Dtos/CreateIdentityResponseDto';
 import { CreateIdentityRequestDto } from './Dtos/CreateIdentityRequestDto';
-import { Envelope } from './Dtos/Envelope';
+import { Envelope, UntypedEnvelope } from './Dtos/Envelope';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -195,16 +195,16 @@ export class BackendApiService {
     });
   }
 
-  createUser(req: CreateIdentityRequestDto): Observable<Envelope<CreateIdentityResponseDto>> {
+  createUser(req: CreateIdentityRequestDto): Observable<UntypedEnvelope> {
     const url = `${environment.baseUrl}/api/identity/create`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.post<Envelope<CreateIdentityResponseDto>>(url, req, { headers: headers });
+    return this._client.post<UntypedEnvelope>(url, req, { headers: headers });
   }
 
-  signUp(req: CreateIdentityRequestDto): Observable<Envelope<CreateIdentityResponseDto>> {
+  signUp(req: CreateIdentityRequestDto): Observable<UntypedEnvelope> {
     const url = `${environment.baseUrl}/api/identity/signup`;
     const headers = this._authService.getTokenHeaders();
-    return this._client.post<Envelope<CreateIdentityResponseDto>>(url, req, { headers: headers });
+    return this._client.post<UntypedEnvelope>(url, req, { headers: headers });
   }
 
 }

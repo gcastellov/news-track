@@ -11,7 +11,7 @@ import { httpLoaderFactory } from '../../app.module';
 import { BackendApiService } from '../../services/backend-api.service';
 import { CreateIdentityResponseDto } from '../../services/Dtos/CreateIdentityResponseDto';
 import { TestBedHelper } from '../../testing/testbed.helper';
-import { Envelope } from '../../services/Dtos/Envelope';
+import { Envelope, UntypedEnvelope } from '../../services/Dtos/Envelope';
 import { Observable } from 'rxjs';
 
 describe('NewUserComponent', () => {
@@ -19,7 +19,7 @@ describe('NewUserComponent', () => {
   let fixture: ComponentFixture<NewUserComponent>;
 
   const apiServiceMock = <BackendApiService>{
-    createUser: (r) => new Observable<Envelope<CreateIdentityResponseDto>>(observer => observer.complete)
+    createUser: (r) => new Observable<UntypedEnvelope>(observer => observer.complete)
   };
 
   beforeEach(waitForAsync(() => {
@@ -76,20 +76,19 @@ describe('NewUserComponent', () => {
 
   it('should show proper message when creating user fails', () => {
     const username = 'MyUsername';
-        const email = 'MyEmail';
+    const email = 'MyEmail';
+    const errorCode = 1;
+    
     component.usrForm.controls['username'].setValue(username);
     component.usrForm.controls['email'].setValue(email);
 
-    const dto = new CreateIdentityResponseDto();
-    dto.failure = 1;
-
     const changePasswordMock = spyOn(apiServiceMock, 'createUser').and
-      .callFake(() => new Observable<Envelope<CreateIdentityResponseDto>>(o => o.next(Envelope.AsFailure(dto))));
+      .callFake(() => new Observable<UntypedEnvelope>(o => o.next(Envelope.AsFailure(errorCode))));
 
     component.createUser();
 
     expect(changePasswordMock).toHaveBeenCalled();
-    expect(component.failureReason).toBe(dto.failure);
+    expect(component.failureReason).toBe(errorCode);
     expect(component.usrForm.get('username')?.value).toBe(username);
     expect(component.usrForm.get('email')?.value).toBe(email);
   });

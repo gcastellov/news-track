@@ -31,8 +31,8 @@ export class NewUserComponent {
           this.failureReason = -1;
           this.usrForm.controls['username'].setValue('');
           this.usrForm.controls['email'].setValue('');
-        } else {
-          this.failureReason = p.payload.failure;
+        } else if (p.error) {
+          this.failureReason = p.error.code;
         }
     });
   }

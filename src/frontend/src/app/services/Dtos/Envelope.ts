@@ -1,24 +1,31 @@
 import { ErrorDto } from "./ErrorDto";
 
-export class Envelope<T> {
+export class UntypedEnvelope {
     isSuccessful: boolean = false;
     error: ErrorDto | undefined;
     at: string;
-    payload: T;
 
-    constructor(payload: T) {
-        this.payload = payload;
+    constructor() {
         this.isSuccessful = true;
         this.at = new Date().toUTCString();
         this.error = undefined;
     }
 
-    static AsFailure<T>(payload: T): Envelope<T> {
-        const envelope = new Envelope(payload);
+    static AsFailure(errorCode: number): UntypedEnvelope {
+        const envelope = new UntypedEnvelope();
         envelope.isSuccessful = false;
         envelope.error = new ErrorDto();
         envelope.error.message = 'Seomething went wrong'; 
-        envelope.error.code = 0;
+        envelope.error.code = errorCode;
         return envelope;
+    }
+}
+
+export class Envelope<T> extends UntypedEnvelope {
+    payload: T;
+
+    constructor(payload: T) {
+        super();
+        this.payload = payload;
     }
 }
