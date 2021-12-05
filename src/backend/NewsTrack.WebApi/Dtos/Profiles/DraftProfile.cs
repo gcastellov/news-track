@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using NewsTrack.Domain.Entities;
 
 namespace NewsTrack.WebApi.Dtos.Profiles

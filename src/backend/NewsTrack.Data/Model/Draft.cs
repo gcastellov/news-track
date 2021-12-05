@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NewsTrack.Data.Model
 {
-    public class Draft : IDocument
+    public record Draft : IDocument
     {
         public Guid Id { get; set; }
         public string Uri { get; set; }

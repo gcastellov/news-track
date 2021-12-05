@@ -3,11 +3,13 @@ using Nest;
 
 namespace NewsTrack.Data.Model
 {
-    public class Identity : IDocument
+    public record Identity : IDocument
     {
         public Guid Id { get; set; }
+        
         [Keyword(Store = true)]
         public string Username { get; set; }
+        
         [Keyword(Store = true)]
         public string Email { get; set; }
         public bool IsEnabled { get; set; }

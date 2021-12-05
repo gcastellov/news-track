@@ -48,7 +48,8 @@ namespace NewsTrack.WebApi
                 new BrowserProfile(),
                 new DraftProfile(),
                 new IdentityProfile(),
-                new NewsProfile()
+                new NewsProfile(),
+                new CommentProfile()
             }));
 
             // Add authentication
@@ -92,6 +93,7 @@ namespace NewsTrack.WebApi
             services.AddScoped<IWebsiteService, WebsiteService>();
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<INotificator, Notificator>();
             
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -105,11 +107,13 @@ namespace NewsTrack.WebApi
             services.AddScoped<IDraftSuggestionsRepository, Data.Repositories.DraftSuggestionsRepository>();
             services.AddScoped<IIdentityRepository, Data.Repositories.IdentityRepository>();
             services.AddScoped<IWebsiteRepository, Data.Repositories.WebsiteRepository>();
+            services.AddScoped<ICommentRepository, Data.Repositories.CommentRepository>();
             services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.ContentRepository>();
             services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftRepository>();
             services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftRelationshipRepository>();
             services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.IdentityRepository>();
             services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftSuggestionsRepository>();
+            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.CommentRepository>();
             services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.WebsiteRepository>();
             services.AddScoped<Data.Configuration.IDataInitializer, Data.Configuration.DataInitializer>();
             services.AddSingleton<Data.Configuration.IDataConfigurationProvider>(configurationProvider);

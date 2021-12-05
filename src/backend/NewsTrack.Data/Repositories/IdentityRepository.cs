@@ -65,7 +65,7 @@ namespace NewsTrack.Data.Repositories
             {
                 Query = new TermQuery
                 {
-                    Field = "email",
+                    Field = Infer.Field<Model.Identity>(f => f.Email),
                     Value = email
                 }
             };
@@ -83,7 +83,7 @@ namespace NewsTrack.Data.Repositories
             {
                 Query = new TermQuery
                 {
-                    Field = "username",
+                    Field = Infer.Field<Model.Identity>(f => f.Username),
                     Value = username
                 }
             };

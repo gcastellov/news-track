@@ -2,7 +2,7 @@
 
 namespace NewsTrack.Data.Model
 {
-    public class Website : IDocument
+    public record Website : IDocument
     {
         public Guid Id { get; set; }
         

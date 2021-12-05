@@ -21,6 +21,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
         internal Mock<IDraftSuggestionsRepository> DraftSuggestionsRepositoryMock { get; }
         internal Mock<IIdentityRepository> IdentityRepositoryMock { get; }
         internal Mock<IWebsiteRepository> WebsiteRepositoryMock { get; }
+        internal Mock<ICommentRepository> CommentRepositoryMock { get; }
         internal Mock<IBroswer> BrowserMock { get; }
         internal string Token { get; set; }
         internal string IdentityClearPassword => "somepassword";
@@ -45,6 +46,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             DraftSuggestionsRepositoryMock = new Mock<IDraftSuggestionsRepository>();
             IdentityRepositoryMock = new Mock<IIdentityRepository>();
             WebsiteRepositoryMock = new Mock<IWebsiteRepository>();
+            CommentRepositoryMock = new Mock<ICommentRepository>();
             BrowserMock = new Mock<IBroswer>();
         }
 
@@ -67,6 +69,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
                 services.AddScoped(sp => DraftSuggestionsRepositoryMock.Object);
                 services.AddScoped(sp => IdentityRepositoryMock.Object);
                 services.AddScoped(sp => WebsiteRepositoryMock.Object);
+                services.AddScoped(sp => CommentRepositoryMock.Object);
                 services.AddScoped(sp => BrowserMock.Object);
             });
         }
