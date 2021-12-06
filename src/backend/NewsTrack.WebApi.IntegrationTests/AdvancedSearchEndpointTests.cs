@@ -77,7 +77,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             envelope.Payload.Count.Should().Be(totalMatches);
             envelope.Payload.News.Should().HaveCount(results.Length);
             var dto = envelope.Payload.News.First();
-            AssertDto(draftResult, dto);
+            AssertNewsDto(draftResult, dto);
         }
     }
 }

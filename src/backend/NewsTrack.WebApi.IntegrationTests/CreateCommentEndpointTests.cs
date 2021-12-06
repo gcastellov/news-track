@@ -46,6 +46,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             envelope.Payload.CreatedAt.Should().BeBefore(DateTime.UtcNow);
             envelope.Payload.CreatedBy.Should().Be(Factory.Identity.Username);
             envelope.Payload.Likes.Should().Be(0);
+            envelope.Payload.Replies.Should().Be(0);
         }
 
         [Fact]

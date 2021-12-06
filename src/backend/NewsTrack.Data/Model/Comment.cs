@@ -11,5 +11,6 @@ namespace NewsTrack.Data.Model
         public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
         public uint Likes { get; set; }
+        public uint Replies { get; set; }
     }
 }

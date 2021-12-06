@@ -46,7 +46,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             envelope.Payload.Count.Should().Be((long)results.Length);
 
             var dto = envelope.Payload.News.First();
-            AssertDto(draftResult, dto);
+            AssertNewsDto(draftResult, dto);
         }
     }
 }

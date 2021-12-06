@@ -93,7 +93,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             return new Uri(uri);
         }
 
-        protected static void AssertDto(Draft draftResult, NewsDto dto)
+        protected static void AssertNewsDto(Draft draftResult, NewsDto dto)
         {
             dto.Id.Should().Be(draftResult.Id);
             dto.Title.Should().Be(draftResult.Title);
@@ -115,6 +115,18 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             dto.Fucks.Should().Be(draftResult.Fucks);
             dto.Views.Should().Be(draftResult.Views);
             dto.Url.Should().Be(draftResult.Uri);
+        }
+
+        protected static void AssertCommentDto(Comment comment, CommentDto dto)
+        {
+            dto.Id.Should().Be(comment.Id);
+            dto.Content.Should().Be(comment.Content);
+            dto.DraftId.Should().Be(comment.DraftId);
+            dto.ReplyingTo.Should().Be(comment.ReplyingTo);
+            dto.CreatedAt.Should().Be(comment.CreatedAt);
+            dto.CreatedBy.Should().Be(comment.CreatedBy.Username);
+            dto.Likes.Should().Be(comment.Likes);
+            dto.Replies.Should().Be(comment.Replies);
         }
 
         protected static Draft CreateDraftEntity()
@@ -145,6 +157,22 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
                     Username = "someuser",
                 },
                 Website = "www.some.com",
+            };
+
+        protected static Comment CreateCommentEntity()
+            => new Comment
+            {
+                Content = "Some content",
+                CreatedAt = DateTime.UtcNow,
+                CreatedBy = new User
+                {
+                    Id = Guid.NewGuid(),
+                    Username = "someuser",
+                },
+                DraftId = Guid.NewGuid(),
+                Likes = 45,
+                Replies = 2,
+                ReplyingTo = Guid.NewGuid(),
             };
     }
 }

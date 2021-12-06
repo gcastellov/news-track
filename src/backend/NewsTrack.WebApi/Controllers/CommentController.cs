@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewsTrack.Domain.Entities;
 using NewsTrack.Domain.Repositories;
@@ -18,7 +20,6 @@ namespace NewsTrack.WebApi.Controllers
         private readonly IIdentityHelper _identityHelper;
         private readonly IMapper _mapper;
 
-
         public CommentController(
             ICommentService commentService,
             ICommentRepository commentRepository,
@@ -31,24 +32,47 @@ namespace NewsTrack.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{messageId}")]
-        public Task<IActionResult> GetMessage(Guid messageId)
+        [HttpGet("{commentId}")]
+        public async Task<IActionResult> Get(Guid commentId)
         {
-            throw new NotImplementedException();
+            return await Execute(async () =>
+            {
+                var comment = await _commentRepository.Get(commentId);
+                return _mapper.Map<CommentDto>(comment);
+            });
         }
 
-        [HttpGet("{messageId}/replies")]
-        public Task<IActionResult> GetReplies(Guid messageId)
+        [HttpGet("{commentId}/replies")]
+        public async Task<IActionResult> GetReplies(Guid commentId, [FromQuery] uint page, [FromQuery] uint count)
         {
-            throw new NotImplementedException();
+            if (count == 0)
+            {
+                return BadRequest();
+            }
+
+            return await Execute(async () =>
+            {
+                var comments = await _commentRepository.GetReplies(commentId, (int)page, (int)count);
+                return _mapper.Map<IEnumerable<CommentDto>>(comments);
+            });
         }
 
         [HttpGet("news/{draftId}")]
-        public Task<IActionResult> GetCommentsByDraft(Guid draftId)
+        public async Task<IActionResult> GeByDraft(Guid draftId, [FromQuery] uint page, [FromQuery] uint count)
         {
-            throw new NotImplementedException();
+            if (count == 0)
+            {
+                return BadRequest();
+            }
+
+            return await Execute(async () =>
+            {
+                var comments = await _commentRepository.GetByDraftId(draftId, (int)page, (int)count);
+                return _mapper.Map<IEnumerable<CommentDto>>(comments);
+            });
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateCommentDto commentDto)
         {

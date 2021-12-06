@@ -84,6 +84,7 @@ namespace NewsTrack.Data.Repositories
                     Username = entity.CreatedBy.Username
                 },
                 Likes = entity.Likes,
+                Replies = entity.Replies,
                 ReplyingTo = entity.ReplyingTo,
                 DraftId = entity.DraftId,
                 Id = entity.Id,
@@ -102,6 +103,7 @@ namespace NewsTrack.Data.Repositories
                     Username = model.CreatedBy.Username
                 },
                 Likes = model.Likes,
+                Replies = model.Replies,
                 ReplyingTo = model.ReplyingTo,
                 DraftId = model.DraftId,
                 Id = model.Id,

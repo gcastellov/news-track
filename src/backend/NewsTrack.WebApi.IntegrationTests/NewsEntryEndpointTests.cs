@@ -35,7 +35,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             response.ShouldBeSuccessful();
             var envelope = await response.ShouldBeOfType<NewsDto>();
             envelope.ShouldBeSuccessful();
-            AssertDto(draftResult, envelope.Payload);
+            AssertNewsDto(draftResult, envelope.Payload);
         }
 
         [Fact]

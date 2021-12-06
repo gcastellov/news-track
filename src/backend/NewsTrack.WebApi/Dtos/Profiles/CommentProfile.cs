@@ -14,7 +14,8 @@ namespace NewsTrack.WebApi.Dtos.Profiles
                 .ForMember(m => m.Content, e => e.MapFrom(p => p.Content))
                 .ForMember(m => m.DraftId, e => e.MapFrom(p => p.DraftId))
                 .ForMember(m => m.ReplyingTo, e => e.MapFrom(p => p.ReplyingTo))
-                .ForMember(m => m.Likes, e => e.MapFrom(p => p.Likes));
+                .ForMember(m => m.Likes, e => e.MapFrom(p => p.Likes))
+                .ForMember(m => m.Replies, e => e.MapFrom(p => p.Replies));
         }
     }
 }

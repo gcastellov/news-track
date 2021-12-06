@@ -16,6 +16,7 @@ namespace NewsTrack.Domain.Entities
         public DateTime CreatedAt { get; set; }
         public string Content { get; set; }
         public uint Likes { get; set; }
+        public uint Replies { get; set; }
 
         public static Comment Create(Guid draftId, string content, User createdBy)
         {
