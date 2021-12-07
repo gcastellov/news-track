@@ -218,7 +218,9 @@ namespace NewsTrack.Data.Repositories
             await client.UpdateAsync(DocumentPath<Model.Draft>.Id(id),
                     u => u.Script(s => s.Source("ctx._source.views += 1")));
 
-            var result = await client.GetAsync<Model.Draft>(id);
+            var result = await client.GetAsync<Model.Draft>(
+                id,
+                desc => desc.SourceIncludes(f => f.Views));
 
             CheckResponse(result, id);
             return result.Source.Views;
@@ -230,7 +232,9 @@ namespace NewsTrack.Data.Repositories
             await client.UpdateAsync(DocumentPath<Model.Draft>.Id(id),
                 u => u.Script(s => s.Source("ctx._source.fucks += 1")));
 
-            var result = await client.GetAsync<Model.Draft>(id);
+            var result = await client.GetAsync<Model.Draft>(
+                id,
+                desc => desc.SourceIncludes(f => f.Fucks));
 
             CheckResponse(result, id);
             return result.Source.Fucks;

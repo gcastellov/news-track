@@ -1,4 +1,5 @@
-﻿using NewsTrack.Data.Configuration;
+﻿using Nest;
+using NewsTrack.Data.Configuration;
 using NewsTrack.Domain.Entities;
 using NewsTrack.Domain.Repositories;
 using System;
@@ -50,26 +51,40 @@ namespace NewsTrack.Data.Repositories
             await client.IndexDocumentAsync(model);
         }
 
-        public async Task<Comment> Get(Guid messageId)
+        public async Task<Comment> Get(Guid commentId)
         {
             var client = GetClient();
-            var model = await client.GetAsync<Model.Comment>(messageId);
-            CheckResponse(model, messageId);
+            var model = await client.GetAsync<Model.Comment>(commentId);
+            CheckResponse(model, commentId);
             return To(model.Source);
         }
 
-        public async Task<IEnumerable<Comment>> GetReplies(Guid messageId, int page, int count)
+        public async Task<IEnumerable<Comment>> GetReplies(Guid commentId, int page, int count)
         {
             var client = GetClient();
             var query = await client.SearchAsync<Model.Comment>(
                 d => d.Sort(o => o.Descending(m => m.CreatedAt))
                     .From(page * count)
                     .Size(count)
-                    .Query(m => m.Term(t => t.ReplyingTo, messageId))
+                    .Query(m => m.Term(t => t.ReplyingTo, commentId))
             );
 
             CheckResponse(query);
             return query.Documents.Select(To);
+        }
+
+        public async Task<long> AddReply(Guid id)
+        {
+            var client = GetClient();
+            await client.UpdateAsync(DocumentPath<Model.Comment>.Id(id),
+                    u => u.Script(s => s.Source("ctx._source.replies += 1")));
+
+            var result = await client.GetAsync<Model.Comment>(
+                id, 
+                desc => desc.SourceIncludes(f => f.Replies));
+
+            CheckResponse(result, id);
+            return result.Source.Replies;
         }
 
         protected override Model.Comment From(Comment entity)

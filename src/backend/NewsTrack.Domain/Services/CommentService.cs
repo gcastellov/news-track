@@ -25,7 +25,8 @@ namespace NewsTrack.Domain.Services
 
             if (comment.ReplyingTo.HasValue)
             {
-                _ = await _commentRepository.Get(comment.ReplyingTo.Value);
+                var parent = await _commentRepository.Get(comment.ReplyingTo.Value);
+                _ = await _commentRepository.AddReply(parent.Id);
             }
 
             await _commentRepository.Save(comment);
