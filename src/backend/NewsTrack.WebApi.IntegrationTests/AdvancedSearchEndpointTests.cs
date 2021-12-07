@@ -24,7 +24,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Arrange
             var endpoint = GetUriWithQueryString(
                 Endpoint,
-                new Tuple<string, object>("query", Query));
+                ("query", Query));
 
             // Act
             var response = await Client.GetAsync(endpoint.PathAndQuery);
@@ -39,8 +39,8 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Arrange
             var endpoint = GetUriWithQueryString(
                 Endpoint,
-                new Tuple<string, object>("query", Query),
-                new Tuple<string, object>("count", 0));
+                ("query", Query),
+                ("count", 0));
 
             // Act
             var response = await Client.GetAsync(endpoint.PathAndQuery);
@@ -59,8 +59,8 @@ namespace NewsTrack.WebApi.IntegrationTests
             var draftResult = CreateDraftEntity();
             var endpoint = GetUriWithQueryString(
                 Endpoint,
-                new Tuple<string, object>("query", Query),
-                new Tuple<string, object>("count", count));
+                ("query", Query),
+                ("count", count));
 
             var results = new[] { draftResult };
 

@@ -23,7 +23,7 @@ namespace NewsTrack.WebApi.IntegrationTests
         {
             // Arrange
             const string query = "some mathing pattern";
-            var endpoint = GetUriWithQueryString(Endpoint, new Tuple<string, object>("query", query));
+            var endpoint = GetUriWithQueryString(Endpoint, ("query", query));
             var draftResult = CreateDraftEntity();
 
             var results = new[] { draftResult };

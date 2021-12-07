@@ -29,8 +29,8 @@ namespace NewsTrack.WebApi.IntegrationTests
             var replies = new[] { comment };
             var pathAndQuery = GetUriWithQueryString(
                 Endpoint.Replace("{commentId}", comment.ReplyingTo.ToString()),
-                new Tuple<string, object>("page", page),
-                new Tuple<string, object>("count", count));
+                ("page", page),
+                ("count", count));
 
             Factory.CommentRepositoryMock.Setup(m => m.GetReplies(comment.ReplyingTo.Value, page, count)).Returns(Task.FromResult(replies.AsEnumerable()));
 
@@ -56,8 +56,8 @@ namespace NewsTrack.WebApi.IntegrationTests
 
             var pathAndQuery = GetUriWithQueryString(
                 Endpoint.Replace("{commentId}", Guid.NewGuid().ToString()),
-                new Tuple<string, object>("page", page),
-                new Tuple<string, object>("count", count));
+                ("page", page),
+                ("count", count));
 
             // Act
             var response = await Client.GetAsync(pathAndQuery);

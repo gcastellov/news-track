@@ -38,7 +38,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             };
             
             string urlRequest = Endpoint.Replace("{id}", draftSuggestions.Id.ToString());
-            var endpoint = GetUriWithQueryString(urlRequest, new Tuple<string, object>("take", 10));
+            var endpoint = GetUriWithQueryString(urlRequest, ("take", 10));
 
             Factory.DraftSuggestionsRepositoryMock.Setup(m => m.Get(draftSuggestions.Id)).Returns(Task.FromResult(draftSuggestions));
             Factory.DraftRepositoryMock.Setup(m => m.Get(suggestedDraft.Id)).Returns(Task.FromResult(suggestedDraft));
@@ -67,7 +67,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Arrange
             var id = Guid.NewGuid(); 
             string urlRequest = Endpoint.Replace("{id}", id.ToString());
-            var endpoint = GetUriWithQueryString(urlRequest, new Tuple<string, object>("take", 0));
+            var endpoint = GetUriWithQueryString(urlRequest, ("take", 0));
 
             // Act
             var response = await Client.GetAsync(endpoint.PathAndQuery);

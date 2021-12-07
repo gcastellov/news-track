@@ -30,7 +30,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             identity.IsEnabled = false;
             
             var url = Endpoint.Replace("{email}", identity.Email).Replace("{code}", securityCode);
-            var endpoint = GetUriWithQueryString(url, new Tuple<string, object>("go", redirectUrl));
+            var endpoint = GetUriWithQueryString(url, ("go", redirectUrl));
 
             Factory.IdentityRepositoryMock.Setup(m => m.GetByEmail(identity.Email)).Returns(Task.FromResult(identity));
 

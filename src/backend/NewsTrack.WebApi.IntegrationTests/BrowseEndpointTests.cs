@@ -25,7 +25,7 @@ namespace NewsTrack.WebApi.IntegrationTests
         {
             // Arrange
             var url = new Uri("http://www.some.com/path/resource");
-            var endpoint = GetUriWithQueryString(Endpoint, new Tuple<string, object>("url", url.AbsoluteUri));
+            var endpoint = GetUriWithQueryString(Endpoint, ("url", url.AbsoluteUri));
             var browserDto = new ResponseDto(url)
             {
                 Titles = new[]
@@ -64,7 +64,7 @@ namespace NewsTrack.WebApi.IntegrationTests
         public async Task GivenInvalidUrl_WhenBrowsing_ThenReturnsBadRequest()
         {
             // Arrange
-            var endpoint = GetUriWithQueryString(Endpoint, new Tuple<string, object>("url", "wrong_url"));
+            var endpoint = GetUriWithQueryString(Endpoint, ("url", "wrong_url"));
 
             // Act
             var response = await AuthenticatedGet(endpoint.PathAndQuery);
@@ -77,7 +77,7 @@ namespace NewsTrack.WebApi.IntegrationTests
         public async Task GivenInvalidEmptyUrl_WhenBrowsing_ThenReturnsBadRequest()
         {
             // Arrange
-            var endpoint = GetUriWithQueryString(Endpoint, new Tuple<string, object>("url", null));
+            var endpoint = GetUriWithQueryString(Endpoint, ("url", null));
 
             // Act
             var response = await AuthenticatedGet(endpoint.PathAndQuery);

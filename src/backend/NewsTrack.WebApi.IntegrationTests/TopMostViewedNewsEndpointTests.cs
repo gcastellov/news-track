@@ -25,7 +25,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             const uint take = 10;
             var draftResult = CreateDraftEntity();
             var result = new[] { draftResult };
-            var endpoint = GetUriWithQueryString(Endpoint, new Tuple<string, object>("take", take));
+            var endpoint = GetUriWithQueryString(Endpoint, ("take", take));
 
             Factory.DraftRepositoryMock.Setup(m => m.GetMostViewed((int)take)).Returns(Task.FromResult(result.AsEnumerable()));
 
@@ -47,7 +47,7 @@ namespace NewsTrack.WebApi.IntegrationTests
         public async Task GivenInvalidRequestWithNonPositiveTake_WhenGettingMostViewed_ThenReturnsBadRequest()
         {
             // Arrange
-            var endpoint = GetUriWithQueryString(Endpoint, new Tuple<string, object>("take", 0));
+            var endpoint = GetUriWithQueryString(Endpoint, ("take", 0));
 
             // Act
             var response = await Client.GetAsync(endpoint.PathAndQuery);

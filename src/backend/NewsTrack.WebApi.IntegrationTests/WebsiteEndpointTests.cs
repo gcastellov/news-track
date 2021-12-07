@@ -24,7 +24,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Arrange
             var uri = GetUriWithQueryString(
                 Endpoint,
-                new Tuple<string, object>("uri", ForbiddenUrl));
+                ("uri", ForbiddenUrl));
 
             Factory.WebsiteRepositoryMock.Setup(m => m.Exists(It.IsAny<Uri>())).Returns(Task.FromResult(true));
 
@@ -45,7 +45,7 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Arrange
             var uri = GetUriWithQueryString(
                 Endpoint,
-                new Tuple<string, object>("uri", ForbiddenUrl));
+                ("uri", ForbiddenUrl));
 
             Factory.WebsiteRepositoryMock.Setup(m => m.Exists(It.IsAny<Uri>())).Returns(Task.FromResult(false));
 

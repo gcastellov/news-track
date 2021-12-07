@@ -29,8 +29,8 @@ namespace NewsTrack.WebApi.IntegrationTests
 
             var endpoint = GetUriWithQueryString(
                 Endpoint,
-                new Tuple<string, object>("page", page),
-                new Tuple<string, object>("count", count));
+                ("page", page),
+                ("count", count));
 
             Factory.DraftRepositoryMock.Setup(m => m.GetLatest((int)page, (int)count)).Returns(Task.FromResult(results.AsEnumerable()));
             Factory.DraftRepositoryMock.Setup(m => m.Count()).Returns(Task.FromResult((long)results.Length));

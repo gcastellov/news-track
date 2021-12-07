@@ -77,7 +77,7 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             return await Client.GetAsync(endpoint);
         }
 
-        protected Uri GetUriWithQueryString(string path, params Tuple<string, object>[] parameters)
+        protected Uri GetUriWithQueryString(string path, params (string, object)[] parameters)
         {
             var uriBuilder = new UriBuilder(Client.BaseAddress);
             uriBuilder.Path = path;
