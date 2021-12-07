@@ -58,7 +58,7 @@ namespace NewsTrack.WebApi.Controllers
         }
 
         [HttpGet("news/{draftId}")]
-        public async Task<IActionResult> GeByDraft(Guid draftId, [FromQuery] uint page, [FromQuery] uint count)
+        public async Task<IActionResult> GetByDraft(Guid draftId, [FromQuery] uint page, [FromQuery] uint count)
         {
             if (count == 0)
             {
