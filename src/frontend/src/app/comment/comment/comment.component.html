@@ -3,6 +3,6 @@
         <textarea class="form-control" id="comment" rows="3" placeholder="{{ 'comment-component.input' | translate }}" formControlName="comment"></textarea>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">{{ 'comment-component.action-post' | translate }}</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid" (click)="send()">{{ 'comment-component.action-post' | translate }}</button>
     </div>
 </form>

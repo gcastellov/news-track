@@ -22,6 +22,8 @@ import { DraftSuggestionIdsDto } from './Dtos/DraftSuggestionIdsDto';
 import { CreateIdentityRequestDto } from './Dtos/CreateIdentityRequestDto';
 import { Envelope, UntypedEnvelope } from './Dtos/Envelope';
 import { Observable } from 'rxjs';
+import { CommentDto } from './Dtos/CommentDto';
+import { CreateCommentDto } from './Dtos/CreateCommentDto';
 
 @Injectable()
 export class BackendApiService {
@@ -203,6 +205,12 @@ export class BackendApiService {
     const url = `${environment.baseUrl}/api/identity/signup`;
     const headers = this._authService.getTokenHeaders();
     return this._client.post<UntypedEnvelope>(url, req, { headers: headers });
+  }
+
+  comment(req: CreateCommentDto): Observable<Envelope<CommentDto>> {
+    const url = `${environment.baseUrl}/api/comment`;
+    const headers = this._authService.getTokenHeaders();
+    return this._client.post<Envelope<CommentDto>>(url, req,  { headers: headers });
   }
 
 }

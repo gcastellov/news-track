@@ -11,7 +11,7 @@ namespace NewsTrack.Data.Repositories
 {
     public class CommentRepository : RepositoryBase<Model.Comment, Comment>, ICommentRepository
     {
-        public override string IndexName => "news-messages";
+        public override string IndexName => "news-comments";
 
         public CommentRepository(IDataConfigurationProvider configurationProvider) 
             : base(configurationProvider)

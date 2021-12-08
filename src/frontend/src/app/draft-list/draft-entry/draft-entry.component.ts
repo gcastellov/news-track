@@ -5,6 +5,7 @@ import { DraftDto } from '../../services/Dtos/DraftDto';
 import { DraftDigestDto } from '../../services/Dtos/DraftDigestDto';
 import { DraftSuggestionsDto } from '../../services/Dtos/DraftSuggestionsDto';
 import { AuthenticationApiService } from 'src/app/services/authentication-api.service';
+import { CreateCommentDto } from 'src/app/services/Dtos/CreateCommentDto';
 
 @Component({
   selector: 'app-draft-entry',
@@ -53,6 +54,14 @@ export class DraftEntryComponent implements OnInit {
 
   canShowComment() {
     return this._authService.isAuthenticated();
+  }
+
+  createComment(commentDto: CreateCommentDto) {
+    this._apiService.comment(commentDto).subscribe(s => {
+      if (s.isSuccessful) {
+        // TODO: Add comment to the list
+      }
+    });
   }
 
 }
