@@ -4,6 +4,7 @@ import { BackendApiService } from '../../services/backend-api.service';
 import { DraftDto } from '../../services/Dtos/DraftDto';
 import { DraftDigestDto } from '../../services/Dtos/DraftDigestDto';
 import { DraftSuggestionsDto } from '../../services/Dtos/DraftSuggestionsDto';
+import { AuthenticationApiService } from 'src/app/services/authentication-api.service';
 
 @Component({
   selector: 'app-draft-entry',
@@ -21,7 +22,8 @@ export class DraftEntryComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _apiService: BackendApiService) {
+    private _apiService: BackendApiService,
+    private _authService: AuthenticationApiService) {
       this.id = '';
       this.relationship = [];
       this.take  = 5;
@@ -47,6 +49,10 @@ export class DraftEntryComponent implements OnInit {
 
   searchByTag(tag: any) {
     this._router.navigate(['/search'], { queryParams: { tags: tag } });
+  }
+
+  canShowComment() {
+    return this._authService.isAuthenticated();
   }
 
 }

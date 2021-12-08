@@ -227,5 +227,9 @@
         "failure-reason-four": "An account already exists using this email",
         "success-one": "The account has been successfully created!",
         "success-two": "An email has been sent to you mail address in order to verify your identity. Follow the provided link to activate your account."
-    }    
+    },
+    "comment-component": {
+        "input": "Do you want to comment something?",
+        "action-post": "Send"
+    }
 }

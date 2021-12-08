@@ -227,5 +227,9 @@
         "failure-reason-four": "Ya existe una cuenta con esta dirección de correo",
         "success-one": "El usuario ha sido creado correctamente!",
         "success-two": "Se ha enviado un email a tu dirección de correo con la finalidad de verificar tu identidad. Sigue el link facilitado para activar tu cuenta"
-    }    
+    },
+    "comment-component": {
+        "input": "¿Quiéres comentar alguna cosa?",
+        "action-post": "Enviar"
+    }
 }

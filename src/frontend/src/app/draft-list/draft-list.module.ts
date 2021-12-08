@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { CommentModule } from '../comment/comment.module';
 import { DraftListComponent } from './draft-list.component';
 import { TagsComponent } from './tags/tags.component';
 import { LatestComponent } from './latest/latest.component';
@@ -23,6 +24,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     CommonModule,
     FormsModule,
     SharedModule,
+    CommentModule,
     RouterModule,
     NgbModule,
     TranslateModule,
