@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-12" *ngIf="comment">
+        <div class="comment">
+            <div class="row">
+                <p class="comment-content">{{comment.content}}</p>
+            </div>
+            <div class="row">
+                <ul class="list-inline comment-stats">
+                    <li>
+                      <span>{{ 'comment-entry-component.likes' | translate }} <span class="badge badge-default">{{comment.likes}}</span></span>
+                    </li>
+                    <li>
+                        <span>{{ 'comment-entry-component.replies' | translate }} <b>{{comment.replies}}</b></span>
+                    </li>
+                    <li>
+                      <span> {{ 'comment-entry-component.by' | translate }} <b>{{comment.createdBy}}</b> {{ 'comment-entry-component.created' | translate }} {{comment.createdAt| date: 'dd/MM/yyyy hh:mm'}}</span>
+                    </li>
+                  </ul>
+            </div>
+        </div>
+    </div>
+</div>

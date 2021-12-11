@@ -1,29 +1,27 @@
 <div *ngIf="draft" class="row draft-footer">
-    <div class="col-md-12 col-sm-12">
-      <ul class="list-inline tag-list" *ngIf="draft.tags">
-        <li *ngFor="let tag of draft.tags">
-            <span class="label label-default">{{tag}}</span>
-        </li>
-      </ul>
-      <ul class="list-inline draft-stats">
-        <li>
-          <span>{{ 'draft-footer-component.fucks' | translate }} <span class="badge badge-default">{{draft.fucks}}</span></span>
-        </li>
-        <li>
-          <a href="{{draft.uri}}" target="_blank">{{ 'draft-footer-component.source' | translate }}</a>
-        </li>
-        <li *ngIf="draft.related">
-          <span>{{ 'draft-footer-component.related' | translate }} <b>{{draft.related}}</b></span>
-        </li>
-        <li>
-          <span>{{ 'draft-footer-component.views' | translate }} <b>{{draft.views}}</b></span>
-        </li>
-        <li>
-          <span>{{ 'draft-footer-component.created' | translate }} {{draft.createdAt| date: 'dd/MM/yyyy'}}</span>
-        </li>
-        <li>
-          <span> {{ 'draft-footer-component.by' | translate }} <b>{{draft.createdBy}}</b></span>
-        </li>
-      </ul>
-    </div>    
+  <ul class="list-inline tag-list" *ngIf="draft.tags">
+    <li *ngFor="let tag of draft.tags">
+        <span class="label label-default">{{tag}}</span>
+    </li>
+  </ul>
+  <ul class="list-inline draft-stats">
+    <li>
+      <span>{{ 'draft-footer-component.fucks' | translate }} <span class="badge badge-default">{{draft.fucks}}</span></span>
+    </li>
+    <li>
+      <a href="{{draft.uri}}" target="_blank">{{ 'draft-footer-component.source' | translate }}</a>
+    </li>
+    <li *ngIf="draft.related">
+      <span>{{ 'draft-footer-component.related' | translate }} <b>{{draft.related}}</b></span>
+    </li>
+    <li>
+      <span>{{ 'draft-footer-component.views' | translate }} <b>{{draft.views}}</b></span>
+    </li>
+    <li>
+      <span>{{ 'draft-footer-component.created' | translate }} {{draft.createdAt| date: 'dd/MM/yyyy hh:mm'}}</span>
+    </li>
+    <li>
+      <span> {{ 'draft-footer-component.by' | translate }} <b>{{draft.createdBy}}</b></span>
+    </li>
+  </ul>    
 </div>

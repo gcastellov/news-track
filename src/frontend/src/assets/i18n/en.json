@@ -231,5 +231,11 @@
     "comment-component": {
         "input": "Do you want to comment something?",
         "action-post": "Send"
+    },
+    "comment-entry-component": {
+        "likes": "Likes",
+        "replies": "Replies",
+        "created": "at",
+        "by": "by"
     }
 }

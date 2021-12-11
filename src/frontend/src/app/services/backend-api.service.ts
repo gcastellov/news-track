@@ -213,4 +213,12 @@ export class BackendApiService {
     return this._client.post<Envelope<CommentDto>>(url, req,  { headers: headers });
   }
 
+  getComments(draftId: string, take: number, skip: number): Observable<Envelope<CommentDto[]>> {
+    const params = new HttpParams()
+      .set('count', take.toString())
+      .set('page', skip.toString());      
+    const url = `${environment.baseUrl}/api/comment/news/${draftId}`;
+    return this._client.get<Envelope<CommentDto[]>>(url, { params: params });
+  }
+
 }

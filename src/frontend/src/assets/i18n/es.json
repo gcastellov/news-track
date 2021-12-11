@@ -231,5 +231,11 @@
     "comment-component": {
         "input": "¿Quiéres comentar alguna cosa?",
         "action-post": "Enviar"
+    },
+    "comment-entry-component": {
+        "likes": "Likes",
+        "replies": "Respuestas",
+        "created": "a",
+        "by": "por"
     }
 }

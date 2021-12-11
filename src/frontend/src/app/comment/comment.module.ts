@@ -4,12 +4,16 @@ import { CommentComponent } from './comment/comment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommentEntryComponent } from './comment-entry/comment-entry.component';
+import { CommentListComponent } from './comment-list/comment-list.component';
 
 
 
 @NgModule({
   declarations: [
-    CommentComponent
+    CommentComponent,
+    CommentEntryComponent,
+    CommentListComponent
   ],
   imports: [
     CommonModule,
@@ -18,6 +22,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     TranslateModule,
   ],
-  exports: [CommentComponent]
+  exports: [CommentComponent, CommentListComponent]
 })
 export class CommentModule { }
