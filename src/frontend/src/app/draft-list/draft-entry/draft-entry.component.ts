@@ -19,11 +19,11 @@ export class DraftEntryComponent implements OnInit {
   draft: DraftDto | undefined;
   relationship: DraftDigestDto[];
   suggestions: DraftSuggestionsDto | undefined;
-  comments: CommentsListDto;
+  comments: CommentsListDto | undefined;
+  commentsTake: number;
+  commentsPage: number;
   
   private suggestionsTake: number;
-  private commentsTake: number;
-  private commentsPage: number;
 
   constructor(
     private _route: ActivatedRoute,
@@ -33,9 +33,8 @@ export class DraftEntryComponent implements OnInit {
       this.id = '';
       this.relationship = [];
       this.suggestionsTake  = 5;
-      this.commentsTake = 20;
+      this.commentsTake = 10;
       this.commentsPage = 0;
-      this.comments = new CommentsListDto();
   }
 
   ngOnInit() {
@@ -45,11 +44,7 @@ export class DraftEntryComponent implements OnInit {
       this._apiService.getDraft(this.id).subscribe(s => this.draft = s.payload);
       this._apiService.getDraftRelationship(this.id).subscribe(s => this.relationship = s.payload);
       this._apiService.getDraftSuggestions(this.id, this.suggestionsTake).subscribe(s => this.suggestions = s.payload);
-      this._apiService.getComments(this.id, this.commentsTake, this.commentsPage).subscribe(env => {
-        if (env.isSuccessful) {
-          this.comments = env.payload;
-        }
-      });
+      this._apiService.getComments(this.id, this.commentsTake, this.commentsPage).subscribe(c => this.comments = c.payload);
    });
   }
 
@@ -73,9 +68,20 @@ export class DraftEntryComponent implements OnInit {
     this._apiService.comment(commentDto).subscribe(s => {
       if (s.isSuccessful && this.commentsPage == 0) {
         let comments = [ s.payload ];
-        this.comments.comments = comments.concat(this.comments.comments);
+        if (this.comments) {
+          this.comments.comments = comments.concat(this.comments.comments);
+        } else {
+          this.comments = new CommentsListDto();
+          this.comments.comments = comments;
+          this.comments.count = 1;
+        }
       }
     });
+  }
+
+  onCommentsPageChanged(page: number) {
+    this.commentsPage = page;
+    this._apiService.getComments(this.id, this.commentsTake, this.commentsPage).subscribe(c => this.comments = c.payload);
   }
 
 }

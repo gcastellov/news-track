@@ -2,7 +2,7 @@
   <div class="col-md-8" *ngIf="draft">
     <app-draft [draft]="draft" [isExtended]="true"></app-draft>
     <app-comment *ngIf="canShowComment()" [draft]="draft" (onSendEvent)="createComment($event)"></app-comment>
-    <app-comment-list [comments]="comments"></app-comment-list>
+    <app-comment-list *ngIf="comments" [comments]="comments" [page]="commentsPage" [take]="commentsTake" (onPaginating)="onCommentsPageChanged($event)"></app-comment-list>
   </div>
   <div class="col-md-4">
     <div class="panel panel-default" *ngIf="relationship && relationship.length">      

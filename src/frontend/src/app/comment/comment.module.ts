@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommentEntryComponent } from './comment-entry/comment-entry.component';
 import { CommentListComponent } from './comment-list/comment-list.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -21,6 +22,7 @@ import { CommentListComponent } from './comment-list/comment-list.component';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
+    SharedModule
   ],
   exports: [CommentComponent, CommentListComponent]
 })

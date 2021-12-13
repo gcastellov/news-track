@@ -1,5 +1,8 @@
-<div class="row comment-list" *ngIf="comments.count > 0">
-    <div class="col-md-12">
-        <app-comment-entry *ngFor="let comment of comments.comments" [comment]="comment"></app-comment-entry>
+<div *ngIf="comments">
+    <div class="row comment-list">
+        <div class="col-md-12">
+            <app-comment-entry *ngFor="let comment of comments.comments" [comment]="comment"></app-comment-entry>
+            <app-paginator *ngIf="comments.count > 0" [page]="page" [numberOfPages]="numberOfPages" (pageChange)="onPageChange($event)"></app-paginator>
+        </div>
     </div>
 </div>
