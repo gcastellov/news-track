@@ -7,10 +7,12 @@
             <div class="row">
                 <ul class="list-inline comment-stats">
                     <li>
-                      <span>{{ 'comment-entry-component.likes' | translate }} <span class="badge badge-default">{{comment.likes}}</span></span>
+                      <i class="glyphicon glyphicon-heart"></i>
+                      <span>{{comment.likes}}</span>
                     </li>
                     <li>
-                        <span>{{ 'comment-entry-component.replies' | translate }} <b>{{comment.replies}}</b></span>
+                        <i class="glyphicon glyphicon-comment"></i>
+                        <span>{{comment.replies}}</span>
                     </li>
                     <li>
                       <span> {{ 'comment-entry-component.by' | translate }} <b>{{comment.createdBy}}</b> {{ 'comment-entry-component.created' | translate }} {{comment.createdAt| date: 'dd/MM/yyyy hh:mm'}}</span>

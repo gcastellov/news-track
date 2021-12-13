@@ -24,6 +24,7 @@ import { Envelope, UntypedEnvelope } from './Dtos/Envelope';
 import { Observable } from 'rxjs';
 import { CommentDto } from './Dtos/CommentDto';
 import { CreateCommentDto } from './Dtos/CreateCommentDto';
+import { CommentsListDto } from './Dtos/CommentsListDto';
 
 @Injectable()
 export class BackendApiService {
@@ -213,12 +214,12 @@ export class BackendApiService {
     return this._client.post<Envelope<CommentDto>>(url, req,  { headers: headers });
   }
 
-  getComments(draftId: string, take: number, skip: number): Observable<Envelope<CommentDto[]>> {
+  getComments(draftId: string, take: number, skip: number): Observable<Envelope<CommentsListDto>> {
     const params = new HttpParams()
       .set('count', take.toString())
       .set('page', skip.toString());      
     const url = `${environment.baseUrl}/api/comment/news/${draftId}`;
-    return this._client.get<Envelope<CommentDto[]>>(url, { params: params });
+    return this._client.get<Envelope<CommentsListDto>>(url, { params: params });
   }
 
 }

@@ -52,11 +52,9 @@
         "title-suggested-news": "Suggested news"
     },
     "draft-footer-component": {
-        "fucks": "Embarrassments:",
         "source": "View source",
         "related": "Related:",
-        "views": "Views:",
-        "created": "Created",
+        "created": "at",
         "by": "by"
     },
     "latest-component": {
@@ -233,8 +231,6 @@
         "action-post": "Send"
     },
     "comment-entry-component": {
-        "likes": "Likes",
-        "replies": "Replies",
         "created": "at",
         "by": "by"
     }

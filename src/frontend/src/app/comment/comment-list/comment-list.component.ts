@@ -1,35 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BackendApiService } from 'src/app/services/backend-api.service';
 import { CommentDto } from 'src/app/services/Dtos/CommentDto';
+import { CommentsListDto } from 'src/app/services/Dtos/CommentsListDto';
 
 @Component({
   selector: 'app-comment-list',
   templateUrl: './comment-list.component.html',
   styleUrls: ['./comment-list.component.less']
 })
-export class CommentListComponent implements OnInit {
+export class CommentListComponent {
   
   @Input()
-  draftId: string | undefined;
-  
-  comments: CommentDto[];
+  comments: CommentsListDto;
+ 
   skip: number;
   take: number;
 
-  constructor(private _apiService: BackendApiService) {
-    this.comments = [];
+  constructor() {
     this.skip = 0;
     this.take = 10;
-  }
-
-  ngOnInit(): void {
-    if (this.draftId) {
-      this._apiService.getComments(this.draftId, this.take, this.skip).subscribe(env => {
-        if (env.isSuccessful) {
-          this.comments = env.payload;
-        }
-      });
-    }
+    this.comments = new CommentsListDto();
   }
 
 }

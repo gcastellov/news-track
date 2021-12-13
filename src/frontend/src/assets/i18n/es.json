@@ -52,11 +52,9 @@
         "title-suggested-news": "Noticias sugeridas"
     },
     "draft-footer-component": {
-        "fucks": "Bochornos:",
         "source": "Ver fuente",
         "related": "Relacionadas:",
-        "views": "Visitas:",
-        "created": "Creado",
+        "created": "a",
         "by": "por"
     },
     "latest-component": {
@@ -233,8 +231,6 @@
         "action-post": "Enviar"
     },
     "comment-entry-component": {
-        "likes": "Likes",
-        "replies": "Respuestas",
         "created": "a",
         "by": "por"
     }

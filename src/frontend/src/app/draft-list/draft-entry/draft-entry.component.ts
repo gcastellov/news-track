@@ -6,6 +6,7 @@ import { DraftDigestDto } from '../../services/Dtos/DraftDigestDto';
 import { DraftSuggestionsDto } from '../../services/Dtos/DraftSuggestionsDto';
 import { AuthenticationApiService } from 'src/app/services/authentication-api.service';
 import { CreateCommentDto } from 'src/app/services/Dtos/CreateCommentDto';
+import { CommentsListDto } from 'src/app/services/Dtos/CommentsListDto';
 
 @Component({
   selector: 'app-draft-entry',
@@ -18,7 +19,11 @@ export class DraftEntryComponent implements OnInit {
   draft: DraftDto | undefined;
   relationship: DraftDigestDto[];
   suggestions: DraftSuggestionsDto | undefined;
-  private take: number;
+  comments: CommentsListDto;
+  
+  private suggestionsTake: number;
+  private commentsTake: number;
+  private commentsPage: number;
 
   constructor(
     private _route: ActivatedRoute,
@@ -27,7 +32,10 @@ export class DraftEntryComponent implements OnInit {
     private _authService: AuthenticationApiService) {
       this.id = '';
       this.relationship = [];
-      this.take  = 5;
+      this.suggestionsTake  = 5;
+      this.commentsTake = 20;
+      this.commentsPage = 0;
+      this.comments = new CommentsListDto();
   }
 
   ngOnInit() {
@@ -36,7 +44,12 @@ export class DraftEntryComponent implements OnInit {
       this._apiService.setVisit(this.id).subscribe();
       this._apiService.getDraft(this.id).subscribe(s => this.draft = s.payload);
       this._apiService.getDraftRelationship(this.id).subscribe(s => this.relationship = s.payload);
-      this._apiService.getDraftSuggestions(this.id, this.take).subscribe(s => this.suggestions = s.payload);
+      this._apiService.getDraftSuggestions(this.id, this.suggestionsTake).subscribe(s => this.suggestions = s.payload);
+      this._apiService.getComments(this.id, this.commentsTake, this.commentsPage).subscribe(env => {
+        if (env.isSuccessful) {
+          this.comments = env.payload;
+        }
+      });
    });
   }
 
@@ -58,8 +71,9 @@ export class DraftEntryComponent implements OnInit {
 
   createComment(commentDto: CreateCommentDto) {
     this._apiService.comment(commentDto).subscribe(s => {
-      if (s.isSuccessful) {
-        // TODO: Add comment to the list
+      if (s.isSuccessful && this.commentsPage == 0) {
+        let comments = [ s.payload ];
+        this.comments.comments = comments.concat(this.comments.comments);
       }
     });
   }

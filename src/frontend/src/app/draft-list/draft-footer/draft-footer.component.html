@@ -6,22 +6,21 @@
   </ul>
   <ul class="list-inline draft-stats">
     <li>
-      <span>{{ 'draft-footer-component.fucks' | translate }} <span class="badge badge-default">{{draft.fucks}}</span></span>
+      <a href="{{draft.uri}}" target="_blank">{{ 'draft-footer-component.source' | translate }}</a>
+    </li>    
+    <li>
+      <i class="glyphicon glyphicon-thumbs-down"></i>
+      <span class="badge badge-default">{{draft.fucks}}</span>
     </li>
     <li>
-      <a href="{{draft.uri}}" target="_blank">{{ 'draft-footer-component.source' | translate }}</a>
-    </li>
+      <i class="glyphicon glyphicon-eye-open"></i>
+      <span class="badge badge-default">{{draft.views}}</span>
+    </li>    
     <li *ngIf="draft.related">
       <span>{{ 'draft-footer-component.related' | translate }} <b>{{draft.related}}</b></span>
     </li>
     <li>
-      <span>{{ 'draft-footer-component.views' | translate }} <b>{{draft.views}}</b></span>
-    </li>
-    <li>
-      <span>{{ 'draft-footer-component.created' | translate }} {{draft.createdAt| date: 'dd/MM/yyyy hh:mm'}}</span>
-    </li>
-    <li>
-      <span> {{ 'draft-footer-component.by' | translate }} <b>{{draft.createdBy}}</b></span>
+      <span> {{ 'draft-footer-component.by' | translate }} <b>{{draft.createdBy}}</b> {{ 'draft-footer-component.created' | translate }} {{draft.createdAt| date: 'dd/MM/yyyy hh:mm'}}</span>
     </li>
   </ul>    
 </div>
