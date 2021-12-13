@@ -7,6 +7,8 @@ import { TagsStatsResponseDto, TagScore } from '../services/Dtos/TagsStatsRespon
 import { WebsiteStatsDto } from '../services/Dtos/WebsiteStatsDto';
 import { IdentityDto } from '../services/Dtos/IdentityDto';
 import { DraftSuggestionIdsDto } from '../services/Dtos/DraftSuggestionIdsDto';
+import { CommentsListDto } from '../services/Dtos/CommentsListDto';
+import { CommentDto } from '../services/Dtos/CommentDto';
 
 export class DataBuilder {
     constructor() {
@@ -115,6 +117,18 @@ export class DataBuilder {
         ];
     }
 
+    static getComments(draftId: string): CommentsListDto {
+        const comment = new CommentDto();
+        comment.draftId = draftId;
+        comment.content = "some content";
+        comment.createdAt = new Date();
+        comment.createdBy = 'UserOne';
+        const list = new CommentsListDto();
+        list.comments = [comment];
+        list.count = 1;
+        return list;
+    }
+
     static getIdentityDto(): IdentityDto {
         const date = new Date().toUTCString();
         const identity = new IdentityDto();
@@ -139,5 +153,5 @@ export class DataBuilder {
         draftDto.title = `My ${draftDto.id} title`;
         draftDto.paragraphs = [ 'This is the first paragraph',  'This is the second paragraph' ];
         return draftDto;
-    }
+    }    
 }

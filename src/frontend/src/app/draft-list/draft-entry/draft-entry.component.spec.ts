@@ -17,6 +17,7 @@ import { TestBedHelper } from '../../testing/testbed.helper';
 import { DataBuilder } from '../../testing/data.builder';
 import { Envelope } from '../../services/Dtos/Envelope';
 import { Observable } from 'rxjs';
+import { AuthenticationApiService } from 'src/app/services/authentication-api.service';
 
 describe('DraftEntryComponent', () => {
   let component: DraftEntryComponent;
@@ -30,11 +31,18 @@ describe('DraftEntryComponent', () => {
   const relatedDrafts = DataBuilder.getDraftDigestsDto().splice(0, 1);
   const suggestion = DataBuilder.getDraftSuggestionDto();
   const expressions = DataBuilder.getExpressions();
+  const comments = DataBuilder.getComments(draft.id);
+  
+  const authServiceMock = <AuthenticationApiService> {
+    isAuthenticated: () => true
+  };
+
   const apiServiceMock = <BackendApiService>{
     getDraft: (id) => new Observable(observer => observer.next(new Envelope(draft))),
     setVisit: (id) => new Observable(observer => observer.complete),
     getDraftRelationship: (id) => new Observable(observer => observer.next(new Envelope(relatedDrafts))),
-    getDraftSuggestions: (id, take) => new Observable(observer => observer.next(new Envelope(suggestion)))
+    getDraftSuggestions: (id, take) => new Observable(observer => observer.next(new Envelope(suggestion))),
+    getComments: (draftId, take, skip) => new Observable(observer => observer.next(new Envelope(comments))),
   };
 
   const storageService = <StorageService>{
@@ -73,6 +81,7 @@ describe('DraftEntryComponent', () => {
         { provide: BackendApiService, useFactory: () => apiServiceMock },
         { provide: StorageService, useFactory: () => storageService },
         { provide: AppSettingsService, useFactory: () => settingsService },
+        { provide: AuthenticationApiService, useFactory: () => authServiceMock },
         { provide: ActivatedRoute, useValue: {
           params: {
             subscribe: (fn: (value: Params) => void) => fn({
