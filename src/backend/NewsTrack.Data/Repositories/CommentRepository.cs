@@ -87,6 +87,26 @@ namespace NewsTrack.Data.Repositories
             return result.Source.Replies;
         }
 
+        public async Task<long> CountByDraftId(Guid draftId)
+        {
+            var client = GetClient();
+            var query = await client.CountAsync<Model.Comment>(
+                desc => desc.Query(m => m.Term(t => t.DraftId, draftId)));
+
+            CheckResponse(query);
+            return query.Count;
+        }
+
+        public async Task<long> CountByCommentId(Guid commentId)
+        {
+            var client = GetClient();
+            var query = await client.CountAsync<Model.Comment>(
+                desc => desc.Query(m => m.Term(t => t.ReplyingTo, commentId)));
+
+            CheckResponse(query);
+            return query.Count;
+        }
+
         protected override Model.Comment From(Comment entity)
         {
             return new Model.Comment

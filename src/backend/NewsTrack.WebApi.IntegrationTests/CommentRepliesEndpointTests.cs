@@ -33,17 +33,19 @@ namespace NewsTrack.WebApi.IntegrationTests
                 ("count", count));
 
             Factory.CommentRepositoryMock.Setup(m => m.GetReplies(comment.ReplyingTo.Value, page, count)).Returns(Task.FromResult(replies.AsEnumerable()));
+            Factory.CommentRepositoryMock.Setup(m => m.CountByCommentId(comment.ReplyingTo.Value)).Returns(Task.FromResult(replies.LongLength));
 
             // Act
             var response = await Client.GetAsync(pathAndQuery);
 
             // Assert
             response.ShouldBeSuccessful();
-            var envelope = await response.ShouldBeOfType<IEnumerable<CommentDto>>();
+            var envelope = await response.ShouldBeOfType<CommentsListDto>();
             envelope.ShouldBeSuccessful();
 
-            envelope.Payload.Should().HaveCount(replies.Length);
-            var dto = envelope.Payload.First();
+            envelope.Payload.Comments.Should().HaveCount(replies.Length);
+            envelope.Payload.Count.Should().Be(replies.Length);
+            var dto = envelope.Payload.Comments.First();
             AssertCommentDto(comment, dto);
         }
 

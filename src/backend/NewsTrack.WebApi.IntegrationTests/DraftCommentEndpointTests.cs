@@ -2,7 +2,6 @@
 using NewsTrack.WebApi.Dtos;
 using NewsTrack.WebApi.IntegrationTests.Fixture;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -33,6 +32,7 @@ namespace NewsTrack.WebApi.IntegrationTests
                 ("count", count));
 
             Factory.CommentRepositoryMock.Setup(m => m.GetByDraftId(comment.DraftId, page, count)).Returns(Task.FromResult(results.AsEnumerable()));
+            Factory.CommentRepositoryMock.Setup(m => m.CountByDraftId(comment.DraftId)).Returns(Task.FromResult(results.LongLength));
 
             // Act
             var response = await Client.GetAsync(pathAndQuery);
@@ -40,11 +40,12 @@ namespace NewsTrack.WebApi.IntegrationTests
             // Assert
             response.ShouldBeSuccessful();
             
-            var envelope = await response.ShouldBeOfType<IEnumerable<CommentDto>>();
+            var envelope = await response.ShouldBeOfType<CommentsListDto>();
             envelope.ShouldBeSuccessful();
-            envelope.Payload.Should().HaveCount(results.Length);
 
-            var dto = envelope.Payload.First();
+            envelope.Payload.Comments.Should().HaveCount(results.Length);
+            envelope.Payload.Count.Should().Be(results.Length);
+            var dto = envelope.Payload.Comments.First();
             AssertCommentDto(comment, dto);
         }
 

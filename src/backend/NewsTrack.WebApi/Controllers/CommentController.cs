@@ -53,7 +53,13 @@ namespace NewsTrack.WebApi.Controllers
             return await Execute(async () =>
             {
                 var comments = await _commentRepository.GetReplies(commentId, (int)page, (int)count);
-                return _mapper.Map<IEnumerable<CommentDto>>(comments);
+                var allCount = await _commentRepository.CountByCommentId(commentId);
+                
+                return new CommentsListDto
+                {
+                    Comments = _mapper.Map<IEnumerable<CommentDto>>(comments),
+                    Count = allCount
+                };
             });
         }
 
@@ -68,7 +74,13 @@ namespace NewsTrack.WebApi.Controllers
             return await Execute(async () =>
             {
                 var comments = await _commentRepository.GetByDraftId(draftId, (int)page, (int)count);
-                return _mapper.Map<IEnumerable<CommentDto>>(comments);
+                var allCount = await _commentRepository.CountByDraftId(draftId);
+
+                return new CommentsListDto
+                {
+                    Comments = _mapper.Map<IEnumerable<CommentDto>>(comments),
+                    Count = allCount
+                };
             });
         }
 
