@@ -44,7 +44,7 @@ export class DraftEntryComponent implements OnInit {
       this._apiService.getDraft(this.id).subscribe(s => this.draft = s.payload);
       this._apiService.getDraftRelationship(this.id).subscribe(s => this.relationship = s.payload);
       this._apiService.getDraftSuggestions(this.id, this.suggestionsTake).subscribe(s => this.suggestions = s.payload);
-      this._apiService.getComments(this.id, this.commentsTake, this.commentsPage).subscribe(c => this.comments = c.payload);
+      this._apiService.getCommentsByDraftId(this.id, this.commentsTake, this.commentsPage).subscribe(c => this.comments = c.payload);
    });
   }
 
@@ -81,7 +81,7 @@ export class DraftEntryComponent implements OnInit {
 
   onCommentsPageChanged(page: number) {
     this.commentsPage = page;
-    this._apiService.getComments(this.id, this.commentsTake, this.commentsPage).subscribe(c => this.comments = c.payload);
+    this._apiService.getCommentsByDraftId(this.id, this.commentsTake, this.commentsPage).subscribe(c => this.comments = c.payload);
   }
 
 }

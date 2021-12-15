@@ -11,7 +11,7 @@ import { DraftDto } from 'src/app/services/Dtos/DraftDto';
 export class CommentComponent {
 
   @Input()
-  draft: DraftDto | undefined;
+  draftId: string | undefined;
 
   @Input()
   replyingTo: string | undefined;
@@ -28,9 +28,9 @@ export class CommentComponent {
   }
 
   send() {    
-    if (this.draft !== undefined) {
+    if (this.draftId) {
       const content: string = this.commentForm.get('comment')?.value;
-      const commentDto = new CreateCommentDto(this.draft.id, content);
+      const commentDto = new CreateCommentDto(this.draftId, content);
       if (this.replyingTo !== undefined) {
         commentDto.replyingTo = this.replyingTo;
       }

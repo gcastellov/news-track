@@ -1,0 +1,5 @@
+<div *ngIf="comment">
+    <app-comment-entry [comment]="comment"></app-comment-entry>
+    <app-comment *ngIf="canShowComment()" [draftId]="comment.draftId" [replyingTo]="comment.id" (onSendEvent)="createComment($event)"></app-comment>
+    <app-comment-list *ngIf="comments" [comments]="comments" [page]="page" [take]="take" (onPaginating)="onCommentsPageChanged($event)"></app-comment-list>    
+</div>

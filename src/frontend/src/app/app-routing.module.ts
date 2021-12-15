@@ -13,6 +13,7 @@ import { DraftListComponent } from './draft-list/draft-list.component';
 import { SearchComponent } from './draft-list/search/search.component';
 import { SuggestionsComponent } from './draft-list/suggestions/suggestions.component';
 import { SignupComponent } from './authentication/signup/signup.component';
+import { CommentThreadComponent } from './comment/comment-thread/comment-thread.component';
 
 const routes: Routes = [
   { path: 'latest', component: DraftListComponent },
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'membership',  loadChildren: () => import('./membership/membership.module').then(m => m.MembershipModule) },
-  { path: 'browsing', loadChildren: () => import('./browsing/browsing.module').then(m => m.BrowsingModule) }
+  { path: 'browsing', loadChildren: () => import('./browsing/browsing.module').then(m => m.BrowsingModule) },
+  { path: 'comment/:id', component: CommentThreadComponent }
 ];
 
 @NgModule({

@@ -32,7 +32,7 @@ export class CommentListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.comments) {
-      this.numberOfPages = this.comments.count / this.take;
+      this.numberOfPages = Math.floor(this.comments.count / this.take);
     }
   }
 

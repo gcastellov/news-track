@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-8" *ngIf="draft">
     <app-draft [draft]="draft" [isExtended]="true"></app-draft>
-    <app-comment *ngIf="canShowComment()" [draft]="draft" (onSendEvent)="createComment($event)"></app-comment>
+    <app-comment *ngIf="canShowComment()" [draftId]="draft.id" (onSendEvent)="createComment($event)"></app-comment>
     <app-comment-list *ngIf="comments" [comments]="comments" [page]="commentsPage" [take]="commentsTake" (onPaginating)="onCommentsPageChanged($event)"></app-comment-list>
   </div>
   <div class="col-md-4">

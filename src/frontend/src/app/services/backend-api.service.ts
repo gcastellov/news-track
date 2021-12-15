@@ -214,12 +214,25 @@ export class BackendApiService {
     return this._client.post<Envelope<CommentDto>>(url, req,  { headers: headers });
   }
 
-  getComments(draftId: string, take: number, skip: number): Observable<Envelope<CommentsListDto>> {
+  getCommentsByDraftId(draftId: string, take: number, skip: number): Observable<Envelope<CommentsListDto>> {
     const params = new HttpParams()
       .set('count', take.toString())
       .set('page', skip.toString());      
     const url = `${environment.baseUrl}/api/comment/news/${draftId}`;
     return this._client.get<Envelope<CommentsListDto>>(url, { params: params });
+  }
+
+  getCommentsByCommentId(commentId: string, take: number, skip: number): Observable<Envelope<CommentsListDto>> {
+    const params = new HttpParams()
+      .set('count', take.toString())
+      .set('page', skip.toString());      
+    const url = `${environment.baseUrl}/api/comment/${commentId}/replies`;
+    return this._client.get<Envelope<CommentsListDto>>(url, { params: params });
+  }
+
+  getComment(commentId: string): Observable<Envelope<CommentDto>> {
+    const url = `${environment.baseUrl}/api/comment/${commentId}`;
+    return this._client.get<Envelope<CommentDto>>(url);
   }
 
 }
