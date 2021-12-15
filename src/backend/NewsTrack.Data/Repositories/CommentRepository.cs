@@ -37,7 +37,10 @@ namespace NewsTrack.Data.Repositories
                 d => d.Sort(o => o.Descending(m => m.CreatedAt))
                     .From(page * count)
                     .Size(count)
-                    .Query(m => m.Term(t => t.DraftId, draftId))
+                    .Query(query => query.Bool(b => b
+                        .Must(m => m.Term(t => t.DraftId, draftId))
+                        .MustNot(m => m.Exists(e => e.Field(f => f.ReplyingTo)))))
+
             );
 
             CheckResponse(query);
