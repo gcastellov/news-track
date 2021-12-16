@@ -112,5 +112,16 @@ namespace NewsTrack.WebApi.Controllers
                 return _mapper.Map<CommentDto>(comment);
             });
         }
+
+        [Authorize]
+        [HttpPatch("{commentId}/like")]
+        public async Task<IActionResult> AddLike(Guid commentId)
+        {
+            return await Execute(async () =>
+            {
+                var likes = await _commentRepository.AddLike(commentId);
+                return new IncrementalResponseDto { Amount = likes };
+            });
+        }
     }
 }

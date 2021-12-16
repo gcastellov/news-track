@@ -6,8 +6,10 @@
             <div class="row">
                 <ul class="list-inline comment-stats">
                     <li>
-                      <i class="glyphicon glyphicon-heart"></i>
-                      <span>{{comment.likes}}</span>
+                      <a (click)="like()" [ngClass]="{'likeable': isLikeable}">
+                          <i class="glyphicon glyphicon-heart"></i>
+                          <span>{{comment.likes}}</span>
+                      </a>
                     </li>
                     <li>
                         <a [routerLink]="['/comment', comment.id]">

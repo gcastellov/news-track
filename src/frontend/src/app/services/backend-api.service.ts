@@ -235,4 +235,10 @@ export class BackendApiService {
     return this._client.get<Envelope<CommentDto>>(url);
   }
 
+  setLike(commentId: string): Observable<Envelope<IncrementalResponseDto>> {
+    const url = `${environment.baseUrl}/api/comment/${commentId}/like`;
+    const headers = this._authService.getTokenHeaders();
+    return this._client.patch<Envelope<IncrementalResponseDto>>(url, null, { headers: headers });
+  }
+
 }

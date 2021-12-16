@@ -76,18 +76,32 @@ namespace NewsTrack.Data.Repositories
             return query.Documents.Select(To);
         }
 
-        public async Task<long> AddReply(Guid id)
+        public async Task<long> AddReply(Guid commentId)
         {
             var client = GetClient();
-            await client.UpdateAsync(DocumentPath<Model.Comment>.Id(id),
+            await client.UpdateAsync(DocumentPath<Model.Comment>.Id(commentId),
                     u => u.Script(s => s.Source("ctx._source.replies += 1")));
 
             var result = await client.GetAsync<Model.Comment>(
-                id, 
+                commentId, 
                 desc => desc.SourceIncludes(f => f.Replies));
 
-            CheckResponse(result, id);
+            CheckResponse(result, commentId);
             return result.Source.Replies;
+        }
+
+        public async Task<long> AddLike(Guid commentId)
+        {
+            var client = GetClient();
+            await client.UpdateAsync(DocumentPath<Model.Comment>.Id(commentId),
+                    u => u.Script(s => s.Source("ctx._source.likes += 1")));
+
+            var result = await client.GetAsync<Model.Comment>(
+                commentId,
+                desc => desc.SourceIncludes(f => f.Likes));
+
+            CheckResponse(result, commentId);
+            return result.Source.Likes;
         }
 
         public async Task<long> CountByDraftId(Guid draftId)
@@ -146,6 +160,6 @@ namespace NewsTrack.Data.Repositories
                 DraftId = model.DraftId,
                 Id = model.Id,
             };
-        }        
+        }
     }
 }
