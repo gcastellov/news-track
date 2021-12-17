@@ -18,6 +18,7 @@ The project is made by using .NET 5 as backend and ElasticSearch as NoSQL databa
 - Related news
 - Suggested news and tags
 - Corporate content (terms, privacy and about us)
+- Comments
 
 #### Content browser
 By using this feature the user is able to browse a given URL and choose an image, a title and some paragraphs that represent the news. At same time the user can relate this content to other content that is already on the system and tag it with the most representative words.
@@ -79,6 +80,9 @@ Built-in section with Terms, Privacy and About us. You only need to update the a
 ```
 
 Remove the social media URLs or leave them blank in case you don't want to make them appear at the website's footer.
+
+### Comments
+Any news can be commented by authenticated users. Also, comments can be replied starting a comment thread. Liking a comment is possible too.
 
 
 ## Configuration
