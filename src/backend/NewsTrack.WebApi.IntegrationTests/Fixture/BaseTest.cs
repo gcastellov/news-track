@@ -44,6 +44,17 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             Factory.Token = idResponse.GetProperty("token").GetString();
         }
 
+        protected async Task<HttpResponseMessage> AuthenticatedPatch(string endpoint)
+        {
+            if (Factory.Token == null)
+            {
+                await Authenticate();
+            }
+
+            Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Factory.Token}");
+            return await Client.PatchAsync(endpoint, null);
+        }
+
         protected async Task<HttpResponseMessage> AuthenticatedPost<T>(string endpoint, T payload)
         {
             if (Factory.Token == null)
