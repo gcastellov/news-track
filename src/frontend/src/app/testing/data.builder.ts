@@ -117,12 +117,17 @@ export class DataBuilder {
         ];
     }
 
-    static getComments(draftId: string): CommentsListDto {
+    static getComment(draftId: string): CommentDto {
         const comment = new CommentDto();
         comment.draftId = draftId;
         comment.content = "some content";
         comment.createdAt = new Date();
         comment.createdBy = 'UserOne';
+        return comment;
+    }
+
+    static getComments(draftId: string): CommentsListDto {
+        const comment = this.getComment(draftId);
         const list = new CommentsListDto();
         list.comments = [comment];
         list.count = 1;

@@ -37,12 +37,12 @@ describe('DraftEntryComponent', () => {
     isAuthenticated: () => true
   };
 
-  const apiServiceMock = <BackendApiService>{
+  const apiServiceMock = <BackendApiService> {
     getDraft: (id) => new Observable(observer => observer.next(new Envelope(draft))),
     setVisit: (id) => new Observable(observer => observer.complete),
     getDraftRelationship: (id) => new Observable(observer => observer.next(new Envelope(relatedDrafts))),
     getDraftSuggestions: (id, take) => new Observable(observer => observer.next(new Envelope(suggestion))),
-    getComments: (draftId, take, skip) => new Observable(observer => observer.next(new Envelope(comments))),
+    getCommentsByDraftId: (draftId, take, skip) => new Observable(observer => observer.next(new Envelope(comments)))
   };
 
   const storageService = <StorageService>{
