@@ -1,6 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BackendApiService } from 'src/app/services/backend-api.service';
-import { CommentDto } from 'src/app/services/Dtos/CommentDto';
 import { CommentsListDto } from 'src/app/services/Dtos/CommentsListDto';
 
 @Component({
@@ -11,7 +9,7 @@ import { CommentsListDto } from 'src/app/services/Dtos/CommentsListDto';
 export class CommentListComponent implements OnInit {
 
   @Output()
-  onPaginating: EventEmitter<number> = new EventEmitter<number>();
+  paginated: EventEmitter<number> = new EventEmitter<number>();
   
   @Input()
   comments: CommentsListDto | undefined;
@@ -38,7 +36,7 @@ export class CommentListComponent implements OnInit {
 
   onPageChange(page: number): void {
     this.page = page;
-    this.onPaginating.emit(page);
+    this.paginated.emit(page);
   }
 
 }

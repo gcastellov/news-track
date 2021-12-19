@@ -17,7 +17,7 @@ export class CommentComponent {
   replyingTo: string | undefined;
 
   @Output()
-  onSendEvent: EventEmitter<CreateCommentDto> = new EventEmitter<CreateCommentDto>();
+  eventSent: EventEmitter<CreateCommentDto> = new EventEmitter<CreateCommentDto>();
 
   commentForm: FormGroup;
 
@@ -36,7 +36,7 @@ export class CommentComponent {
       }
 
       this.commentForm.setValue({comment: ''})
-      this.onSendEvent.emit(commentDto);
+      this.eventSent.emit(commentDto);
     }
   }
 
