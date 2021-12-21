@@ -17,7 +17,7 @@ namespace NewsTrack.WebApi.IntegrationTests
         }
 
         [Fact]
-        public async Task GivenExistingComment_WhenLikeing_ThenAddsAndGetsAllLikes()
+        public async Task GivenExistingComment_WhenLiking_ThenAddsAndGetsAllLikes()
         {
             // Arrange
             const long total = 42;
