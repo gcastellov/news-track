@@ -8,7 +8,7 @@ using NewsTrack.Domain.Repositories;
 
 namespace NewsTrack.Data.Repositories
 {
-    public class WebsiteRepository : RepositoryBase<Model.Website, Website>, IWebsiteRepository
+    internal class WebsiteRepository : RepositoryBase<Model.Website, Website>, IWebsiteRepository
     {
         public override string IndexName => "news-website";
 

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace NewsTrack.WebApi.Components
 {
-    public class IdentityHelper : IIdentityHelper
+    internal class IdentityHelper : IIdentityHelper
     {
         private readonly ClaimsPrincipal _identity;
 

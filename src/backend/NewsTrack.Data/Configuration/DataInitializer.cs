@@ -4,7 +4,7 @@ using NewsTrack.Data.Repositories;
 
 namespace NewsTrack.Data.Configuration
 {
-    public class DataInitializer : IDataInitializer
+    internal class DataInitializer : IDataInitializer
     {
         private readonly IEnumerable<IRepositoryBase> _repositories;
 

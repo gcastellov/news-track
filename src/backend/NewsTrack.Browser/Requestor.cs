@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewsTrack.Browser
 {
-    public class Requestor : IRequestor
+    internal class Requestor : IRequestor
     {
         private readonly Lazy<HttpClient> _httpClient;
 

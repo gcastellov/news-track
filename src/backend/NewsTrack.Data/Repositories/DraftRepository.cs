@@ -9,7 +9,7 @@ using NewsTrack.Domain.Repositories;
 
 namespace NewsTrack.Data.Repositories
 {
-    public class DraftRepository : RepositoryBase<Model.Draft, Draft>, IDraftRepository
+    internal class DraftRepository : RepositoryBase<Model.Draft, Draft>, IDraftRepository
     {
         public override string IndexName => "news-drafts";
 

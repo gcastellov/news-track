@@ -7,7 +7,7 @@ using NewsTrack.Domain.Repositories;
 
 namespace NewsTrack.Domain.Services
 {
-    public class WebsiteService : IWebsiteService
+    internal class WebsiteService : IWebsiteService
     {
         private readonly IWebsiteRepository _websiteRepository;
 

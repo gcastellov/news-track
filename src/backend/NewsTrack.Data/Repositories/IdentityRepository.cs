@@ -8,7 +8,7 @@ using NewsTrack.Identity.Repositories;
 
 namespace NewsTrack.Data.Repositories
 {
-    public class IdentityRepository : RepositoryBase<Model.Identity, Identity.Identity>, IIdentityRepository
+    internal class IdentityRepository : RepositoryBase<Model.Identity, Identity.Identity>, IIdentityRepository
     {
         public override string IndexName => "news-identities";
 

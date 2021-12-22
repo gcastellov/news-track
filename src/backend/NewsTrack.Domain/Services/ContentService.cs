@@ -9,7 +9,7 @@ using NewsTrack.Domain.Repositories;
 
 namespace NewsTrack.Domain.Services
 {
-    public class ContentService : IContentService
+    internal class ContentService : IContentService
     {
         private readonly IDraftRepository _draftRepository;
         private readonly IContentRepository _contentRepository;

@@ -9,7 +9,7 @@ using NewsTrack.Browser.Dtos;
 
 namespace NewsTrack.Browser
 {
-    public class Broswer : IBroswer
+    internal class Broswer : IBroswer
     {
         private readonly IRequestor _requestor;
 

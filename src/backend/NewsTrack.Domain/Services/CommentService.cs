@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewsTrack.Domain.Services
 {
-    public class CommentService : ICommentService
+    internal class CommentService : ICommentService
     {
         private readonly IDraftRepository _draftRepository;
         private readonly ICommentRepository _commentRepository;

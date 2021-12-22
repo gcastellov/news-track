@@ -8,7 +8,7 @@ using NewsTrack.Common.Validations;
 
 namespace NewsTrack.Domain.Services
 {
-    public class DraftService : IDraftService
+    internal class DraftService : IDraftService
     {
         private readonly IDraftRepository _draftRepository;
         private readonly IContentRepository _contentRepository;

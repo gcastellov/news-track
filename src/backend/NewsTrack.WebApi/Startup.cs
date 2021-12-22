@@ -3,23 +3,16 @@ using AutoMapper;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using NewsTrack.Domain.Repositories;
-using NewsTrack.Domain.Services;
-using NewsTrack.Identity.Encryption;
-using NewsTrack.Identity.Repositories;
-using NewsTrack.Identity.Services;
-using NewsTrack.WebApi.Components;
+using NewsTrack.Browser.Configuration;
+using NewsTrack.Data.Configuration;
+using NewsTrack.Domain.Configuration;
+using NewsTrack.Identity.Configuration;
 using NewsTrack.WebApi.Configuration;
-using NewsTrack.WebApi.Dtos.Profiles;
-using NewsTrack.WebApi.HostedServices;
 
 namespace NewsTrack.WebApi
 {
@@ -32,6 +25,7 @@ namespace NewsTrack.WebApi
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+            
             Configuration = builder.Build();
         }
 
@@ -39,101 +33,27 @@ namespace NewsTrack.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add Mediatr
-            services.AddMediatR(typeof(Startup));
+            services.AddControllers();
 
-            // Add AutoMapper
-            services.AddAutoMapper(map => map.AddProfiles(new Profile[]
-            {
-                new BrowserProfile(),
-                new DraftProfile(),
-                new IdentityProfile(),
-                new NewsProfile(),
-                new CommentProfile()
-            }));
-
-            // Add authentication
             var configurationProvider = new Configuration.ConfigurationProvider();
             configurationProvider.Set(Configuration);
 
-            services.AddSingleton<Configuration.IConfigurationProvider>(provider => configurationProvider);
-
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(cfg =>
-            {
-                cfg.RequireHttpsMetadata = false;
-                cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuer = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = configurationProvider.TokenConfiguration.Issuer,
-                    ValidAudience = configurationProvider.TokenConfiguration.Audience,
-                    IssuerSigningKey = configurationProvider.TokenConfiguration.SigningKey
-                };
-            });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(IdentityPolicies.RequireAdministratorRole, policy => policy.RequireRole(IdentityRoles.Administrator));
-            });
-
-            services.AddHostedService<SeederHostedService>();
-            services.AddHostedService<SuggestionsHostedService>();
-
-            services.AddScoped<Browser.IRequestor, Browser.Requestor>();
-            services.AddScoped<Browser.IBroswer, Browser.Broswer>();
-            services.AddScoped<IDraftService, DraftService>();
-            services.AddScoped<IWebsiteService, WebsiteService>();
-            services.AddScoped<IContentService, ContentService>();
-            services.AddScoped<IIdentityService, IdentityService>();
-            services.AddScoped<ICommentService, CommentService>();
-            services.AddScoped<INotificator, Notificator>();
-            
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddSingleton<IIdentityHelper, IdentityHelper>();
-
-            services.AddScoped<ICryptoManager, CryptoManager>();
-            services.AddScoped<IContentRepository, Data.Repositories.ContentRepository>();
-            services.AddScoped<IDraftRepository, Data.Repositories.DraftRepository>();
-            services.AddScoped<IDraftRelationshipRepository, Data.Repositories.DraftRelationshipRepository>();
-            services.AddScoped<IDraftSuggestionsRepository, Data.Repositories.DraftSuggestionsRepository>();
-            services.AddScoped<IIdentityRepository, Data.Repositories.IdentityRepository>();
-            services.AddScoped<IWebsiteRepository, Data.Repositories.WebsiteRepository>();
-            services.AddScoped<ICommentRepository, Data.Repositories.CommentRepository>();
-            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.ContentRepository>();
-            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftRepository>();
-            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftRelationshipRepository>();
-            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.IdentityRepository>();
-            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.DraftSuggestionsRepository>();
-            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.CommentRepository>();
-            services.AddScoped<Data.Repositories.IRepositoryBase, Data.Repositories.WebsiteRepository>();
-            services.AddScoped<Data.Configuration.IDataInitializer, Data.Configuration.DataInitializer>();
-            services.AddSingleton<Data.Configuration.IDataConfigurationProvider>(configurationProvider);
-
-            services.AddScoped<ISeeder>(provider => new Seeder(
-                    provider.GetService<Data.Configuration.IDataInitializer>(),
-                    provider.GetService<IIdentityService>(),
-                    provider.GetService<IWebsiteService>(),
-                    provider.GetService<IIdentityRepository>(),
-                    Configuration
-                ));
-
-            services.AddControllers();
-            services.AddCors();
             services
+                .AddMediatR(typeof(Startup))
+                .AddAutoMapper()
+                .AddConfiguration(configurationProvider)
+                .AddAuthenticationAndAuthorization(configurationProvider)
+                .AddHostedServices()
+                .AddInternals(configurationProvider, Configuration)
+                .AddDomainDependencies()
+                .AddDataDependencies()
+                .AddIdentityDependencies()
+                .AddBrowserDependencies()
+                .AddCors()
+                .AddHangfire(options => options.UseMemoryStorage())
+                .AddHangfireServer()
                 .AddHealthChecks()
                 .AddElasticsearch(configurationProvider.ConnectionString.AbsoluteUri);
-
-            services.AddHangfire(options => options.UseMemoryStorage());
-            services.AddHangfireServer();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

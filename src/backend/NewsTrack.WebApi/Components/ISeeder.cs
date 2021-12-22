@@ -2,7 +2,7 @@
 
 namespace NewsTrack.WebApi.Components
 {
-    public interface ISeeder
+    internal interface ISeeder
     {
         Task Initialize();
     }

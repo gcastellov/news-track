@@ -7,7 +7,7 @@ using NewsTrack.Domain.Exceptions;
 
 namespace NewsTrack.Data.Repositories
 {
-    public abstract class RepositoryBase<T, TK> : IRepositoryBase where T: class, IDocument
+    internal abstract class RepositoryBase<T, TK> : IRepositoryBase where T: class, IDocument
         where TK: class
     {
         protected const int MaxQuerySize = 10000;

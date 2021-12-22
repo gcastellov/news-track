@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewsTrack.Data.Repositories
 {
-    public class CommentRepository : RepositoryBase<Model.Comment, Comment>, ICommentRepository
+    internal class CommentRepository : RepositoryBase<Model.Comment, Comment>, ICommentRepository
     {
         public override string IndexName => "news-comments";
 

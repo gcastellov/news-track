@@ -2,7 +2,7 @@
 
 namespace NewsTrack.Data.Repositories
 {
-    public interface IRepositoryBase
+    internal interface IRepositoryBase
     {
         Task Initialize();
     }

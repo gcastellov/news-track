@@ -11,7 +11,7 @@ using NewsTrack.Identity.Services;
 
 namespace NewsTrack.WebApi.Components
 {
-    public class Seeder : ISeeder
+    internal class Seeder : ISeeder
     {
         private const string Username = "Username";
         private const string Email = "Email";

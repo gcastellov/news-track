@@ -7,7 +7,7 @@ using NewsTrack.Domain.Repositories;
 
 namespace NewsTrack.Data.Repositories
 {
-    public class DraftRelationshipRepository : RepositoryBase<Model.DraftRelationship, DraftRelationship>, IDraftRelationshipRepository
+    internal class DraftRelationshipRepository : RepositoryBase<Model.DraftRelationship, DraftRelationship>, IDraftRelationshipRepository
     {
         public override string IndexName => "news-draft-relationship";
 
