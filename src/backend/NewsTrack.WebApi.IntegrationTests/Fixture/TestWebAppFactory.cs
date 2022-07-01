@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Moq;
 using NewsTrack.Browser;
 using NewsTrack.Data.Repositories;
 using NewsTrack.Domain.Repositories;
 using NewsTrack.Identity.Repositories;
+using NewsTrack.WebApi.HostedServices;
 using System;
 using System.Linq;
 
 namespace NewsTrack.WebApi.IntegrationTests.Fixture
 {
-    public class TestWebAppFactory<T> : WebApplicationFactory<T> where T : class
+    public class TestWebAppFactory<T> : WebApplicationFactory<Program> where T : Program
     {       
         private Identity.Identity _identity;
 
@@ -55,9 +57,16 @@ namespace NewsTrack.WebApi.IntegrationTests.Fixture
             builder.ConfigureServices(services =>
             {
                 var repositories = services.Where(s => s.ServiceType.Namespace == typeof(IRepositoryBase).Namespace).ToArray();
+                var hostedServices = services.Where(s => s.ServiceType == typeof(IHostedService)).ToArray();
+                
                 foreach (var repository in repositories)
                 {
                     services.Remove(repository);
+                }
+
+                foreach (var hostedSvc in hostedServices)
+                {
+                    services.Remove(hostedSvc);
                 }
 
                 var browser = services.Single(s => s.ServiceType == typeof(IBroswer));

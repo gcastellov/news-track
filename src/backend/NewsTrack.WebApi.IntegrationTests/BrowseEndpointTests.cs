@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
@@ -15,7 +12,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/browser/browse";
 
-        public BrowseEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public BrowseEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

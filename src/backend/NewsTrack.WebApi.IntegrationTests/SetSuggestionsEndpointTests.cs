@@ -8,7 +8,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/content/suggestions";
 
-        public SetSuggestionsEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public SetSuggestionsEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

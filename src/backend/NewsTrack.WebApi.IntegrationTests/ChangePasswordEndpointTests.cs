@@ -11,7 +11,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/identity/password/change";
         
-        public ChangePasswordEndpointTests(TestWebAppFactory<Startup> testWebAppFactory)
+        public ChangePasswordEndpointTests(TestWebAppFactory<Program> testWebAppFactory)
             : base(testWebAppFactory)
         {
         }

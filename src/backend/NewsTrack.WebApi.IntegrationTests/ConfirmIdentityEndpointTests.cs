@@ -13,7 +13,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/identity/confirm/{email}/{code}";
 
-        public ConfirmIdentityEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public ConfirmIdentityEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

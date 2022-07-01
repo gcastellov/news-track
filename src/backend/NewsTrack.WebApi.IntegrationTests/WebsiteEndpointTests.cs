@@ -13,7 +13,7 @@ namespace NewsTrack.WebApi.IntegrationTests
         private const string Endpoint = "/api/website/check";
         private const string ForbiddenUrl = "http://www.some.org/path/resource";
 
-        public WebsiteEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public WebsiteEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

@@ -12,7 +12,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/tags";
 
-        public TagsEndpointTests(TestWebAppFactory<Startup> testWebAppFactory)
+        public TagsEndpointTests(TestWebAppFactory<Program> testWebAppFactory)
             : base(testWebAppFactory)
         {
         }

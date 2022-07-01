@@ -10,7 +10,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/identity/create";
 
-        public CreateIdentityEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public CreateIdentityEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

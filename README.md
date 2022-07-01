@@ -51,9 +51,6 @@ As much content the system has, the better. The algorithm will search for relate
 #### Membership control panel
 Nowadays the membership is limited to admin purposes, meaning that only the admin and contributors can post news, create new users, change current password, and dispatch the suggestion process. In a near feature more kind of users will be added.
 
-![Membership user panel](doc/membership_panel.png)
-![Membership management](doc/membership_panel2.png)
-
 To set your admin settings, update your backend appsettings.json file. Once the application wakes up it will create the user.
 
 ```json

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using FluentAssertions;
 using NewsTrack.WebApi.IntegrationTests.Fixture;
 using NewsTrack.WebApi.Dtos;
 using NewsTrack.Domain.Exceptions;
@@ -15,7 +11,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/news/entry/{id}";
 
-        public NewsEntryEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public NewsEntryEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

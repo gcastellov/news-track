@@ -11,7 +11,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/comment/{commentId}/like";
 
-        public LikeCommentEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public LikeCommentEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

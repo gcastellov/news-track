@@ -11,7 +11,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/news/entry/{id}/visit";
 
-        public VisitNewsEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public VisitNewsEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

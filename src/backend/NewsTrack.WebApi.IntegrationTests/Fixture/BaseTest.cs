@@ -11,15 +11,15 @@ using FluentAssertions;
 
 namespace NewsTrack.WebApi.IntegrationTests.Fixture
 {
-    public class BaseTest : IClassFixture<TestWebAppFactory<Startup>>
+    public class BaseTest : IClassFixture<TestWebAppFactory<Program>>
     {
         protected const string AuthenticationEndpoint = "/api/authentication/generate";
 
-        protected TestWebAppFactory<Startup> Factory { get; }
+        protected TestWebAppFactory<Program> Factory { get; }
 
         protected HttpClient Client { get; }        
 
-        protected BaseTest(TestWebAppFactory<Startup> testWebAppFactory)
+        protected BaseTest(TestWebAppFactory<Program> testWebAppFactory)
         {
             Factory = testWebAppFactory;
             Client = Factory.CreateClient();

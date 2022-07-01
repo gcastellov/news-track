@@ -27,7 +27,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.Identity.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.WebApi.UnitTests", "NewsTrack.WebApi.UnitTests\NewsTrack.WebApi.UnitTests.csproj", "{B7FD54A8-A455-4F3B-AF21-C6CD59BAB3FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsTrack.WebApi.IntegrationTests", "NewsTrack.WebApi.IntegrationTests\NewsTrack.WebApi.IntegrationTests.csproj", "{9D5CF458-C01E-474D-A6C3-21FD7A45478A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewsTrack.WebApi.IntegrationTests", "NewsTrack.WebApi.IntegrationTests\NewsTrack.WebApi.IntegrationTests.csproj", "{9D5CF458-C01E-474D-A6C3-21FD7A45478A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20D5E627-AEE3-4561-BF5C-17BAC3EF0C14}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		Packages.props = Packages.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

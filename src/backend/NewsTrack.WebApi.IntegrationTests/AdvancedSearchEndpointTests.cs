@@ -13,7 +13,7 @@ namespace NewsTrack.WebApi.IntegrationTests
         private const string Endpoint = "/api/search/advanced";
         private const string Query = "some mathing pattern";
 
-        public AdvancedSearchEndpointTests(TestWebAppFactory<Startup> testWebAppFactory)
+        public AdvancedSearchEndpointTests(TestWebAppFactory<Program> testWebAppFactory)
             : base(testWebAppFactory)
         {
         }

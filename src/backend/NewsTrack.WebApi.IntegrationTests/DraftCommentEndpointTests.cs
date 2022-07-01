@@ -12,7 +12,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/comment/news/{draftId}";
 
-        public DraftCommentEndpointTests(TestWebAppFactory<Startup> testWebAppFactory)
+        public DraftCommentEndpointTests(TestWebAppFactory<Program> testWebAppFactory)
             : base(testWebAppFactory)
         {
         }

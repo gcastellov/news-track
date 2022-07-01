@@ -1,5 +1,4 @@
 ﻿using NewsTrack.WebApi.IntegrationTests.Fixture;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -12,7 +11,7 @@ namespace NewsTrack.WebApi.IntegrationTests
     {
         private const string Endpoint = "/api/news/mostviewed";
 
-        public MostViewedNewsEndpointTests(TestWebAppFactory<Startup> testWebAppFactory)
+        public MostViewedNewsEndpointTests(TestWebAppFactory<Program> testWebAppFactory)
             : base(testWebAppFactory)
         {
         }

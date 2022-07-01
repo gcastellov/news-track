@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,12 +11,12 @@ namespace NewsTrack.Browser.IntegrationTests
         {
             var requestor = new Requestor();
             var browser = new Broswer(requestor);
-            var response = await browser.Get("https://help.github.com/articles/github-terms-of-service/");
+            var response = await browser.Get("https://policies.google.com/terms");
 
             response.Should().NotBeNull();
-            response.Titles.Should().NotBeEmpty(); ;
+            response.Titles.Should().NotBeEmpty();
             response.Paragraphs.Should().NotBeEmpty();
-            response.Pictures.Should().BeEmpty();
+            response.Pictures.Should().NotBeEmpty();
         }
     }
 }

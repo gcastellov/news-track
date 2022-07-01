@@ -9,7 +9,7 @@ namespace NewsTrack.WebApi.IntegrationTests
 {
     public class AuthenticationEndpointTests : BaseTest
     {
-        public AuthenticationEndpointTests(TestWebAppFactory<Startup> testWebAppFactory) 
+        public AuthenticationEndpointTests(TestWebAppFactory<Program> testWebAppFactory) 
             : base(testWebAppFactory)
         {
         }

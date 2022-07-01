@@ -11,7 +11,7 @@ namespace NewsTrack.Browser.IntegrationTests
         [Fact]
         public async Task WhenRequestingValidUrl_ThenGetResponseAsync()
         {
-            var uri = new Uri("https://help.github.com/articles/github-terms-of-service/");
+            var uri = new Uri("https://policies.google.com/terms");
             var requestor = new Requestor();
             var content = await requestor.Get(uri);
             content.Should().NotBeNull();
