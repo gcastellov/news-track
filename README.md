@@ -131,7 +131,7 @@ Set your frontend authentication URL where the user has to be redirected once he
 
 ## Docker
 
-There are a couple of compose files. The one located under */docker/backing-services* creates only the ELK replicaset, while the one in */docker* creates the images and containers for the frontend and backend along with the ES cluster by using the set up *Docker* environment.
+There are a couple of compose files. The one located under */docker/backing-services* creates only ElasticSearch and Kibana services, while the one in */docker* creates the images and containers for the frontend and backend along with ES by using the *Docker* environment.
 
 ```
 docker-compose up
